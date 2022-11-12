@@ -6,7 +6,7 @@ module Monty
       l = 9
       w = 4.5
       h = 2.5
-      n = 3
+      n = 20
       s = 10
       model = Sketchup.active_model
       model.start_operation("Create Kiln", true)
@@ -14,13 +14,13 @@ module Monty
       definitions=model.definitions
       compdefinition=definitions.add "Block"
       group = compdefinition.entities.add_group
-      face = group.entities.add_face [0,0,0],[l,0,0],[l,w,0],[0,w,0]
+      face = group.entities.add_face [0,0,0],[w,0,0],[w,l,0],[0,l,0]
       face.pushpull -h
       component = group.to_component
       (0..n).each { |i|
           (0..n).each { |j|
               (0..n).each { |k|
-                  transformation = Geom::Transformation.new([i*l,j*w,k*h])
+                  transformation = Geom::Transformation.new([i*w,j*l,k*h])
                   componentinstance = entities.add_instance(component.definition, transformation)
               }
           }
