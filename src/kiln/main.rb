@@ -1,5 +1,7 @@
 require 'sketchup'
 
+# how to get bounding box l,w,h
+# how to rotate component (Geom.Transformation.something...)
 # Monty::KilnTool.reload_files
 module Monty
   module KilnTool
@@ -10,6 +12,7 @@ module Monty
       height += create_slab height
       height += create_concrete_block_base height
       height += create_ifb_floor height
+      height += create_fb_floor height
       model.commit_operation
     end
 
@@ -29,9 +32,9 @@ module Monty
       model = Sketchup.active_model
       entities = model.entities
       componentdefinition = find_componentdefinition('Cinder Block')
-      6.times do |i|
+      5.times do |i|
         10.times do |j|
-          transformation = Geom::Transformation.new([i * w - 1.5, j * (l + 11.0 / 9.0), height])
+          transformation = Geom::Transformation.new([i * (w + 5.0 / 4.0), j * (l + 11.0 / 9.0), height])
           componentinstance = entities.add_instance(componentdefinition, transformation)
           componentinstance.material = componentdefinition.material
         end
@@ -45,6 +48,22 @@ module Monty
       model = Sketchup.active_model
       entities = model.entities
       componentdefinition = find_componentdefinition('IFB')
+      10.times do |i|
+        19.times do |j|
+          transformation = Geom::Transformation.new([i * w, j * l, height])
+          componentinstance = entities.add_instance(componentdefinition, transformation)
+          componentinstance.material = componentdefinition.material
+        end
+      end
+      2.5
+    end
+
+    def self.create_fb_floor(height)
+      l = 9.0
+      w = 4.5
+      model = Sketchup.active_model
+      entities = model.entities
+      componentdefinition = find_componentdefinition('FB')
       10.times do |i|
         19.times do |j|
           transformation = Geom::Transformation.new([i * w, j * l, height])
