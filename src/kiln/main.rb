@@ -13,7 +13,7 @@ module Monty
       model = Sketchup.active_model
       entities = model.entities
       model.start_operation("Create Kiln", true)
-      componentdefinition = self.find_componentdefinition("Standard Firebrick")
+      componentdefinition = self.find_componentdefinition("IFB")
       (0..n).each { |i|
           (0..n).each { |j|
               (0..n).each { |k|
@@ -35,16 +35,18 @@ module Monty
       group = compdefinition.entities.add_group
       face = group.entities.add_face [0,0,0],[w,0,0],[w,l,0],[0,l,0]
       face.pushpull -h
-      # component = group.to_component
-      # component.material = compdefinition.material
-      # component
     end
 
     def self.create_bricks
-      l = 9
+      l = 9.0
       w = 4.5
       h = 2.5  
-      component = self.create_brick(l, w, h, "Standard Firebrick", "Goldenrod")
+      self.create_brick(l, w, h, "FB", "Goldenrod")
+      self.create_brick(l, w, h, "IFB", "Cornsilk")
+      self.create_brick(l/2, w, h, "FB/2", "Goldenrod")
+      self.create_brick(l/2, w, h, "IFB/2", "Cornsilk")
+      self.create_brick(l/4, w, h, "FB/4", "Goldenrod")
+      self.create_brick(l/4, w, h, "IFB/4", "Cornsilk")
     end
 
     def self.find_componentdefinition(name)
