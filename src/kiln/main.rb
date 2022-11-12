@@ -1,32 +1,40 @@
-require 'sketchup.rb'
+require "sketchup.rb"
 
 module Monty
   module KilnTool
+    def self.create_brick
+      l = 9
+      w = 4.5
+      h = 2.5
+      n = 3
+      s = 10
+      model = Sketchup.active_model
+      model.start_operation("Create Kiln", true)
+      entities = model.entities
+      definitions=model.definitions
+      compdefinition=definitions.add "Block"
+      group = compdefinition.entities.add_group
+      face = group.entities.add_face [0,0,0],[l,0,0],[l,w,0],[0,w,0]
+      face.pushpull -h
+      component = group.to_component
+      (0..n).each { |i|
+          (0..n).each { |j|
+              (0..n).each { |k|
+                  transformation = Geom::Transformation.new([i*l,j*w,k*h])
+                  componentinstance = entities.add_instance(component.definition, transformation)
+              }
+          }
+      }
+      model.commit_operation
+    end
 
-def self.create_cube
-  model = Sketchup.active_model
-  model.start_operation('Create Kiln', true)
-  group = model.active_entities.add_group
-  entities = group.entities
-  points = [
-    Geom::Point3d.new(0,   0,   0),
-    Geom::Point3d.new(1.m, 0,   0),
-    Geom::Point3d.new(1.m, 1.m, 0),
-    Geom::Point3d.new(0,   1.m, 0)
-  ]
-  face = entities.add_face(points)
-  face.pushpull(-1.m)
-  model.commit_operation
-end
+    unless file_loaded?(__FILE__)
+      menu = UI.menu("Plugins")
+      menu.add_item("Create Kiln") {
+        self.create_brick
+      }
 
-unless file_loaded?(__FILE__)
-  menu = UI.menu('Plugins')
-  menu.add_item('Create Kiln') {
-    self.create_cube
-  }
-
-  file_loaded(__FILE__)
-end
-
+      file_loaded(__FILE__)
+    end
   end # module HelloCube
 end # module Examples
