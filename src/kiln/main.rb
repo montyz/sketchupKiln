@@ -29,14 +29,10 @@ module Monty
       model.commit_operation
       hash = {}
       Sketchup.active_model.entities.each do |instance|
-        hash[instance.definition.name] = if hash.key?(instance.definition.name)
-                                           hash[instance.definition.name] + 1
-                                         else
-                                           1
-                                         end
+        hash[instance.definition.name] = hash.key?(instance.definition.name) ? hash[instance.definition.name] + 1 : 1
       end
       hash.each do |key, value|
-        puts "#{key}:#{value}"
+        puts "#{key}: #{value}"
       end
     end
 
@@ -53,7 +49,7 @@ module Monty
       model = Sketchup.active_model
       entities = model.entities
       componentdefinition = find_componentdefinition('Slab')
-      transformation = Geom::Transformation.new([-1.5, 0, @height])
+      transformation = Geom::Transformation.new([0, 0, @height])
       componentinstance = entities.add_instance(componentdefinition, transformation)
       componentinstance.material = componentdefinition.material
       componentinstance.layer = layer
@@ -81,6 +77,7 @@ module Monty
     def self.create_ifb_floor
       l = 4.5
       w = 9
+      layer = add_kiln_layer
       entities = Sketchup.active_model.entities
       componentdefinition = find_componentdefinition('IFB')
       5.times do |i|
@@ -92,6 +89,7 @@ module Monty
           transformation = Geom::Transformation.new([(i * w) + w, j * l, @height]) * t
           componentinstance = entities.add_instance(componentdefinition, transformation)
           componentinstance.material = componentdefinition.material
+          componentinstance.layer = layer
         end
       end
       @height += componentdefinition.bounds.depth
@@ -100,6 +98,7 @@ module Monty
     def self.create_fb_floor
       l = 9.0
       w = 4.5
+      layer = add_kiln_layer
       model = Sketchup.active_model
       entities = model.entities
       componentdefinition = find_componentdefinition('FB')
@@ -108,6 +107,7 @@ module Monty
           transformation = Geom::Transformation.new([i * w, j * l, @height])
           componentinstance = entities.add_instance(componentdefinition, transformation)
           componentinstance.material = componentdefinition.material
+          componentinstance.layer = layer
         end
       end
       @height += componentdefinition.bounds.depth
@@ -135,7 +135,7 @@ module Monty
       create_brick(l / 4, w, h, 'FB/4', 'Goldenrod')
       create_brick(l / 4, w, h, 'IFB/4', 'Cornsilk')
       create_brick(16.0, 8.0, 8.0, 'Cinder Block', 'LightSlateGray')
-      create_brick(171.0, 48.0, 3.5, 'Slab', 'LightSlateGray')
+      create_brick(171.0, 45.0, 3.5, 'Slab', 'LightSlateGray')
     end
 
     def self.find_componentdefinition(name)
