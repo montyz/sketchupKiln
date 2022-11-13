@@ -1,9 +1,9 @@
 require 'sketchup'
 
-# how to get bounding box l,w,h
-# how to rotate component (Geom.Transformation.something...)
+# √ how to get bounding box l,w,h
+# √ how to rotate component (Geom.Transformation.something...)
 # how to tweak rubocop to not complain about 15 line methods
-# create a layer and assign a course to it Layout::Layer ? or Layout::Label
+# √ create a layer and assign a course to it Layout::Layer ? or Layout::Label
 # course a
 # course b
 # header course
@@ -38,7 +38,7 @@ module Monty
       end
     end
 
-    def self.add_kiln_layer()
+    def self.add_kiln_layer
       layer_name = "Kiln#{@index}"
       @index += 1
       model = Sketchup.active_model
@@ -77,13 +77,17 @@ module Monty
     end
 
     def self.create_ifb_floor
-      l = 9.0
-      w = 4.5
+      l = 4.5
+      w = 9
       entities = Sketchup.active_model.entities
       componentdefinition = find_componentdefinition('IFB')
-      10.times do |i|
-        19.times do |j|
-          transformation = Geom::Transformation.new([i * w, j * l, @height])
+      5.times do |i|
+        38.times do |j|
+          target_point = componentdefinition.bounds.center
+          vector = Geom::Vector3d.new(0, 0, 1)
+          degrees_to_rotate = 90.degrees
+          t = Geom::Transformation.rotation(target_point, vector, degrees_to_rotate)
+          transformation = Geom::Transformation.new([i * w + 4.5 / 2, j * l - 4.5 / 2, @height]) * t
           componentinstance = entities.add_instance(componentdefinition, transformation)
           componentinstance.material = componentdefinition.material
         end
