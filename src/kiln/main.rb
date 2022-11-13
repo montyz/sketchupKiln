@@ -2,7 +2,7 @@ require 'sketchup'
 
 # √ how to get bounding box l,w,h
 # √ how to rotate component (Geom.Transformation.something...)
-# how to tweak rubocop to not complain about 15 line methods
+# √ how to tweak rubocop to not complain about 15 line methods
 # √ create a layer and assign a course to it Layout::Layer ? or Layout::Label
 # course a
 # course b
@@ -14,6 +14,7 @@ require 'sketchup'
 
 # Monty::KilnTool.reload_files
 module Monty
+  # Kiln builder
   module KilnTool
     @index = 0
     @height = 0.0
