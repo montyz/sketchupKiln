@@ -27,7 +27,7 @@ module Monty
       create_ifb_floor
       create_fb_floor
       model.commit_operation
-      hash = Hash.[]
+      hash = {}
       Sketchup.active_model.entities.each do |instance|
         hash[instance.definition.name] = if hash.key?(instance.definition.name)
                                            hash[instance.definition.name] + 1
@@ -69,7 +69,7 @@ module Monty
       componentdefinition = find_componentdefinition('Cinder Block')
       5.times do |i|
         10.times do |j|
-          transformation = Geom::Transformation.new([i * (w + 5.0 / 4.0), j * (l + 11.0 / 9.0), @height])
+          transformation = Geom::Transformation.new([i * (w + (5.0 / 4.0)), j * (l + (11.0 / 9.0)), @height])
           componentinstance = entities.add_instance(componentdefinition, transformation)
           componentinstance.material = componentdefinition.material
           componentinstance.layer = layer
@@ -85,11 +85,11 @@ module Monty
       componentdefinition = find_componentdefinition('IFB')
       5.times do |i|
         38.times do |j|
-          target_point = Geom::Point3d.new(0,0,0)
+          target_point = Geom::Point3d.new(0, 0, 0)
           vector = Geom::Vector3d.new(0, 0, 1)
           degrees_to_rotate = 90.degrees
           t = Geom::Transformation.rotation(target_point, vector, degrees_to_rotate)
-          transformation = Geom::Transformation.new([i * w + w, j * l, @height]) * t
+          transformation = Geom::Transformation.new([(i * w) + w, j * l, @height]) * t
           componentinstance = entities.add_instance(componentdefinition, transformation)
           componentinstance.material = componentdefinition.material
         end
