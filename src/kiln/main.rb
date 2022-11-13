@@ -4,13 +4,14 @@ require 'sketchup'
 # √ how to rotate component (Geom.Transformation.something...)
 # √ how to tweak rubocop to not complain about 15 line methods
 # √ create a layer and assign a course to it Layout::Layer ? or Layout::Label
+# √ iterate over all instances and sum by type
+# how to create ruby DSL?
 # course a
 # course b
 # header course
 # bagwall & primary air
 # arches
 # build the cast headers
-# √ iterate over all instances and sum by type
 
 # Monty::KilnTool.reload_files
 module Monty
@@ -84,11 +85,11 @@ module Monty
       componentdefinition = find_componentdefinition('IFB')
       5.times do |i|
         38.times do |j|
-          target_point = componentdefinition.bounds.center
+          target_point = Geom::Point3d.new(0,0,0)
           vector = Geom::Vector3d.new(0, 0, 1)
           degrees_to_rotate = 90.degrees
           t = Geom::Transformation.rotation(target_point, vector, degrees_to_rotate)
-          transformation = Geom::Transformation.new([i * w + 4.5 / 2, j * l - 4.5 / 2, @height]) * t
+          transformation = Geom::Transformation.new([i * w + w, j * l, @height]) * t
           componentinstance = entities.add_instance(componentdefinition, transformation)
           componentinstance.material = componentdefinition.material
         end
