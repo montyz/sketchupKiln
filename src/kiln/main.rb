@@ -16,14 +16,14 @@ require 'sketchup'
 module Monty
   module KilnTool
     @index = 0
+    @height = 0.0
     def self.create_kiln
-      height = 0
       model = Sketchup.active_model
       model.start_operation('Create Kiln', true)
-      height += create_slab(height)
-      height += create_concrete_block_base(height)
-      height += create_ifb_floor height
-      height += create_fb_floor height
+      @height += create_slab
+      @height += create_concrete_block_base
+      @height += create_ifb_floor
+      @height += create_fb_floor
       model.commit_operation
       hash = Hash.[]
       Sketchup.active_model.entities.each do |instance|
@@ -46,19 +46,19 @@ module Monty
       model.layers[layer_name]
     end
 
-    def self.create_slab(height)
+    def self.create_slab
       layer = add_kiln_layer
       model = Sketchup.active_model
       entities = model.entities
       componentdefinition = find_componentdefinition('Slab')
-      transformation = Geom::Transformation.new([-1.5, 0, height])
+      transformation = Geom::Transformation.new([-1.5, 0, @height])
       componentinstance = entities.add_instance(componentdefinition, transformation)
       componentinstance.material = componentdefinition.material
       componentinstance.layer = layer
       3.5
     end
 
-    def self.create_concrete_block_base(height)
+    def self.create_concrete_block_base
       l = 16.0
       w = 8.0
       layer = add_kiln_layer
@@ -67,7 +67,7 @@ module Monty
       componentdefinition = find_componentdefinition('Cinder Block')
       5.times do |i|
         10.times do |j|
-          transformation = Geom::Transformation.new([i * (w + 5.0 / 4.0), j * (l + 11.0 / 9.0), height])
+          transformation = Geom::Transformation.new([i * (w + 5.0 / 4.0), j * (l + 11.0 / 9.0), @height])
           componentinstance = entities.add_instance(componentdefinition, transformation)
           componentinstance.material = componentdefinition.material
           componentinstance.layer = layer
@@ -76,14 +76,14 @@ module Monty
       8
     end
 
-    def self.create_ifb_floor(height)
+    def self.create_ifb_floor
       l = 9.0
       w = 4.5
       entities = Sketchup.active_model.entities
       componentdefinition = find_componentdefinition('IFB')
       10.times do |i|
         19.times do |j|
-          transformation = Geom::Transformation.new([i * w, j * l, height])
+          transformation = Geom::Transformation.new([i * w, j * l, @height])
           componentinstance = entities.add_instance(componentdefinition, transformation)
           componentinstance.material = componentdefinition.material
         end
@@ -91,7 +91,7 @@ module Monty
       2.5
     end
 
-    def self.create_fb_floor(height)
+    def self.create_fb_floor
       l = 9.0
       w = 4.5
       model = Sketchup.active_model
@@ -99,7 +99,7 @@ module Monty
       componentdefinition = find_componentdefinition('FB')
       10.times do |i|
         19.times do |j|
-          transformation = Geom::Transformation.new([i * w, j * l, height])
+          transformation = Geom::Transformation.new([i * w, j * l, @height])
           componentinstance = entities.add_instance(componentdefinition, transformation)
           componentinstance.material = componentdefinition.material
         end
