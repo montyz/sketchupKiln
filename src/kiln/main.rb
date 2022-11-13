@@ -2,33 +2,66 @@ require 'sketchup'
 
 # how to get bounding box l,w,h
 # how to rotate component (Geom.Transformation.something...)
+# how to tweak rubocop to not complain about 15 line methods
+# create a layer and assign a course to it Layout::Layer ? or Layout::Label
+# course a
+# course b
+# header course
+# bagwall & primary air
+# arches
+# build the cast headers
+# √ iterate over all instances and sum by type
+
 # Monty::KilnTool.reload_files
 module Monty
   module KilnTool
+    @index = 0
     def self.create_kiln
       height = 0
       model = Sketchup.active_model
       model.start_operation('Create Kiln', true)
-      height += create_slab height
-      height += create_concrete_block_base height
+      height += create_slab(height)
+      height += create_concrete_block_base(height)
       height += create_ifb_floor height
       height += create_fb_floor height
       model.commit_operation
+      hash = Hash.[]
+      Sketchup.active_model.entities.each do |instance|
+        hash[instance.definition.name] = if hash.key?(instance.definition.name)
+                                           hash[instance.definition.name] + 1
+                                         else
+                                           1
+                                         end
+      end
+      hash.each do |key, value|
+        puts "#{key}:#{value}"
+      end
+    end
+
+    def self.add_kiln_layer()
+      layer_name = "Kiln#{@index}"
+      @index += 1
+      model = Sketchup.active_model
+      model.layers.add(layer_name) unless model.layers[layer_name]
+      model.layers[layer_name]
     end
 
     def self.create_slab(height)
+      layer = add_kiln_layer
       model = Sketchup.active_model
       entities = model.entities
       componentdefinition = find_componentdefinition('Slab')
       transformation = Geom::Transformation.new([-1.5, 0, height])
       componentinstance = entities.add_instance(componentdefinition, transformation)
       componentinstance.material = componentdefinition.material
+      componentinstance.layer = layer
       3.5
     end
 
     def self.create_concrete_block_base(height)
       l = 16.0
       w = 8.0
+      layer = add_kiln_layer
       model = Sketchup.active_model
       entities = model.entities
       componentdefinition = find_componentdefinition('Cinder Block')
@@ -37,6 +70,7 @@ module Monty
           transformation = Geom::Transformation.new([i * (w + 5.0 / 4.0), j * (l + 11.0 / 9.0), height])
           componentinstance = entities.add_instance(componentdefinition, transformation)
           componentinstance.material = componentdefinition.material
+          componentinstance.layer = layer
         end
       end
       8
@@ -45,8 +79,7 @@ module Monty
     def self.create_ifb_floor(height)
       l = 9.0
       w = 4.5
-      model = Sketchup.active_model
-      entities = model.entities
+      entities = Sketchup.active_model.entities
       componentdefinition = find_componentdefinition('IFB')
       10.times do |i|
         19.times do |j|
