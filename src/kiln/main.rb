@@ -20,10 +20,10 @@ module Monty
     def self.create_kiln
       model = Sketchup.active_model
       model.start_operation('Create Kiln', true)
-      @height += create_slab
-      @height += create_concrete_block_base
-      @height += create_ifb_floor
-      @height += create_fb_floor
+      create_slab
+      create_concrete_block_base
+      create_ifb_floor
+      create_fb_floor
       model.commit_operation
       hash = Hash.[]
       Sketchup.active_model.entities.each do |instance|
@@ -55,7 +55,7 @@ module Monty
       componentinstance = entities.add_instance(componentdefinition, transformation)
       componentinstance.material = componentdefinition.material
       componentinstance.layer = layer
-      3.5
+      @height += componentdefinition.bounds.depth
     end
 
     def self.create_concrete_block_base
@@ -73,7 +73,7 @@ module Monty
           componentinstance.layer = layer
         end
       end
-      8
+      @height += componentdefinition.bounds.depth
     end
 
     def self.create_ifb_floor
@@ -88,7 +88,7 @@ module Monty
           componentinstance.material = componentdefinition.material
         end
       end
-      2.5
+      @height += componentdefinition.bounds.depth
     end
 
     def self.create_fb_floor
@@ -104,7 +104,7 @@ module Monty
           componentinstance.material = componentdefinition.material
         end
       end
-      2.5
+      @height += componentdefinition.bounds.depth
     end
 
     def self.create_brick(l, w, h, name, material)
