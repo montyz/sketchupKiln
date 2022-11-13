@@ -110,7 +110,8 @@ module Monty
     def self.create_brick(l, w, h, name, material)
       model = Sketchup.active_model
       definitions = model.definitions
-      compdefinition = definitions.add name
+      definitions.add name unless definitions[name]
+      compdefinition = definitions[name]
       compdefinition.material = material
       group = compdefinition.entities.add_group
       face = group.entities.add_face [0, 0, 0], [w, 0, 0], [w, l, 0], [0, l, 0]
