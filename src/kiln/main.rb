@@ -20,6 +20,7 @@ module Monty
   module KilnTool
     @index = 0
     @height = -3.5
+    @unit = 4.5
     def self.create_kiln
       model = Sketchup.active_model
       model.start_operation('Create Kiln', true)
@@ -27,6 +28,7 @@ module Monty
       create_concrete_block_base
       create_ifb_floor
       create_fb_floor
+      create_brick_row4
       model.commit_operation
       hash = {}
       Sketchup.active_model.entities.each do |instance|
@@ -35,6 +37,110 @@ module Monty
       hash.each do |key, value|
         puts "#{key}: #{value}"
       end
+    end
+
+    def self.create_brick_row4
+      layer = add_kiln_layer
+      # col 0
+      bx = 0
+      by = 0
+      19.times do |i|
+        lay_brick('IFB', bx, (i * 2) + by, layer)
+      end
+      # col 1
+      bx += 1
+      lay_brick('IFB', bx, by, layer)
+      by += 2
+      lay_brick('FB/2', bx, by, layer)
+      by += 1
+      17.times do |i|
+        lay_brick('FB', bx, (i * 2) + by, layer)
+      end
+      by += 17 * 2
+      # col 2
+      bx += 1
+      by = 0
+      3.times do |i|
+        lay_brick('FB', bx, (i * 2) + by, layer)
+      end
+      lay_bagwall_a(layer)
+      # col 3
+      bx += 1
+      # col 4
+      bx += 1
+      lay_brick('FB', bx, by, layer)
+      lay_brick_rotated('FB', bx, by + 2, layer)
+      lay_brick_rotated('FB', bx, by + 3, layer)
+      lay_brick('FB', bx, by + 4, layer)
+      # col 5
+      bx += 1
+      lay_brick('FB', bx, by, layer)
+      lay_brick('FB', bx, by + 4, layer)
+      # col 6
+      bx += 1
+      # col 7
+      bx += 1
+      3.times do |i|
+        lay_brick('FB', bx, (i * 2) + by, layer)
+      end
+      # col 8
+      bx += 1
+      lay_brick('IFB', bx, by, layer)
+      lay_brick('FB/2', bx, by + 2, layer)
+      lay_brick('FB', bx, by + 3, layer)
+      lay_brick('FB/2', bx, by + 5, layer)
+      by = 8
+      14.times do |i|
+        lay_brick('FB', bx, (i * 2) + by, layer)
+      end
+      # col 9
+      bx += 1
+      by = 0
+      lay_brick('IFB', bx, by, layer)
+      lay_brick('IFB', bx, by + 2, layer)
+      lay_brick('FB', bx, by + 4, layer)
+      by = 8
+      lay_brick('FB', bx, by, layer)
+      lay_brick('IFB/2', bx, by + 2, layer)
+      lay_brick('IFB', bx, by + 3, layer)
+      lay_brick('IFB', bx, by + 5, layer)
+      lay_brick('FB', bx, by + 7, layer)
+      lay_brick('IFB', bx, by + 9, layer)
+      lay_brick('IFB', bx, by + 11, layer)
+      lay_brick('FB', bx, by + 13, layer)
+      by += 15
+      7.times do |i|
+        lay_brick('IFB', bx, (i * 2) + by, layer)
+      end
+      @height += 2.5
+    end
+
+    def self.lay_bagwall_a(layer)
+      (2..7).each do |bx|
+        lay_brick('FB/2', bx, 29, layer)
+        lay_brick('FB', bx, 30, layer)
+      end
+    end
+
+    def self.lay_brick(brick_type, bx, by, layer)
+      componentdefinition = find_componentdefinition(brick_type)
+      transformation = Geom::Transformation.new([bx * @unit, by * @unit, @height])
+      componentinstance = Sketchup.active_model.entities.add_instance(componentdefinition, transformation)
+      componentinstance.material = componentdefinition.material
+      componentinstance.layer = layer
+    end
+
+    def self.lay_brick_rotated(brick_type, bx, by, layer)
+      componentdefinition = find_componentdefinition(brick_type)
+      w = componentdefinition.bounds.height
+      target_point = Geom::Point3d.new(0, 0, 0)
+      vector = Geom::Vector3d.new(0, 0, 1)
+      degrees_to_rotate = 90.degrees
+      t = Geom::Transformation.rotation(target_point, vector, degrees_to_rotate)
+      transformation = Geom::Transformation.new([(bx * @unit) + w, by * @unit, @height]) * t
+      componentinstance = Sketchup.active_model.entities.add_instance(componentdefinition, transformation)
+      componentinstance.material = componentdefinition.material
+      componentinstance.layer = layer
     end
 
     def self.add_kiln_layer
