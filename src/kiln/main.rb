@@ -21,13 +21,14 @@ module Monty
     @index = 0
     @height = -3.5
     @unit = 4.5
+    @layer = nil
     def self.create_kiln
       model = Sketchup.active_model
       model.start_operation('Create Kiln', true)
       create_slab
       create_concrete_block_base
       create_ifb_floor
-      create_fb_floor
+      create_fb_tile_floor
       create_brick_row4
       model.commit_operation
       hash = {}
@@ -40,97 +41,97 @@ module Monty
     end
 
     def self.create_brick_row4
-      layer = add_kiln_layer
+      add_kiln_layer
       # col 0
       bx = 0
       by = 0
       19.times do |i|
-        lay_brick('IFB', bx, (i * 2) + by, layer)
+        lay_brick('IFB', bx, (i * 2) + by)
       end
       # col 1
       bx += 1
-      lay_brick('IFB', bx, by, layer)
+      lay_brick('IFB', bx, by)
       by += 2
-      lay_brick('FB/2', bx, by, layer)
+      lay_brick('FB/2', bx, by)
       by += 1
       17.times do |i|
-        lay_brick('FB', bx, (i * 2) + by, layer)
+        lay_brick('FB', bx, (i * 2) + by)
       end
       by += 17 * 2
       # col 2
       bx += 1
       by = 0
       3.times do |i|
-        lay_brick('FB', bx, (i * 2) + by, layer)
+        lay_brick('FB', bx, (i * 2) + by)
       end
-      lay_bagwall_a(layer)
+      lay_bagwall_a()
       # col 3
       bx += 1
       # col 4
       bx += 1
-      lay_brick('FB', bx, by, layer)
-      lay_brick_rotated('FB', bx, by + 2, layer)
-      lay_brick_rotated('FB', bx, by + 3, layer)
-      lay_brick('FB', bx, by + 4, layer)
+      lay_brick('FB', bx, by)
+      lay_brick_rotated('FB', bx, by + 2)
+      lay_brick_rotated('FB', bx, by + 3)
+      lay_brick('FB', bx, by + 4)
       # col 5
       bx += 1
-      lay_brick('FB', bx, by, layer)
-      lay_brick('FB', bx, by + 4, layer)
+      lay_brick('FB', bx, by)
+      lay_brick('FB', bx, by + 4)
       # col 6
       bx += 1
       # col 7
       bx += 1
       3.times do |i|
-        lay_brick('FB', bx, (i * 2) + by, layer)
+        lay_brick('FB', bx, (i * 2) + by)
       end
       # col 8
       bx += 1
-      lay_brick('IFB', bx, by, layer)
-      lay_brick('FB/2', bx, by + 2, layer)
-      lay_brick('FB', bx, by + 3, layer)
-      lay_brick('FB/2', bx, by + 5, layer)
+      lay_brick('IFB', bx, by)
+      lay_brick('FB/2', bx, by + 2)
+      lay_brick('FB', bx, by + 3)
+      lay_brick('FB/2', bx, by + 5)
       by = 8
       14.times do |i|
-        lay_brick('FB', bx, (i * 2) + by, layer)
+        lay_brick('FB', bx, (i * 2) + by)
       end
       # col 9
       bx += 1
       by = 0
-      lay_brick('IFB', bx, by, layer)
-      lay_brick('IFB', bx, by + 2, layer)
-      lay_brick('FB', bx, by + 4, layer)
+      lay_brick('IFB', bx, by)
+      lay_brick('IFB', bx, by + 2)
+      lay_brick('FB', bx, by + 4)
       by = 8
-      lay_brick('FB', bx, by, layer)
-      lay_brick('IFB/2', bx, by + 2, layer)
-      lay_brick('IFB', bx, by + 3, layer)
-      lay_brick('IFB', bx, by + 5, layer)
-      lay_brick('FB', bx, by + 7, layer)
-      lay_brick('IFB', bx, by + 9, layer)
-      lay_brick('IFB', bx, by + 11, layer)
-      lay_brick('FB', bx, by + 13, layer)
+      lay_brick('FB', bx, by)
+      lay_brick('IFB/2', bx, by + 2)
+      lay_brick('IFB', bx, by + 3)
+      lay_brick('IFB', bx, by + 5)
+      lay_brick('FB', bx, by + 7)
+      lay_brick('IFB', bx, by + 9)
+      lay_brick('IFB', bx, by + 11)
+      lay_brick('FB', bx, by + 13)
       by += 15
       7.times do |i|
-        lay_brick('IFB', bx, (i * 2) + by, layer)
+        lay_brick('IFB', bx, (i * 2) + by)
       end
       @height += 2.5
     end
 
-    def self.lay_bagwall_a(layer)
+    def self.lay_bagwall_a()
       (2..7).each do |bx|
-        lay_brick('FB/2', bx, 29, layer)
-        lay_brick('FB', bx, 30, layer)
+        lay_brick('FB/2', bx, 29)
+        lay_brick('FB', bx, 30)
       end
     end
 
-    def self.lay_brick(brick_type, bx, by, layer)
+    def self.lay_brick(brick_type, bx, by)
       componentdefinition = find_componentdefinition(brick_type)
       transformation = Geom::Transformation.new([bx * @unit, by * @unit, @height])
       componentinstance = Sketchup.active_model.entities.add_instance(componentdefinition, transformation)
       componentinstance.material = componentdefinition.material
-      componentinstance.layer = layer
+      componentinstance.layer = @layer
     end
 
-    def self.lay_brick_rotated(brick_type, bx, by, layer)
+    def self.lay_brick_rotated(brick_type, bx, by)
       componentdefinition = find_componentdefinition(brick_type)
       w = componentdefinition.bounds.height
       target_point = Geom::Point3d.new(0, 0, 0)
@@ -140,7 +141,7 @@ module Monty
       transformation = Geom::Transformation.new([(bx * @unit) + w, by * @unit, @height]) * t
       componentinstance = Sketchup.active_model.entities.add_instance(componentdefinition, transformation)
       componentinstance.material = componentdefinition.material
-      componentinstance.layer = layer
+      componentinstance.layer = @layer
     end
 
     def self.add_kiln_layer
@@ -148,22 +149,22 @@ module Monty
       @index += 1
       model = Sketchup.active_model
       model.layers.add(layer_name) unless model.layers[layer_name]
-      model.layers[layer_name]
+      @layer = model.layers[layer_name]
     end
 
     def self.create_slab
-      layer = add_kiln_layer
+      add_kiln_layer
       entities = Sketchup.active_model.entities
       componentdefinition = find_componentdefinition('Slab')
       transformation = Geom::Transformation.new([0, 0, @height])
       componentinstance = entities.add_instance(componentdefinition, transformation)
       componentinstance.material = componentdefinition.material
-      componentinstance.layer = layer
+      componentinstance.layer = @layer
       @height += componentdefinition.bounds.depth
     end
 
     def self.create_concrete_block_base
-      layer = add_kiln_layer
+      add_kiln_layer
       entities = Sketchup.active_model.entities
       componentdefinition = find_componentdefinition('Cinder Block')
       l = componentdefinition.bounds.height
@@ -173,14 +174,14 @@ module Monty
           transformation = Geom::Transformation.new([i * (w + (5.0 / 4.0)), j * (l + (11.0 / 9.0)), @height])
           componentinstance = entities.add_instance(componentdefinition, transformation)
           componentinstance.material = componentdefinition.material
-          componentinstance.layer = layer
+          componentinstance.layer = @layer
         end
       end
       @height += componentdefinition.bounds.depth
     end
 
     def self.create_ifb_floor
-      layer = add_kiln_layer
+      add_kiln_layer
       entities = Sketchup.active_model.entities
       componentdefinition = find_componentdefinition('IFB')
       # have to swap l & w because of the rotation applied
@@ -195,24 +196,24 @@ module Monty
           transformation = Geom::Transformation.new([(i * w) + w, j * l, @height]) * t
           componentinstance = entities.add_instance(componentdefinition, transformation)
           componentinstance.material = componentdefinition.material
-          componentinstance.layer = layer
+          componentinstance.layer = @layer
         end
       end
       @height += componentdefinition.bounds.depth
     end
 
-    def self.create_fb_floor
-      layer = add_kiln_layer
+    def self.create_fb_tile_floor
+      add_kiln_layer
       entities = Sketchup.active_model.entities
-      componentdefinition = find_componentdefinition('FB')
+      componentdefinition = find_componentdefinition('Floor Tile')
       l = componentdefinition.bounds.height
       w = componentdefinition.bounds.width
-      10.times do |i|
+      5.times do |i|
         19.times do |j|
           transformation = Geom::Transformation.new([i * w, j * l, @height])
           componentinstance = entities.add_instance(componentdefinition, transformation)
           componentinstance.material = componentdefinition.material
-          componentinstance.layer = layer
+          componentinstance.layer = @layer
         end
       end
       @height += componentdefinition.bounds.depth
@@ -234,6 +235,7 @@ module Monty
       w = 4.5
       h = 2.5
       create_brick(l, w, h, 'FB', 'Goldenrod')
+      create_brick(l, l, h, 'Floor Tile', 'DarkGoldenrod')
       create_brick(l, w, h, 'IFB', 'Cornsilk')
       create_brick(l / 2, w, h, 'FB/2', 'Goldenrod')
       create_brick(l / 2, w, h, 'IFB/2', 'Cornsilk')
