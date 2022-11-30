@@ -5,6 +5,7 @@ require 'sketchup'
 # √ how to tweak rubocop to not complain about 15 line methods
 # √ create a layer and assign a course to it Layout::Layer ? or Layout::Label
 # √ iterate over all instances and sum by type
+# how to define my own units?
 # how to create ruby DSL?
 # course a
 # course b
@@ -18,7 +19,7 @@ module Monty
   # Kiln builder
   module KilnTool
     @index = 0
-    @height = 0.0
+    @height = -3.5
     def self.create_kiln
       model = Sketchup.active_model
       model.start_operation('Create Kiln', true)
@@ -46,8 +47,7 @@ module Monty
 
     def self.create_slab
       layer = add_kiln_layer
-      model = Sketchup.active_model
-      entities = model.entities
+      entities = Sketchup.active_model.entities
       componentdefinition = find_componentdefinition('Slab')
       transformation = Geom::Transformation.new([0, 0, @height])
       componentinstance = entities.add_instance(componentdefinition, transformation)
@@ -57,12 +57,11 @@ module Monty
     end
 
     def self.create_concrete_block_base
-      l = 16.0
-      w = 8.0
       layer = add_kiln_layer
-      model = Sketchup.active_model
-      entities = model.entities
+      entities = Sketchup.active_model.entities
       componentdefinition = find_componentdefinition('Cinder Block')
+      l = componentdefinition.bounds.height
+      w = componentdefinition.bounds.width
       5.times do |i|
         10.times do |j|
           transformation = Geom::Transformation.new([i * (w + (5.0 / 4.0)), j * (l + (11.0 / 9.0)), @height])
@@ -75,17 +74,18 @@ module Monty
     end
 
     def self.create_ifb_floor
-      l = 4.5
-      w = 9
       layer = add_kiln_layer
       entities = Sketchup.active_model.entities
       componentdefinition = find_componentdefinition('IFB')
+      # have to swap l & w because of the rotation applied
+      l = componentdefinition.bounds.width
+      w = componentdefinition.bounds.height
+      target_point = Geom::Point3d.new(0, 0, 0)
+      vector = Geom::Vector3d.new(0, 0, 1)
+      degrees_to_rotate = 90.degrees
+      t = Geom::Transformation.rotation(target_point, vector, degrees_to_rotate)
       5.times do |i|
         38.times do |j|
-          target_point = Geom::Point3d.new(0, 0, 0)
-          vector = Geom::Vector3d.new(0, 0, 1)
-          degrees_to_rotate = 90.degrees
-          t = Geom::Transformation.rotation(target_point, vector, degrees_to_rotate)
           transformation = Geom::Transformation.new([(i * w) + w, j * l, @height]) * t
           componentinstance = entities.add_instance(componentdefinition, transformation)
           componentinstance.material = componentdefinition.material
@@ -96,12 +96,11 @@ module Monty
     end
 
     def self.create_fb_floor
-      l = 9.0
-      w = 4.5
       layer = add_kiln_layer
-      model = Sketchup.active_model
-      entities = model.entities
+      entities = Sketchup.active_model.entities
       componentdefinition = find_componentdefinition('FB')
+      l = componentdefinition.bounds.height
+      w = componentdefinition.bounds.width
       10.times do |i|
         19.times do |j|
           transformation = Geom::Transformation.new([i * w, j * l, @height])
