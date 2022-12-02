@@ -29,9 +29,9 @@ module Monty
     def self.create_kiln
       model = Sketchup.active_model
       model.start_operation('Create Kiln', true)
-      # create_slab
-      # create_concrete_block_base
-      # create_ifb_floor
+      create_slab
+      create_concrete_block_base
+      create_ifb_floor
       create_fb_tile_floor
       create_brick_row4
       create_brick_row5
