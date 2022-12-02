@@ -123,8 +123,6 @@ module Monty
       (2..7).each do |bx|
         lay_brick('FB/2', bx, 29)
         lay_brick('FB', bx, 30)
-        lay_brick('FB', bx, 36)
-        lay_brick('FB/2', bx, 38)
       end
     end
 
@@ -242,6 +240,7 @@ module Monty
       create_brick(l, w, h, 'FB', 'Goldenrod')
       create_brick(l, l, h, 'Floor Tile', 'DarkGoldenrod')
       create_brick(l, w, h, 'IFB', 'Cornsilk')
+      create_brick(l, 6.75, h, 'LG', 'LightGoldenrodYellow')
       create_brick(l / 2, w, h, 'FB/2', 'Goldenrod')
       create_brick(l / 2, w, h, 'IFB/2', 'Cornsilk')
       create_brick(l / 4, w, h, 'FB/4', 'Goldenrod')
