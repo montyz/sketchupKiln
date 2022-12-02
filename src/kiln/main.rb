@@ -49,7 +49,7 @@ module Monty
       # col 0
       bx = 0
       by = 0
-      20.times do |i|
+      19.times do |i|
         lay_brick('IFB', bx, (i * 2) + by)
       end
       # col 1
@@ -60,6 +60,9 @@ module Monty
       by += 1
       2.times do |i|
         lay_brick_rotated('LG', bx, (i * 1.5) + by)
+      end
+      2.times do |i|
+        lay_brick('FB', bx, (i * 2) + 32)
       end
       # col 2
       bx += 1
@@ -95,6 +98,9 @@ module Monty
         lay_brick('FB', bx, (i * 2) + by)
       end
       lay_brick('FB/2', bx, by + 20)
+      2.times do |i|
+        lay_brick('FB', bx, (i * 2) + 32)
+      end
       # col 9
       bx += 1
       by = 0
@@ -111,7 +117,7 @@ module Monty
       lay_brick('IFB', bx, by + 11)
       lay_brick('FB', bx, by + 13)
       by += 15
-      8.times do |i|
+      7.times do |i|
         lay_brick('IFB', bx, (i * 2) + by)
       end
       @height += 2.5
