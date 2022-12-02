@@ -5,8 +5,11 @@ require 'sketchup'
 # √ how to tweak rubocop to not complain about 15 line methods
 # √ create a layer and assign a course to it Layout::Layer ? or Layout::Label
 # √ iterate over all instances and sum by type
-# how to define my own units?
-# how to create ruby DSL?
+# X how to define my own units?
+# X how to create ruby DSL?
+# use the oversize bricks in header courses
+# use 2" slabs & squares in air intake
+# use 2" slabs & squares over door arches?
 # course a
 # course b
 # header course
