@@ -17,6 +17,7 @@ require 'sketchup'
 # arches
 # build the cast headers
 
+# to reload from Sketchup Ruby Console:
 # Monty::KilnTool.reload_files
 module Monty
   # Kiln builder
@@ -126,6 +127,31 @@ module Monty
     def self.create_brick_row5
       add_kiln_layer
       lay_bagwall_b
+      bx = 0
+      by = 0
+      lay_brick_rotated('IFB', 0, by)
+      lay_brick_rotated('IFB', 8, by)
+      2.times do |i|
+        lay_brick('IFB', 0, (i*2) + 1)
+        lay_brick('IFB', 9, (i*2) + 1)
+      end
+      lay_brick_rotated('FB/4', 2, 0)
+      lay_brick_rotated('FB', 2.5, 0)
+      lay_brick_rotated('FB/2', 4.5, 0)
+      lay_brick_rotated('FB', 5.5, 0)
+      lay_brick_rotated('FB/4', 7.5, 0)
+      lay_brick('LG', 1, 1)
+      lay_brick('LG', 1, 3)
+      lay_brick_rotated('LG', 2.5, 1)
+      lay_brick_rotated('LG', 2.5, 2.5)
+      lay_brick_rotated('LG', 2.5, 4)
+      lay_brick('FB', 4.5, 1)
+      lay_brick('FB', 4.5, 3)
+      lay_brick_rotated('LG', 5.5, 1)
+      lay_brick_rotated('LG', 5.5, 2.5)
+      lay_brick_rotated('LG', 5.5, 4)
+      lay_brick('LG', 7.5, 1)
+      lay_brick('LG', 7.5, 3)
     end
 
     def self.lay_bagwall_a
@@ -140,12 +166,19 @@ module Monty
     end
 
     def self.lay_bagwall_b
+      lay_brick('FB', 1, 28)
+      lay_brick('FB/2', 1, 30)
+      lay_brick('FB', 1, 31)
       lay_brick('FB', 2.5, 29)
       lay_brick('FB/2', 2.5, 31)
       lay_brick('FB', 4.5, 29)
       lay_brick('FB/2', 4.5, 31)
       lay_brick('FB', 6.5, 29)
       lay_brick('FB/2', 6.5, 31)
+      lay_brick('FB', 8, 28)
+      lay_brick('FB/2', 8, 30)
+      lay_brick('FB', 8, 31)
+
     end
 
     def self.lay_brick(brick_type, bx, by)
@@ -195,8 +228,8 @@ module Monty
       l = componentdefinition.bounds.height
       w = componentdefinition.bounds.width
       5.times do |i|
-        11.times do |j|
-          transformation = Geom::Transformation.new([i * (w + (5.0 / 4.0)), j * (l + (4.0 / 10.0)), @height])
+        10.times do |j|
+          transformation = Geom::Transformation.new([i * (w + (5.0 / 4.0)), j * (l + (11.0 / 9.0)), @height])
           componentinstance = entities.add_instance(componentdefinition, transformation)
           componentinstance.material = componentdefinition.material
           componentinstance.layer = @layer
@@ -217,7 +250,7 @@ module Monty
       degrees_to_rotate = 90.degrees
       t = Geom::Transformation.rotation(target_point, vector, degrees_to_rotate)
       5.times do |i|
-        40.times do |j|
+        38.times do |j|
           transformation = Geom::Transformation.new([(i * w) + w, j * l, @height]) * t
           componentinstance = entities.add_instance(componentdefinition, transformation)
           componentinstance.material = componentdefinition.material
@@ -234,7 +267,7 @@ module Monty
       l = componentdefinition.bounds.height
       w = componentdefinition.bounds.width
       5.times do |i|
-        20.times do |j|
+        19.times do |j|
           transformation = Geom::Transformation.new([i * w, j * l, @height])
           componentinstance = entities.add_instance(componentdefinition, transformation)
           componentinstance.material = componentdefinition.material
@@ -268,7 +301,7 @@ module Monty
       create_brick(l / 4, w, h, 'FB/4', 'Goldenrod')
       create_brick(l / 4, w, h, 'IFB/4', 'Cornsilk')
       create_brick(16.0, 8.0, 8.0, 'Cinder Block', 'SlateGray')
-      create_brick(180.0, 45.0, 3.5, 'Slab', 'LightSlateGray')
+      create_brick(171.0, 45.0, 3.5, 'Slab', 'LightSlateGray')
     end
 
     def self.find_componentdefinition(name)
