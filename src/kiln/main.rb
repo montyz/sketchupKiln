@@ -67,7 +67,7 @@ module Monty
       3.times do |i|
         lay_brick('FB', bx, (i * 2) + by)
       end
-      lay_bagwall_a()
+      lay_bagwall_a
       # col 3
       bx += 1
       # col 4
@@ -119,11 +119,13 @@ module Monty
       @height += 2.5
     end
 
-    def self.lay_bagwall_a()
-      (2..7).each do |bx|
-        lay_brick('FB/2', bx, 29)
-        lay_brick('FB', bx, 30)
-      end
+    def self.lay_bagwall_a
+      lay_brick_rotated('LG', 2, 29)
+      lay_brick_rotated('LG', 4, 29)
+      lay_brick_rotated('LG', 6, 29)
+      lay_brick_rotated('LG', 2, 30.5)
+      lay_brick_rotated('LG', 4, 30.5)
+      lay_brick_rotated('LG', 6, 30.5)
     end
 
     def self.lay_brick(brick_type, bx, by)
@@ -240,7 +242,7 @@ module Monty
       create_brick(l, w, h, 'FB', 'Goldenrod')
       create_brick(l, l, h, 'Floor Tile', 'DarkGoldenrod')
       create_brick(l, w, h, 'IFB', 'Cornsilk')
-      create_brick(l, 6.75, h, 'LG', 'LightGoldenrodYellow')
+      create_brick(l, 6.75, h, 'LG', 'Khaki')
       create_brick(l / 2, w, h, 'FB/2', 'Goldenrod')
       create_brick(l / 2, w, h, 'IFB/2', 'Cornsilk')
       create_brick(l / 4, w, h, 'FB/4', 'Goldenrod')
