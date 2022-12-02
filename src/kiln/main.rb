@@ -33,6 +33,7 @@ module Monty
       create_ifb_floor
       create_fb_tile_floor
       create_brick_row4
+      create_brick_row5
       model.commit_operation
       hash = {}
       Sketchup.active_model.entities.each do |instance|
@@ -55,48 +56,45 @@ module Monty
       bx += 1
       lay_brick('IFB', bx, by)
       by += 2
-      lay_brick('FB/2', bx, by)
+      lay_brick_rotated('FB', bx, by)
       by += 1
-      18.times do |i|
-        lay_brick('FB', bx, (i * 2) + by)
+      2.times do |i|
+        lay_brick_rotated('LG', bx, (i * 1.5) + by)
       end
-      by += 17 * 2
       # col 2
       bx += 1
       by = 0
-      3.times do |i|
-        lay_brick('FB', bx, (i * 2) + by)
-      end
+      lay_brick('FB', bx, by)
       lay_bagwall_a
       # col 3
       bx += 1
       # col 4
       bx += 1
-      lay_brick('FB', bx, by)
-      lay_brick_rotated('FB', bx, by + 2)
-      lay_brick_rotated('FB', bx, by + 3)
-      lay_brick('FB', bx, by + 4)
+      4.times do |i|
+        lay_brick_rotated('LG', bx, by + (i*1.5))
+      end
       # col 5
       bx += 1
-      lay_brick('FB', bx, by)
-      lay_brick('FB', bx, by + 4)
       # col 6
       bx += 1
       # col 7
       bx += 1
-      3.times do |i|
-        lay_brick('FB', bx, (i * 2) + by)
+      lay_brick('FB', bx, by)
+      by += 2
+      lay_brick_rotated('FB', bx, by)
+      by += 1
+      2.times do |i|
+        lay_brick_rotated('LG', bx, (i * 1.5) + by)
       end
       # col 8
       bx += 1
+      by = 0
       lay_brick('IFB', bx, by)
-      lay_brick('FB/2', bx, by + 2)
-      lay_brick('FB', bx, by + 3)
-      lay_brick('FB/2', bx, by + 5)
       by = 8
-      16.times do |i|
+      10.times do |i|
         lay_brick('FB', bx, (i * 2) + by)
       end
+      lay_brick('FB/2', bx, by + 20)
       # col 9
       bx += 1
       by = 0
@@ -119,13 +117,29 @@ module Monty
       @height += 2.5
     end
 
+    def self.create_brick_row5
+      add_kiln_layer
+      lay_bagwall_b
+    end
+
     def self.lay_bagwall_a
-      lay_brick_rotated('LG', 2, 29)
-      lay_brick_rotated('LG', 4, 29)
-      lay_brick_rotated('LG', 6, 29)
-      lay_brick_rotated('LG', 2, 30.5)
-      lay_brick_rotated('LG', 4, 30.5)
-      lay_brick_rotated('LG', 6, 30.5)
+      lay_brick_rotated('LG', 1, 29)
+      lay_brick_rotated('LG', 3, 29)
+      lay_brick_rotated('LG', 5, 29)
+      lay_brick_rotated('LG', 7, 29)
+      lay_brick_rotated('LG', 1, 30.5)
+      lay_brick_rotated('LG', 3, 30.5)
+      lay_brick_rotated('LG', 5, 30.5)
+      lay_brick_rotated('LG', 7, 30.5)
+    end
+
+    def self.lay_bagwall_b
+      lay_brick('FB', 2.5, 29)
+      lay_brick('FB/2', 2.5, 31)
+      lay_brick('FB', 4.5, 29)
+      lay_brick('FB/2', 4.5, 31)
+      lay_brick('FB', 6.5, 29)
+      lay_brick('FB/2', 6.5, 31)
     end
 
     def self.lay_brick(brick_type, bx, by)
