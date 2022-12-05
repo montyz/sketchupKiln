@@ -22,8 +22,9 @@ require 'sketchup'
 module Monty
   # Kiln builder
   module KilnTool
-    @index = 0
+    @index = -1
     @serial = 0
+    @sub = ''
     @height = -3.5
     @unit = 4.5
     @layer = nil
@@ -38,6 +39,8 @@ module Monty
       create_brick_row5
       create_brick_row6
       create_brick_row7
+      create_brick_row8
+      create_brick_row9
       model.commit_operation
       hash = {}
       Sketchup.active_model.entities.each do |instance|
@@ -48,32 +51,126 @@ module Monty
       end
     end
 
-    def self.create_brick_row7
+    def self.create_brick_row9
       add_kiln_layer
       lay_bagwall_b
+
+      # col 0
       bx = 0
       by = 0
+      lay_brick_rotated('IFB', bx, by)
+      2.times do |i|
+        lay_brick('IFB', bx, (i * 2) + 1)
+      end
+      # col 1
+      bx += 1
+      lay_brick('IFB/2', bx, 1)
+      by += 2
+      lay_brick_rotated('FB', bx, by)
+      by += 1
+      lay_brick('FB', bx, by)
+      # col 2
+      bx += 1
+      by = 0
+      lay_brick('FB', bx, by)
+      # col 4
+      bx = 4
+      2.times do |i|
+        lay_brick_rotated('LG', bx, by + (i * 1.5))
+      end
+      # col 7
+      bx = 7
+      lay_brick('FB', bx, by)
+      by += 2
+      lay_brick_rotated('FB', bx, by)
+      # col 8
+      bx = 8
+      lay_brick_rotated('IFB', bx, 0)
+      lay_brick('IFB/2', bx, 1)
+      lay_brick('FB', bx, 3)
+      # col 9
+      bx = 9
+      2.times do |i|
+        lay_brick('IFB', bx, (i * 2) + 1)
+      end
+
+      @height += 2.5
+    end
+
+    def self.create_brick_row8
+      add_kiln_layer
+      lay_bagwall_a
       3.times do |i|
         lay_brick('IFB', 0, (i * 2))
       end
-      3.times do |i|
+      2.times do |i|
         lay_brick('LG', 1, i * 2)
       end
-      4.times do |i|
+      lay_brick('FB', 1, 4)
+      3.times do |i|
         lay_brick_rotated('LG', 2.5, i * 1.5)
         lay_brick_rotated('LG', 5.5, i * 1.5)
       end
 
-      3.times do |i|
+      2.times do |i|
         lay_brick('FB', 4.5, i * 2)
       end
 
       lay_brick('LG', 7.5, 0)
       lay_brick('LG', 7.5, 2)
-      lay_brick('FB', 7.5, 4)
-      lay_brick('LG', 8.5, 4)
+      # col 8
+      lay_brick_rotated('LG', 8, 4)
+      # col 9
       2.times do |i|
         lay_brick('IFB', 9, (i * 2))
+      end
+      lay_brick('LFB', 9, 5.5)
+      @height += 2.5
+    end
+
+    def self.create_brick_row7
+      add_kiln_layer
+      lay_bagwall_b
+
+      # col 0
+      bx = 0
+      by = 0
+      lay_brick_rotated('IFB', bx, by)
+      2.times do |i|
+        lay_brick('IFB', bx, (i * 2) + 1)
+      end
+      # col 1
+      bx += 1
+      lay_brick('IFB/2', bx, 1)
+      by += 2
+      2.times do |i|
+        lay_brick_rotated('LG', bx, (i * 1.5) + by)
+      end
+      # col 2
+      bx += 1
+      by = 0
+      lay_brick('FB', bx, by)
+      # col 4
+      bx = 4
+      3.times do |i|
+        lay_brick_rotated('LG', bx, by + (i * 1.5))
+      end
+      # col 7
+      bx = 7
+      lay_brick('FB', bx, by)
+      by += 2
+      2.times do |i|
+        lay_brick_rotated('LG', bx, (i * 1.5) + by)
+      end
+      # col 8
+      bx = 8
+      lay_brick_rotated('IFB', bx, 0)
+      lay_brick('IFB/2', bx, 1)
+      lay_brick_rotated('FB', bx, 5)
+      # col 9
+      bx = 9
+      2.times do |i|
+        lay_brick('IFB', bx, (i * 2) + 1)
       end
 
       @height += 2.5
@@ -161,10 +258,10 @@ module Monty
       2.times do |i|
         lay_brick('IFB', 9, 1 + (i * 2))
       end
-      lay_brick('FB/2', 2, 0)
-      lay_brick('FB/2', 7, 0)
-      lay_brick_rotated('FB', 1, 1)
-      lay_brick_rotated('FB', 7, 1)
+      lay_brick('FB', 2, 0)
+      lay_brick('FB', 7, 0)
+      lay_brick('FB/2', 1, 1)
+      lay_brick('FB/2', 8, 1)
       2.times do |i|
         lay_brick_rotated('LG', 1, 2 + (i * 1.5))
         lay_brick_rotated('LG', 7, 2 + (i * 1.5))
@@ -211,6 +308,7 @@ module Monty
     end
 
     def self.lay_bagwall_b
+      @sub = 'lay_bagwall_b'
       lay_brick_rotated('LG', 1, 29)
       lay_brick_rotated('LG', 3, 29)
       lay_brick_rotated('LG', 5, 29)
@@ -223,9 +321,11 @@ module Monty
         lay_brick('FB', 1, (i * 2) + 32)
         lay_brick('FB', 8, (i * 2) + 32)
       end
+      @sub = ''
     end
 
     def self.lay_bagwall_a
+      @sub = 'lay_bagwall_a'
       lay_brick('FB', 1, 28)
       lay_brick('FB/2', 1, 30)
       3.times do |i|
@@ -242,6 +342,7 @@ module Monty
       3.times do |i|
         lay_brick('FB', 8, (i * 2) + 31)
       end
+      @sub = ''
     end
 
     def self.lay_brick(brick_type, bx, by)
@@ -268,13 +369,13 @@ module Monty
     end
 
     def self.assign_instance_name(componentinstance)
-      componentinstance.name = "Kiln#{@index} #{@serial}"
+      componentinstance.name = "Kiln#{@index} #{@sub} #{@serial}"
       @serial += 1
     end
 
     def self.add_kiln_layer
-      layer_name = "Kiln#{@index}"
       @index += 1
+      layer_name = "Kiln#{@index}"
       @serial = 0
       model = Sketchup.active_model
       model.layers.add(layer_name) unless model.layers[layer_name]
@@ -370,6 +471,7 @@ module Monty
       create_brick(l, w, h, 'FB', 'Goldenrod')
       create_brick(l, l, h, 'Floor Tile', 'DarkGoldenrod')
       create_brick(l, w, h, 'IFB', 'Cornsilk')
+      create_brick(13.5, w, h, 'LFB', 'BurlyWood')
       create_brick(l, 6.75, h, 'LG', 'Khaki')
       create_brick(l / 2, w, h, 'FB/2', 'Goldenrod')
       create_brick(l / 2, w, h, 'IFB/2', 'Cornsilk')
