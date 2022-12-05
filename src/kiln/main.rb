@@ -54,15 +54,17 @@ module Monty
     end
 
     def self.create_brick_row10
+      # header course
       add_kiln_layer
-      lay_bagwall_a
+      lay_bagwall_a_header_course
       3.times do |i|
         lay_brick('IFB', 0, (i * 2))
       end
       2.times do |i|
         lay_brick('LG', 1, i * 2)
       end
-      lay_brick('FB', 1, 4)
+      lay_brick('FB/2', 1, 4)
+      lay_brick('FB', 1, 5)
       2.times do |i|
         lay_brick_rotated('LG', 2.5, i * 1.5)
         lay_brick_rotated('LG', 5.5, i * 1.5)
@@ -75,7 +77,8 @@ module Monty
       lay_brick('LG', 7.5, 0)
       lay_brick('LG', 7.5, 2)
       # col 8
-      lay_brick('FB', 8, 4)
+      lay_brick('FB/2', 8, 4)
+      lay_brick('FB', 8, 5)
 
       # col 9
       3.times do |i|
@@ -97,6 +100,8 @@ module Monty
       # col 1
       bx += 1
       by = 1
+      lay_brick('FB/2', bx, by)
+      by += 1
       lay_brick('FB', bx, by)
       by += 2
       lay_brick('FB', bx, by)
@@ -140,7 +145,8 @@ module Monty
       2.times do |i|
         lay_brick('LG', 1, i * 2)
       end
-      lay_brick('FB', 1, 4)
+      lay_brick('FB/2', 1, 4)
+      lay_brick('FB', 1, 5)
       3.times do |i|
         lay_brick_rotated('LG', 2.5, i * 1.5)
         lay_brick_rotated('LG', 5.5, i * 1.5)
@@ -158,6 +164,7 @@ module Monty
       2.times do |i|
         lay_brick('IFB', 9, (i * 2))
       end
+      lay_brick('LFB', 8, 5.5)
       lay_brick('LFB', 9, 5.5)
       @height += 2.5
     end
@@ -180,6 +187,7 @@ module Monty
       2.times do |i|
         lay_brick_rotated('LG', bx, (i * 1.5) + by)
       end
+      lay_brick('FB/2', 1, 5)
       # col 2
       bx += 1
       by = 0
@@ -379,6 +387,22 @@ module Monty
       @sub = ''
     end
 
+    def self.lay_bagwall_a_header_course
+      @sub = 'lay_bagwall_a_header'
+      5.times do |i|
+        lay_brick_rotated('LG', 0, 28 + (i*1.5))
+        lay_brick_rotated('LG', 8, 28 + (i*1.5))
+      end
+
+      lay_brick('FB', 2.5, 29)
+      lay_brick('FB/2', 2.5, 31)
+      lay_brick('FB', 4.5, 29)
+      lay_brick('FB/2', 4.5, 31)
+      lay_brick('FB', 6.5, 29)
+      lay_brick('FB/2', 6.5, 31)
+      @sub = ''
+    end
+
     def self.lay_brick(brick_type, bx, by)
       componentdefinition = find_componentdefinition(brick_type)
       transformation = Geom::Transformation.new([bx * @unit, by * @unit, @height])
@@ -413,8 +437,8 @@ module Monty
       @layer_name = "Kiln#{formatted}"
       @serial = 0
       model = Sketchup.active_model
-      model.layers.add(layer_name) unless model.layers[layer_name]
-      @layer = model.layers[layer_name]
+      model.layers.add(@layer_name) unless model.layers[@layer_name]
+      @layer = model.layers[@layer_name]
     end
 
     def self.create_slab
