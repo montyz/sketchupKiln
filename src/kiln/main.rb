@@ -23,6 +23,7 @@ module Monty
   # Kiln builder
   module KilnTool
     @index = 0
+    @serial = 0
     @height = -3.5
     @unit = 4.5
     @layer = nil
@@ -36,6 +37,7 @@ module Monty
       create_brick_row4
       create_brick_row5
       create_brick_row6
+      create_brick_row7
       model.commit_operation
       hash = {}
       Sketchup.active_model.entities.each do |instance|
@@ -44,6 +46,37 @@ module Monty
       hash.each do |key, value|
         puts "#{key}: #{value}"
       end
+    end
+
+    def self.create_brick_row7
+      add_kiln_layer
+      lay_bagwall_b
+      bx = 0
+      by = 0
+      3.times do |i|
+        lay_brick('IFB', 0, (i * 2))
+      end
+      3.times do |i|
+        lay_brick('LG', 1, i * 2)
+      end
+      4.times do |i|
+        lay_brick_rotated('LG', 2.5, i * 1.5)
+        lay_brick_rotated('LG', 5.5, i * 1.5)
+      end
+
+      3.times do |i|
+        lay_brick('FB', 4.5, i * 2)
+      end
+
+      lay_brick('LG', 7.5, 0)
+      lay_brick('LG', 7.5, 2)
+      lay_brick('FB', 7.5, 4)
+      lay_brick('LG', 8.5, 4)
+      2.times do |i|
+        lay_brick('IFB', 9, (i * 2))
+      end
+
+      @height += 2.5
     end
 
     def self.create_brick_row4
@@ -217,6 +250,7 @@ module Monty
       componentinstance = Sketchup.active_model.entities.add_instance(componentdefinition, transformation)
       componentinstance.material = componentdefinition.material
       componentinstance.layer = @layer
+      assign_instance_name componentinstance
     end
 
     def self.lay_brick_rotated(brick_type, bx, by)
@@ -230,11 +264,18 @@ module Monty
       componentinstance = Sketchup.active_model.entities.add_instance(componentdefinition, transformation)
       componentinstance.material = componentdefinition.material
       componentinstance.layer = @layer
+      assign_instance_name componentinstance
+    end
+
+    def self.assign_instance_name(componentinstance)
+      componentinstance.name = "Kiln#{@index} #{@serial}"
+      @serial += 1
     end
 
     def self.add_kiln_layer
       layer_name = "Kiln#{@index}"
       @index += 1
+      @serial = 0
       model = Sketchup.active_model
       model.layers.add(layer_name) unless model.layers[layer_name]
       @layer = model.layers[layer_name]
@@ -248,6 +289,7 @@ module Monty
       componentinstance = entities.add_instance(componentdefinition, transformation)
       componentinstance.material = componentdefinition.material
       componentinstance.layer = @layer
+      assign_instance_name componentinstance
       @height += componentdefinition.bounds.depth
     end
 
@@ -263,6 +305,7 @@ module Monty
           componentinstance = entities.add_instance(componentdefinition, transformation)
           componentinstance.material = componentdefinition.material
           componentinstance.layer = @layer
+          assign_instance_name componentinstance
         end
       end
       @height += componentdefinition.bounds.depth
@@ -285,6 +328,7 @@ module Monty
           componentinstance = entities.add_instance(componentdefinition, transformation)
           componentinstance.material = componentdefinition.material
           componentinstance.layer = @layer
+          assign_instance_name componentinstance
         end
       end
       @height += componentdefinition.bounds.depth
@@ -302,6 +346,7 @@ module Monty
           componentinstance = entities.add_instance(componentdefinition, transformation)
           componentinstance.material = componentdefinition.material
           componentinstance.layer = @layer
+          assign_instance_name componentinstance
         end
       end
       @height += componentdefinition.bounds.depth

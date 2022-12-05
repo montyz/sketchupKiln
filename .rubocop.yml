@@ -6,3 +6,5 @@ Metrics/ModuleLength:
   Enabled: false
 AllCops: 
   NewCops: enable
+Naming/MethodParameterName:
+  MinNameLength: 1
