@@ -28,6 +28,7 @@ module Monty
     @height = -3.5
     @unit = 4.5
     @layer = nil
+    @layer_name = ""
     def self.create_kiln
       model = Sketchup.active_model
       model.start_operation('Create Kiln', true)
@@ -402,13 +403,14 @@ module Monty
     end
 
     def self.assign_instance_name(componentinstance)
-      componentinstance.name = "Kiln#{@index} #{@sub} #{@serial}"
+      componentinstance.name = "#{@layer_name} #{@sub} #{@serial}"
       @serial += 1
     end
 
     def self.add_kiln_layer
       @index += 1
-      layer_name = "Kiln#{@index}"
+      formatted = format('%02d', @index)
+      @layer_name = "Kiln#{formatted}"
       @serial = 0
       model = Sketchup.active_model
       model.layers.add(layer_name) unless model.layers[layer_name]
