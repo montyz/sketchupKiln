@@ -57,6 +57,10 @@ module Monty
       # header course
       add_kiln_layer
       lay_bagwall_a_header_course
+      # door frame
+      lay_brick_rotated('FB', 0, 16)
+      lay_brick_rotated('FB', 0, 23)
+
       3.times do |i|
         lay_brick('IFB', 0, (i * 2))
       end
@@ -90,6 +94,9 @@ module Monty
     def self.create_brick_row9
       add_kiln_layer
       lay_bagwall_b
+      # door frame
+      lay_brick_rotated('FB', 0, 16)
+      lay_brick_rotated('FB', 0, 23)
       # col 0
       bx = 0
       by = 0
@@ -139,6 +146,10 @@ module Monty
     def self.create_brick_row8
       add_kiln_layer
       lay_bagwall_a
+      # door frame
+      lay_brick_rotated('FB', 0, 16)
+      lay_brick_rotated('FB', 0, 23)
+
       3.times do |i|
         lay_brick('IFB', 0, (i * 2))
       end
@@ -176,6 +187,10 @@ module Monty
       # col 0
       bx = 0
       by = 0
+      # door frame
+      lay_brick_rotated('FB', 0, 16)
+      lay_brick_rotated('FB', 0, 23)
+
       lay_brick_rotated('IFB', bx, by)
       2.times do |i|
         lay_brick('IFB', bx, (i * 2) + 1)
@@ -223,9 +238,16 @@ module Monty
       # col 0
       bx = 0
       by = 0
-      19.times do |i|
+      8.times do |i|
         lay_brick('IFB', bx, (i * 2) + by)
       end
+      # door frame
+      lay_brick_rotated('FB', 0, 16)
+      lay_brick_rotated('FB', 0, 23)
+      7.times do |i|
+        lay_brick('IFB', bx, (i * 2) + 24)
+      end
+
       # col 1
       bx += 1
       lay_brick('IFB', bx, by)
@@ -264,7 +286,11 @@ module Monty
       bx += 1
       by = 0
       lay_brick('IFB', bx, by)
-      by = 8
+      lay_brick_rotated('FB', bx, 8)
+      9.times do |i|
+        lay_brick('FB', bx, (i * 2) + 9)
+      end
+      lay_brick('FB/2', bx, 27)
       # col 9
       bx += 1
       by = 0
@@ -272,17 +298,23 @@ module Monty
       lay_brick('IFB', bx, by + 2)
       lay_brick('FB', bx, by + 4)
       by = 8
-      lay_brick('FB', bx, by)
-      lay_brick('IFB/2', bx, by + 2)
-      lay_brick('IFB', bx, by + 3)
-      lay_brick('IFB', bx, by + 5)
-      lay_brick('FB', bx, by + 7)
-      lay_brick('IFB', bx, by + 9)
-      lay_brick('IFB', bx, by + 11)
-      lay_brick('FB', bx, by + 13)
-      by += 15
-      7.times do |i|
+      lay_brick('IFB/2', bx, by + 1)
+      lay_brick('IFB', bx, by + 2)
+      lay_brick('IFB', bx, by + 4)
+      lay_brick('FB', bx, by + 6)
+      lay_brick('IFB', bx, by + 8)
+      lay_brick('IFB', bx, by + 10)
+      lay_brick('FB', bx, by + 12)
+      lay_brick('IFB', bx, by + 14)
+      lay_brick('IFB', bx, by + 16)
+      lay_brick('FB', bx, by + 18)
+      by += 20
+      5.times do |i|
         lay_brick('IFB', bx, (i * 2) + by)
+      end
+      # shelves
+      5.times do |i|
+        lay_brick('shelf', 2.333, 14 + (i * 3))
       end
       @height += 2.5
     end
@@ -290,6 +322,9 @@ module Monty
     def self.create_brick_row5
       add_kiln_layer
       lay_bagwall_b
+      # door frame
+      lay_brick_rotated('FB', 0, 16)
+      lay_brick_rotated('FB', 0, 23)
       bx = 0
       by = 0
       lay_brick_rotated('IFB', 0, 0)
@@ -314,6 +349,23 @@ module Monty
       4.times do |i|
         lay_brick_rotated('LG', 4, i * 1.5)
       end
+      # row 8 wall
+      bx = 8
+      lay_brick_rotated('FB', bx, 8)
+      lay_brick('FB/2', bx, 9)
+      lay_brick('FB', bx, 10)
+      lay_brick('FB3/4', bx, 12)
+      lay_brick_rotated('FB', bx, 13.5)
+      lay_brick_rotated('FB', bx, 15.5)
+      lay_brick('FB', bx, 16.5)
+      lay_brick('FB/2', bx, 18.5)
+      lay_brick_rotated('FB', bx, 19.5)
+      lay_brick_rotated('FB', bx, 21.5)
+      lay_brick('FB', bx, 22.5)
+      lay_brick('FB/2', bx, 24.5)
+      lay_brick_rotated('FB', bx, 25.5)
+      lay_brick_rotated('FB', bx, 27.5)
+      lay_brick('FB/4', bx, 28.5)
 
       @height += 2.5
     end
@@ -321,6 +373,9 @@ module Monty
     def self.create_brick_row6
       add_kiln_layer
       lay_bagwall_a
+      # door frame
+      lay_brick_rotated('FB', 0, 16)
+      lay_brick_rotated('FB', 0, 23)
       bx = 0
       by = 0
       3.times do |i|
@@ -536,7 +591,10 @@ module Monty
       create_brick(l / 2, w, h, 'IFB/2', 'Cornsilk')
       create_brick(l / 4, w, h, 'FB/4', 'Goldenrod')
       create_brick(l / 4, w, h, 'IFB/4', 'Cornsilk')
+      create_brick(3 * l / 4, w, h, 'FB3/4', 'Goldenrod')
+      create_brick(3 * l / 4, w, h, 'IFB3/4', 'Cornsilk')
       create_brick(16.0, 8.0, 8.0, 'Cinder Block', 'SlateGray')
+      create_brick(12, 24, 1, 'shelf', 'PapayaWhip')
       create_brick(171.0, 45.0, 3.5, 'Slab', 'LightSlateGray')
     end
 
