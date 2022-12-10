@@ -24,6 +24,7 @@ module Monty
   module KilnTool
     @index = -1
     @serial = 0
+    @grid = 'unk'
     @sub = ''
     @height = -3.5
     @unit = 4.5
@@ -349,7 +350,7 @@ module Monty
       4.times do |i|
         lay_brick_rotated('LG', 4, i * 1.5)
       end
-      # row 8 wall
+      # row 8 port wall
       bx = 8
       lay_brick_rotated('FB', bx, 8)
       lay_brick('FB/2', bx, 9)
@@ -366,6 +367,16 @@ module Monty
       lay_brick_rotated('FB', bx, 25.5)
       lay_brick_rotated('FB', bx, 27.5)
       lay_brick('FB/4', bx, 28.5)
+      # row 9 port wall
+      bx = 9
+      lay_brick('IFB', bx, 9)
+      lay_brick('IFB/4', bx, 11)
+      lay_brick('IFB', bx, 11.5)
+      lay_brick('IFB/2', bx, 16.5)
+      lay_brick('IFB', bx, 17.5)
+      lay_brick('IFB/2', bx, 22.5)
+      lay_brick('IFB', bx, 23.5)
+      lay_brick('IFB/4', bx, 28.5)
 
       @height += 2.5
     end
@@ -400,6 +411,44 @@ module Monty
       2.times do |i|
         lay_brick('IFB', 9, (i * 2))
       end
+      # col 8
+      bx = 8
+      by = 0
+      lay_brick_rotated('FB', bx, 8)
+      lay_brick('FB/4', bx, 9)
+      lay_brick('FB', bx, 9.5)
+      lay_brick('FB/2', bx, 11.5)
+      lay_brick('FB3/4', bx, 12.5)
+      lay_brick('FB', bx, 14)
+      lay_brick('FB/2', bx, 16)
+      lay_brick('FB', bx, 17)
+      lay_brick('FB/2', bx, 19)
+      lay_brick('FB', bx, 20)
+      lay_brick('FB/2', bx, 22)
+      lay_brick('FB', bx, 23)
+      lay_brick('FB/2', bx, 25)
+      lay_brick('FB', bx, 26)
+
+      # col 9
+      bx = 9
+      by = 0
+      lay_brick('IFB', bx, by)
+      lay_brick('IFB', bx, by + 2)
+      by = 8
+      lay_brick('IFB/2', bx, by + 1)
+      lay_brick('IFB', bx, by + 2)
+      lay_brick('IFB', bx, by + 4)
+      lay_brick('FB', bx, by + 6)
+      lay_brick('IFB', bx, by + 8)
+      lay_brick('IFB', bx, by + 10)
+      lay_brick('FB', bx, by + 12)
+      lay_brick('IFB', bx, by + 14)
+      lay_brick('IFB', bx, by + 16)
+      lay_brick('FB', bx, by + 18)
+      by += 20
+      5.times do |i|
+        lay_brick('IFB', bx, (i * 2) + by)
+      end
 
       @height += 2.5
     end
@@ -414,9 +463,13 @@ module Monty
       lay_brick_rotated('LG', 3, 30.5)
       lay_brick_rotated('LG', 5, 30.5)
       lay_brick_rotated('LG', 7, 30.5)
-      3.times do |i|
+      2.times do |i|
         lay_brick('FB', 1, (i * 2) + 32)
         lay_brick('FB', 8, (i * 2) + 32)
+      end
+      4.times do |i|
+        lay_brick('IFB', 0, (i * 2) + 29)
+        lay_brick('IFB', 9, (i * 2) + 29)
       end
       @sub = ''
     end
@@ -459,6 +512,7 @@ module Monty
     end
 
     def self.lay_brick(brick_type, bx, by)
+      @grid = "(#{bx}, #{by})"
       componentdefinition = find_componentdefinition(brick_type)
       transformation = Geom::Transformation.new([bx * @unit, by * @unit, @height])
       componentinstance = Sketchup.active_model.entities.add_instance(componentdefinition, transformation)
@@ -468,6 +522,7 @@ module Monty
     end
 
     def self.lay_brick_rotated(brick_type, bx, by)
+      @grid = "(#{bx}, #{by})"
       componentdefinition = find_componentdefinition(brick_type)
       w = componentdefinition.bounds.height
       target_point = Geom::Point3d.new(0, 0, 0)
@@ -482,7 +537,7 @@ module Monty
     end
 
     def self.assign_instance_name(componentinstance)
-      componentinstance.name = "#{@layer_name} #{@sub} #{@serial}"
+      componentinstance.name = "#{@layer_name} #{@sub} #{@grid} #{@serial}"
       @serial += 1
     end
 
