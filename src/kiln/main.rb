@@ -28,7 +28,7 @@ module Monty
     @height = -3.5
     @unit = 4.5
     @layer = nil
-    @layer_name = ""
+    @layer_name = ''
     def self.create_kiln
       model = Sketchup.active_model
       model.start_operation('Create Kiln', true)
@@ -390,8 +390,8 @@ module Monty
     def self.lay_bagwall_a_header_course
       @sub = 'lay_bagwall_a_header'
       5.times do |i|
-        lay_brick_rotated('LG', 0, 28 + (i*1.5))
-        lay_brick_rotated('LG', 8, 28 + (i*1.5))
+        lay_brick_rotated('LG', 0, 28 + (i * 1.5))
+        lay_brick_rotated('LG', 8, 28 + (i * 1.5))
       end
 
       lay_brick('FB', 2.5, 29)
