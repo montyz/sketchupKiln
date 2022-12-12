@@ -239,14 +239,17 @@ module Monty
       # col 0
       bx = 0
       by = 0
-      8.times do |i|
+      7.times do |i|
         lay_brick('IFB', bx, (i * 2) + by)
       end
+      lay_brick('FB', bx, 14)
       # door frame
       lay_brick_rotated('FB', 0, 16)
       lay_brick_rotated('FB', 0, 23)
-      7.times do |i|
-        lay_brick('IFB', bx, (i * 2) + 24)
+      lay_brick('IFB', bx, 24)
+      lay_brick('FB', bx, 26)
+      5.times do |i|
+        lay_brick('IFB', bx, (i * 2) + 28)
       end
 
       # col 1
@@ -258,6 +261,18 @@ module Monty
       2.times do |i|
         lay_brick_rotated('LG', bx, (i * 1.5) + by)
       end
+      lay_brick('FB/2', bx, 6)
+      3.times do |i|
+        lay_brick('FB', bx, 7 + (i * 2))
+      end
+      lay_brick('FB/2', bx, 13)
+      lay_brick('FB', bx, 14)
+      lay_brick('FB/2', bx, 24)
+      2.times do |i|
+        lay_brick('FB', bx, (i * 2) + 25)
+      end
+
+
       # col 2
       bx += 1
       by = 0
