@@ -288,10 +288,9 @@ module Monty
       by = 0
       lay_brick('IFB', bx, by)
       lay_brick_rotated('FB', bx, 8)
-      9.times do |i|
+      10.times do |i|
         lay_brick('FB', bx, (i * 2) + 9)
       end
-      lay_brick('FB/2', bx, 27)
       # col 9
       bx += 1
       by = 0
@@ -428,6 +427,7 @@ module Monty
       lay_brick('FB', bx, 23)
       lay_brick('FB/2', bx, 25)
       lay_brick('FB', bx, 26)
+      lay_brick('FB/2', bx, 28)
 
       # col 9
       bx = 9
@@ -476,10 +476,9 @@ module Monty
 
     def self.lay_bagwall_a
       @sub = 'lay_bagwall_a'
-      lay_brick('FB', 1, 28)
-      lay_brick('FB/2', 1, 30)
-      3.times do |i|
-        lay_brick('FB', 1, (i * 2) + 31)
+      4.times do |i|
+        lay_brick('FB', 1, (i * 2) + 29)
+        lay_brick('FB', 8, (i * 2) + 29)
       end
       lay_brick('FB', 2.5, 29)
       lay_brick('FB/2', 2.5, 31)
@@ -487,11 +486,6 @@ module Monty
       lay_brick('FB/2', 4.5, 31)
       lay_brick('FB', 6.5, 29)
       lay_brick('FB/2', 6.5, 31)
-      lay_brick('FB', 8, 28)
-      lay_brick('FB/2', 8, 30)
-      3.times do |i|
-        lay_brick('FB', 8, (i * 2) + 31)
-      end
       @sub = ''
     end
 
