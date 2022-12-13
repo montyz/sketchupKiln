@@ -62,33 +62,38 @@ module Monty
       lay_brick_rotated('FB', 0, 16)
       lay_brick_rotated('FB', 0, 23)
 
-      3.times do |i|
-        lay_brick('IFB', 0, (i * 2))
-      end
-      2.times do |i|
-        lay_brick('LG', 1, i * 2)
-      end
-      lay_brick('FB/2', 1, 4)
-      lay_brick('FB', 1, 5)
       2.times do |i|
         lay_brick_rotated('LG', 2.5, i * 1.5)
         lay_brick_rotated('LG', 5.5, i * 1.5)
       end
 
-      2.times do |i|
-        lay_brick('FB', 4.5, i * 2)
+      lay_brick('FB', 4.5, 0)
+      lay_brick('FB/2', 4.5, 2)
+      lay_brick('FB/2L', 2, 0)
+      lay_brick('FB/2/2L', 2, 2)
+      lay_brick('FB/2L', 7.5, 0)
+      lay_brick('FB/2/2L', 7.5, 2)
+      # col 0
+      10.times do |i|
+        lay_brick_rotated('LG', 0, i * 1.5)
       end
-
-      lay_brick('LG', 7.5, 0)
-      lay_brick('LG', 7.5, 2)
+      lay_brick_rotated('FB', 0, 15)
+      8.times do |i|
+        lay_brick_rotated('LG', 0, 24 + (i * 1.5))
+      end
       # col 8
-      lay_brick('FB/2', 8, 4)
-      lay_brick('FB', 8, 5)
-
-      # col 9
-      3.times do |i|
-        lay_brick('IFB', 9, (i * 2))
+      24.times do |i|
+        lay_brick_rotated('LG', 8, i * 1.5)
       end
+      # chimney end
+      3.times do |i|
+        lay_brick('LG', i * 1.5, 36)
+      end
+      lay_brick('FB', 4.5, 36)
+      3.times do |i|
+        lay_brick('LG', 5.5 + (i * 1.5), 36)
+      end
+
       @height += 2.5
     end
 
@@ -204,7 +209,7 @@ module Monty
       lay_brick('LFB', 9, 5.5)
       lay_brick('IFB3/4', 9, 8.5)
       14.times do |i|
-        lay_brick('IFB', 9  , 10 + (i * 2))
+        lay_brick('IFB', 9, 10 + (i * 2))
       end
       # header over chimney w/hole for soda kiln
       # lay_brick_rotated('FB/2', 2, 36)
@@ -621,10 +626,6 @@ module Monty
 
     def self.lay_bagwall_a_header_course
       @sub = 'lay_bagwall_a_header'
-      5.times do |i|
-        lay_brick_rotated('LG', 0, 28 + (i * 1.5))
-        lay_brick_rotated('LG', 8, 28 + (i * 1.5))
-      end
 
       lay_brick('FB', 2.5, 29)
       lay_brick('FB/2', 2.5, 31)
@@ -785,6 +786,8 @@ module Monty
       create_brick(l / 2, w, h, 'IFB/2', 'Cornsilk')
       create_brick(l / 4, w, h, 'FB/4', 'Goldenrod')
       create_brick(l / 4, w, h, 'IFB/4', 'Cornsilk')
+      create_brick(l , w/2, h, 'FB/2L', 'Goldenrod')
+      create_brick(l / 2, w/2, h, 'FB/2/2L', 'Goldenrod')
       create_brick(3 * l / 4, w, h, 'FB3/4', 'Goldenrod')
       create_brick(3 * l / 4, w, h, 'IFB3/4', 'Cornsilk')
       create_brick(16.0, 8.0, 8.0, 'Cinder Block', 'SlateGray')
