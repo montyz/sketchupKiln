@@ -70,9 +70,9 @@ module Monty
       lay_brick('FB', 4.5, 0)
       lay_brick('FB/2', 4.5, 2)
       lay_brick('FB/2L', 2, 0)
-      lay_brick('FB/2/2L', 2, 2)
+      lay_brick('FB/2/2', 2, 2)
       lay_brick('FB/2L', 7.5, 0)
-      lay_brick('FB/2/2L', 7.5, 2)
+      lay_brick('FB/2/2', 7.5, 2)
       # col 0
       10.times do |i|
         lay_brick_rotated('LG', 0, i * 1.5)
@@ -187,13 +187,15 @@ module Monty
         lay_brick_rotated('LG', 2.5, i * 1.5)
         lay_brick_rotated('LG', 5.5, i * 1.5)
       end
+      lay_brick('FB/4/2', 2, 4)
 
-      2.times do |i|
-        lay_brick('FB', 4.5, i * 2)
-      end
+      lay_brick('FB', 4.5, 0)
+      lay_brick('FB/4', 4.5, 2)
+      lay_brick('FB', 4.5, 2.5)
 
       lay_brick('LG', 7.5, 0)
       lay_brick('LG', 7.5, 2)
+      lay_brick('FB/4/2', 7.5, 4)
       # col 8
       lay_brick_rotated('LG', 8, 4)
       lay_brick('FB', 8, 8.5)
@@ -242,11 +244,9 @@ module Monty
       # col 1
       bx += 1
       lay_brick('IFB/2', bx, 1)
-      by += 2
-      2.times do |i|
-        lay_brick_rotated('LG', bx, (i * 1.5) + by)
-      end
-      lay_brick('FB/2', 1, 5)
+      lay_brick_rotated('LG', bx, 2)
+      lay_brick_rotated('FB', bx, 3.5)
+      lay_brick('FB3/4', bx, 4.5)
       5.times do |i|
         lay_brick('FB', bx, 6 + (2 * i))
       end
@@ -266,14 +266,13 @@ module Monty
       # col 7
       bx = 7
       lay_brick('FB', bx, by)
-      by += 2
-      2.times do |i|
-        lay_brick_rotated('LG', bx, (i * 1.5) + by)
-      end
+      lay_brick_rotated('LG', bx, 2)
+      lay_brick_rotated('FB', bx, 3.5)
       # col 8
       bx = 8
       lay_brick_rotated('IFB', bx, 0)
       lay_brick('IFB/2', bx, 1)
+      lay_brick('FB/4', 8, 4.5)
       lay_brick_rotated('FB', bx, 5)
       lay_brick_rotated('FB', bx, 8)
       lay_brick('FB/2', bx, 9)
@@ -786,8 +785,9 @@ module Monty
       create_brick(l / 2, w, h, 'IFB/2', 'Cornsilk')
       create_brick(l / 4, w, h, 'FB/4', 'Goldenrod')
       create_brick(l / 4, w, h, 'IFB/4', 'Cornsilk')
-      create_brick(l , w/2, h, 'FB/2L', 'Goldenrod')
-      create_brick(l / 2, w/2, h, 'FB/2/2L', 'Goldenrod')
+      create_brick(l, w / 2, h, 'FB/2L', 'Goldenrod')
+      create_brick(l / 2, w / 2, h, 'FB/2/2', 'Goldenrod')
+      create_brick(l / 4, w / 2, h, 'FB/4/2', 'Goldenrod')
       create_brick(3 * l / 4, w, h, 'FB3/4', 'Goldenrod')
       create_brick(3 * l / 4, w, h, 'IFB3/4', 'Cornsilk')
       create_brick(16.0, 8.0, 8.0, 'Cinder Block', 'SlateGray')
