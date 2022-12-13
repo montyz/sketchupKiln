@@ -102,17 +102,24 @@ module Monty
       bx = 0
       by = 0
       lay_brick_rotated('IFB', bx, by)
-      2.times do |i|
+      7.times do |i|
         lay_brick('IFB', bx, (i * 2) + 1)
+      end
+      lay_brick('IFB/2', bx, 15)
+      lay_brick('IFB/2', bx, 24)
+      2.times do |i|
+        lay_brick('IFB', bx, 25 + (i * 2))
       end
       # col 1
       bx += 1
-      by = 1
-      lay_brick('FB/2', bx, by)
-      by += 1
-      lay_brick('FB', bx, by)
-      by += 2
-      lay_brick('FB', bx, by)
+      lay_brick('FB/2', bx, 1)
+      7.times do |i|
+        lay_brick('FB', bx, 2 + (i * 2))
+      end
+      2.times do |i|
+        lay_brick('FB', bx, 24 + (i * 2))
+      end
+      lay_brick('FB/2', bx, 28)
       # col 2
       bx += 1
       by = 0
@@ -133,11 +140,13 @@ module Monty
       bx = 8
       lay_brick_rotated('IFB', bx, 0)
       lay_brick('FB/2', bx, 1)
-      lay_brick('FB', bx, 2)
-      lay_brick('FB', bx, 4)
+      13.times do |i|
+        lay_brick('FB', bx, 2 + (i * 2))
+      end
+      lay_brick('FB/2', bx, 28)
       # col 9
       bx = 9
-      2.times do |i|
+      14.times do |i|
         lay_brick('IFB', bx, (i * 2) + 1)
       end
 
@@ -151,14 +160,24 @@ module Monty
       lay_brick_rotated('FB', 0, 16)
       lay_brick_rotated('FB', 0, 23)
 
-      3.times do |i|
+      8.times do |i|
         lay_brick('IFB', 0, (i * 2))
+      end
+      7.times do |i|
+        lay_brick('IFB', 0, 24 + (i * 2))
       end
       2.times do |i|
         lay_brick('LG', 1, i * 2)
       end
       lay_brick('FB/2', 1, 4)
-      lay_brick('FB', 1, 5)
+      5.times do |i|
+        lay_brick('FB', 1, 5 + (2 * i))
+      end
+      lay_brick('FB/2', 1, 15)
+      lay_brick('FB/2', 1, 24)
+      2.times do |i|
+        lay_brick('FB', 1, 25 + (i * 2))
+      end
       3.times do |i|
         lay_brick_rotated('LG', 2.5, i * 1.5)
         lay_brick_rotated('LG', 5.5, i * 1.5)
@@ -172,12 +191,26 @@ module Monty
       lay_brick('LG', 7.5, 2)
       # col 8
       lay_brick_rotated('LG', 8, 4)
+      lay_brick('FB', 8, 8.5)
+      lay_brick('FB/4', 8, 10.5)
+      9.times do |i|
+        lay_brick('FB', 8, 11 + (i * 2))
+      end
       # col 9
       2.times do |i|
         lay_brick('IFB', 9, (i * 2))
       end
       lay_brick('LFB', 8, 5.5)
       lay_brick('LFB', 9, 5.5)
+      lay_brick('IFB3/4', 9, 8.5)
+      14.times do |i|
+        lay_brick('IFB', 9  , 10 + (i * 2))
+      end
+      # header over chimney w/hole for soda kiln
+      # lay_brick_rotated('FB/2', 2, 36)
+      # lay_brick_rotated('FB/2', 7, 36)
+      # lay_brick_rotated('FB', 1, 37)
+      # lay_brick_rotated('FB', 7, 37)
       @height += 2.5
     end
 
@@ -193,8 +226,13 @@ module Monty
       lay_brick_rotated('FB', 0, 23)
 
       lay_brick_rotated('IFB', bx, by)
-      2.times do |i|
+      7.times do |i|
         lay_brick('IFB', bx, (i * 2) + 1)
+      end
+      lay_brick('IFB/2', bx, 15)
+      lay_brick('IFB/2', bx, 24)
+      2.times do |i|
+        lay_brick('IFB', bx, 25 + (i * 2))
       end
       # col 1
       bx += 1
@@ -204,6 +242,13 @@ module Monty
         lay_brick_rotated('LG', bx, (i * 1.5) + by)
       end
       lay_brick('FB/2', 1, 5)
+      5.times do |i|
+        lay_brick('FB', bx, 6 + (2 * i))
+      end
+      2.times do |i|
+        lay_brick('FB', bx, 24 + (i * 2))
+      end
+      lay_brick('FB/2', bx, 28)
       # col 2
       bx += 1
       by = 0
@@ -225,11 +270,27 @@ module Monty
       lay_brick_rotated('IFB', bx, 0)
       lay_brick('IFB/2', bx, 1)
       lay_brick_rotated('FB', bx, 5)
+      lay_brick_rotated('FB', bx, 8)
+      lay_brick('FB/2', bx, 9)
+      9.times do |i|
+        lay_brick('FB', bx, 10 + (i * 2))
+      end
+      lay_brick('FB/2', bx, 28)
       # col 9
       bx = 9
       2.times do |i|
         lay_brick('IFB', bx, (i * 2) + 1)
       end
+      10.times do |i|
+        lay_brick('IFB', bx, (i * 2) + 9)
+      end
+      # chimney w/hole for soda kiln B
+      lay_brick_rotated('FB', 1, 36)
+      lay_brick_rotated('FB', 7, 36)
+      lay_brick_rotated('FB/2', 2, 37)
+      lay_brick_rotated('FB/2', 7, 37)
+      lay_brick_rotated('IFB', 0, 37)
+      lay_brick_rotated('IFB', 8, 37)
 
       @height += 2.5
     end
@@ -254,6 +315,9 @@ module Monty
       5.times do |i|
         lay_brick('IFB', bx, (i * 2) + 28)
       end
+
+      # kiln shelf to size flue hole
+      lay_brick_rotated_vertically('shelf', 2.33, 38)
 
       # col 1
       bx += 1
@@ -333,6 +397,11 @@ module Monty
       6.times do |i|
         lay_brick('shelf', 2.333, 11 + (i * 3))
       end
+      # chimney w/hole for soda kiln A
+      lay_brick_rotated('FB/2', 2, 36)
+      lay_brick_rotated('FB/2', 7, 36)
+      lay_brick_rotated('FB', 1, 37)
+      lay_brick_rotated('FB', 7, 37)
       @height += 2.5
     end
 
@@ -408,7 +477,13 @@ module Monty
       lay_brick('IFB/2', bx, 22.5)
       lay_brick('IFB', bx, 23.5)
       lay_brick('IFB/4', bx, 28.5)
-
+      # chimney w/hole for soda kiln B
+      lay_brick_rotated('FB', 1, 36)
+      lay_brick_rotated('FB', 7, 36)
+      lay_brick_rotated('FB/2', 2, 37)
+      lay_brick_rotated('FB/2', 7, 37)
+      lay_brick_rotated('IFB', 0, 37)
+      lay_brick_rotated('IFB', 8, 37)
       @height += 2.5
     end
 
@@ -500,7 +575,11 @@ module Monty
       5.times do |i|
         lay_brick('IFB', bx, (i * 2) + by)
       end
-
+      # chimney w/hole for soda kiln A
+      lay_brick_rotated('FB/2', 2, 36)
+      lay_brick_rotated('FB/2', 7, 36)
+      lay_brick_rotated('FB', 1, 37)
+      lay_brick_rotated('FB', 7, 37)
       @height += 2.5
     end
 
@@ -575,6 +654,21 @@ module Monty
       degrees_to_rotate = 90.degrees
       t = Geom::Transformation.rotation(target_point, vector, degrees_to_rotate)
       transformation = Geom::Transformation.new([(bx * @unit) + w, by * @unit, @height]) * t
+      componentinstance = Sketchup.active_model.entities.add_instance(componentdefinition, transformation)
+      componentinstance.material = componentdefinition.material
+      componentinstance.layer = @layer
+      assign_instance_name componentinstance
+    end
+
+    def self.lay_brick_rotated_vertically(brick_type, bx, by)
+      @grid = "(#{bx}, #{by})"
+      componentdefinition = find_componentdefinition(brick_type)
+      d = componentdefinition.bounds.depth
+      target_point = Geom::Point3d.new(0, 0, 0)
+      vector = Geom::Vector3d.new(1, 0, 0)
+      degrees_to_rotate = 90.degrees
+      t = Geom::Transformation.rotation(target_point, vector, degrees_to_rotate)
+      transformation = Geom::Transformation.new([(bx * @unit), (by * @unit) + d, @height]) * t
       componentinstance = Sketchup.active_model.entities.add_instance(componentdefinition, transformation)
       componentinstance.material = componentdefinition.material
       componentinstance.layer = @layer
