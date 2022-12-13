@@ -154,6 +154,10 @@ module Monty
       14.times do |i|
         lay_brick('IFB', bx, (i * 2) + 1)
       end
+      lay_brick('FB/2', 1, 36)
+      lay_brick('FB/2', 8, 36)
+      lay_brick_rotated('IFB', 0, 37)
+      lay_brick_rotated('IFB', 8, 37)
 
       @height += 2.5
     end
@@ -214,10 +218,9 @@ module Monty
         lay_brick('IFB', 9, 10 + (i * 2))
       end
       # header over chimney w/hole for soda kiln
-      # lay_brick_rotated('FB/2', 2, 36)
-      # lay_brick_rotated('FB/2', 7, 36)
-      # lay_brick_rotated('FB', 1, 37)
-      # lay_brick_rotated('FB', 7, 37)
+      lay_brick_rotated('Cast27x9x5', 2, 36)
+      lay_brick('IFB/2', 1, 37)
+      lay_brick('IFB/2', 8, 37)
       @height += 2.5
     end
 
@@ -793,6 +796,7 @@ module Monty
       create_brick(16.0, 8.0, 8.0, 'Cinder Block', 'SlateGray')
       create_brick(12, 24, 1, 'shelf', 'PapayaWhip')
       create_brick(171.0, 45.0, 3.5, 'Slab', 'LightSlateGray')
+      create_brick(27.0, 9.0, 5, 'Cast27x9x5', 'Thistle')
     end
 
     def self.find_componentdefinition(name)
