@@ -44,6 +44,7 @@ module Monty
       create_brick_row8
       create_brick_row9
       create_brick_row10
+      create_brick_row11
       model.commit_operation
       hash = {}
       Sketchup.active_model.entities.each do |instance|
@@ -54,6 +55,11 @@ module Monty
       end
     end
 
+    def self.create_brick_row11
+      add_kiln_layer
+      lay_brick_rotated('arch1_27', 0, 20)
+      @height += 2.5
+    end
     def self.create_brick_row10
       # header course
       add_kiln_layer
@@ -93,7 +99,6 @@ module Monty
       3.times do |i|
         lay_brick('LG', 5.5 + (i * 1.5), 36)
       end
-
       @height += 2.5
     end
 
@@ -324,7 +329,7 @@ module Monty
       end
 
       # kiln shelf to size flue hole
-      lay_brick_rotated_vertically('shelf', 2.33, 38)
+      # lay_brick_rotated_vertically('shelf', 2.33, 38)
 
       # col 1
       bx += 1
@@ -775,7 +780,36 @@ module Monty
       face.pushpull(-h)
     end
 
+    def self.create_arch_1_11
+      name = 'arch1_27'
+      model = Sketchup.active_model
+      definitions = model.definitions
+      definitions.add name unless definitions[name]
+      compdefinition = definitions[name]
+      compdefinition.material = 'DarkSeaGreen'
+      group = compdefinition.entities.add_group
+      center = [0, 0, -47.203]
+      xaxis = [0, 0, 1]
+      vector = Geom::Vector3d.new 0, 1, 0
+      normal = vector.normalize!
+      angle = 0.306
+
+      arc1 = group.entities.add_arc center, xaxis, normal, 49.5, -angle, angle, 11
+      arc2 = group.entities.add_arc center, xaxis, normal, 54, angle, -angle, 11
+      # add an edge to close the shape.
+      closer1 = group.entities.add_line(arc1[0].start, arc2[-1].end)
+      closer2 = group.entities.add_line(arc2[0].start, arc1[-1].end)
+      # let the edge find it's own face.
+      edges = arc1
+      edges.push(closer2)
+      edges.push(*arc2)
+      edges.push(closer1)
+      face = group.entities.add_face edges
+      face.pushpull(-9.0)
+    end
+
     def self.create_components
+      create_arch_1_11
       l = 9.0
       w = 4.5
       h = 2.5
