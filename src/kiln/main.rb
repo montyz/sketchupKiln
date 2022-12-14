@@ -45,6 +45,10 @@ module Monty
       create_brick_row9
       create_brick_row10
       create_brick_row11
+      create_brick_row12
+      create_brick_row13
+      create_brick_row14
+      create_brick_row15
       model.commit_operation
       hash = {}
       Sketchup.active_model.entities.each do |instance|
@@ -55,9 +59,25 @@ module Monty
       end
     end
 
-    def self.create_brick_row11
+    def self.create_brick_row15
       add_kiln_layer
       lay_brick_rotated('arch1_27', 0, 20)
+      @height += 2.5
+    end
+    def self.create_brick_row14
+      add_kiln_layer
+      @height += 2.5
+    end
+    def self.create_brick_row13
+      add_kiln_layer
+      @height += 2.5
+    end
+    def self.create_brick_row12
+      add_kiln_layer
+      @height += 2.5
+    end
+    def self.create_brick_row11
+      add_kiln_layer
       @height += 2.5
     end
     def self.create_brick_row10
@@ -795,17 +815,25 @@ module Monty
       angle = 0.306
 
       arc1 = group.entities.add_arc center, xaxis, normal, 49.5, -angle, angle, 11
-      arc2 = group.entities.add_arc center, xaxis, normal, 54, angle, -angle, 11
-      # add an edge to close the shape.
-      closer1 = group.entities.add_line(arc1[0].start, arc2[-1].end)
-      closer2 = group.entities.add_line(arc2[0].start, arc1[-1].end)
-      # let the edge find it's own face.
-      edges = arc1
-      edges.push(closer2)
-      edges.push(*arc2)
-      edges.push(closer1)
-      face = group.entities.add_face edges
-      face.pushpull(-9.0)
+      arc2 = group.entities.add_arc center, xaxis, normal, 54, -angle, angle, 11
+      11.times do |i|
+        edge1 = arc1[i]
+        edge2 = group.entities.add_line(arc1[i].end, arc2[i].end)
+        edge3 = group.entities.add_line(arc2[i].end, arc2[i].start)
+        edge4 = group.entities.add_line(arc2[i].start, arc1[i].start)
+        face = group.entities.add_face [edge1, edge2, edge3, edge4]
+        face.pushpull(-9.0)
+      end
+      # # add an edge to close the shape.
+      # closer1 = group.entities.add_line(arc1[0].start, arc2[-1].end)
+      # closer2 = group.entities.add_line(arc2[0].start, arc1[-1].end)
+      # # let the edge find it's own face.
+      # edges = arc1
+      # edges.push(closer2)
+      # edges.push(*arc2)
+      # edges.push(closer1)
+      # face = group.entities.add_face edges
+      # face.pushpull(-9.0)
     end
 
     def self.create_components
