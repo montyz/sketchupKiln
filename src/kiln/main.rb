@@ -118,6 +118,13 @@ module Monty
       4.times do |i|
         lay_brick_rotated('IFB', 1 + (i * 2), 0)
       end
+      lay_brick('IFB', 0, 24)
+      lay_brick('FB', 0, 26)
+      lay_brick('IFB/2', 0, 28)
+      lay_brick('FB', 1, 24)
+      lay_brick('FB', 1, 26)
+      lay_brick('FB/2', 1, 28)
+
       3.times do |i|
         lay_brick_rotated('FB', 2 + (i * 2), 1)
       end
@@ -127,6 +134,12 @@ module Monty
         lay_brick('IFB', 9, i * 2)
       end
       lay_brick('IFB/2', 9, 10)
+      3.times do |i|
+        lay_brick_rotated('FB', 2 + (i * 2), 36)
+      end
+      5.times do |i|
+        lay_brick_rotated('IFB', i * 2, 37)
+      end
       @height += 2.5
     end
 
@@ -135,7 +148,6 @@ module Monty
       add_kiln_layer
       lay_bagwall_a_header_course
       # door frame
-      lay_brick_rotated('FB', 0, 16)
       lay_brick_rotated('FB', 0, 23)
 
       2.times do |i|
@@ -150,19 +162,25 @@ module Monty
       lay_brick('FB/2L', 7.5, 0)
       lay_brick('FB/2/2', 7.5, 2)
       # col 0
-      10.times do |i|
+      7.times do |i|
         lay_brick_rotated('LG', 0, i * 1.5)
       end
-      lay_brick_rotated('FB', 0, 15)
-      8.times do |i|
-        lay_brick_rotated('LG', 0, 24 + (i * 1.5))
+      lay_brick_rotated('FB', 0, 10.5)
+      lay_brick_rotated('FB', 0, 12.5)
+      lay_brick_rotated('FB', 0, 13.5)
+      lay_brick_rotated('LG', 0, 15.5)
+      lay_brick_rotated('LG', 0, 24)
+      lay_brick_rotated('FB', 0, 25.5)
+      lay_brick_rotated('FB', 0, 27.5)
+      5.times do |i|
+        lay_brick_rotated('LG', 0, 28.5 + (i * 1.5))
       end
       # col 8
       7.times do |i|
         lay_brick_rotated('LG', 8, i * 1.5)
       end
       lay_peeps_8b
-      6.times do |i|
+      5.times do |i|
         lay_brick_rotated('LG', 8, 28.5 + (i * 1.5))
       end
       # chimney end
@@ -186,14 +204,16 @@ module Monty
       bx = 0
       by = 0
       lay_brick_rotated('IFB', bx, by)
-      7.times do |i|
+      5.times do |i|
         lay_brick('IFB', bx, (i * 2) + 1)
       end
-      lay_brick('IFB/2', bx, 15)
-      lay_brick('IFB/2', bx, 24)
-      2.times do |i|
-        lay_brick('IFB', bx, 25 + (i * 2))
-      end
+      lay_brick('FB', bx, 11)
+      lay_brick('IFB/2', bx, 13)
+      lay_brick('FB', bx, 14)
+
+      lay_brick('IFB', bx, 24)
+      lay_brick('FB', bx, 26)
+      lay_brick('IFB/2', bx, 28)
       # col 1
       bx += 1
       lay_brick('FB/2', bx, 1)
