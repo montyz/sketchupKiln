@@ -816,6 +816,7 @@ module Monty
 
       arc1 = group.entities.add_arc center, xaxis, normal, 49.5, -angle, angle, 11
       arc2 = group.entities.add_arc center, xaxis, normal, 54, -angle, angle, 11
+      # ¿make each one a named brick for the staggered center arch and so they can be counted?
       11.times do |i|
         edge1 = arc1[i]
         edge2 = group.entities.add_line(arc1[i].end, arc2[i].end)
