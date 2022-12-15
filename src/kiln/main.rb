@@ -121,7 +121,12 @@ module Monty
       3.times do |i|
         lay_brick_rotated('FB', 2 + (i * 2), 1)
       end
-
+      lay_peeps_c
+      5.times do |i|
+        lay_brick('FB', 8, 1 + (i * 2))
+        lay_brick('IFB', 9, i * 2)
+      end
+      lay_brick('IFB/2', 9, 10)
       @height += 2.5
     end
 
