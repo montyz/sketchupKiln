@@ -40,16 +40,16 @@ module Monty
       create_brick_row4
       create_brick_row5
       create_brick_row6
-      create_brick_row7
-      create_brick_row8
-      create_brick_row9
-      create_brick_row10
-      create_brick_row11
-      create_brick_row12
-      create_brick_row13
-      create_brick_row14
-      create_brick_row15
-      create_brick_row16
+      # create_brick_row7
+      # create_brick_row8
+      # create_brick_row9
+      # create_brick_row10
+      # create_brick_row11
+      # create_brick_row12
+      # create_brick_row13
+      # create_brick_row14
+      # create_brick_row15
+      # create_brick_row16
       model.commit_operation
       hash = {}
       Sketchup.active_model.entities.each do |instance|
@@ -112,14 +112,14 @@ module Monty
         lay_brick('IFB', 0, i * 2)
       end
       7.times do |i|
-        lay_brick('FB', 1, 1 + i * 2)
+        lay_brick('FB', 1, 1 + (i * 2))
       end
       lay_brick('FB', 1, 15)
       4.times do |i|
-        lay_brick_rotated('IFB', 1 + i * 2, 0)
+        lay_brick_rotated('IFB', 1 + (i * 2), 0)
       end
       3.times do |i|
-        lay_brick_rotated('FB', 2 + i * 2, 1)
+        lay_brick_rotated('FB', 2 + (i * 2), 1)
       end
 
       @height += 2.5
@@ -455,18 +455,8 @@ module Monty
       lay_brick('IFB', bx, by)
       lay_brick('IFB', bx, by + 2)
       lay_brick('FB', bx, by + 4)
-      by = 8
-      lay_brick('IFB', bx, by + 1)
-      lay_brick('FB', bx, by + 3)
-      lay_brick('IFB/2', bx, by + 5)
-      lay_brick('FB', bx, by + 6)
-      lay_brick('IFB', bx, by + 8)
-      lay_brick('IFB', bx, by + 10)
-      lay_brick('FB', bx, by + 12)
-      lay_brick('IFB', bx, by + 14)
-      lay_brick('IFB', bx, by + 16)
-      lay_brick('FB', bx, by + 18)
-      by += 20
+      lay_peeps_9a
+      by = 28
       5.times do |i|
         lay_brick('IFB', bx, (i * 2) + by)
       end
@@ -480,6 +470,21 @@ module Monty
       lay_brick_rotated('FB', 1, 37)
       lay_brick_rotated('FB', 7, 37)
       @height += 2.5
+    end
+
+    def self.lay_peeps_9a
+      lay_brick('IFB', 9, 8 + 1)
+      lay_brick('FB', 9, 8 + 3)
+      lay_brick('IFB/2', 9, 8 + 5)
+      lay_brick('FB', 9, 8 + 6)
+      lay_brick('IFB/2', 9, 8 + 8)
+      lay_brick('FB', 9, 8 + 9)
+      lay_brick('IFB/2', 9, 8 + 11)
+      lay_brick('FB', 9, 8 + 12)
+      lay_brick('IFB/2', 9, 8 + 14)
+      lay_brick('FB', 9, 8 + 15)
+      lay_brick('IFB/2', 9, 8 + 17)
+      lay_brick('FB', 9, 8 + 18)
     end
 
     def self.create_brick_row5
@@ -532,27 +537,10 @@ module Monty
       # row 8 port wall
       bx = 8
       lay_brick_rotated('FB', bx, 8)
-      lay_brick('FB3/4', bx, 9)
-      lay_brick_rotated('FB', bx, 10.5)
-      lay_brick_rotated('FB', bx, 12.5)
-      lay_brick_rotated('FB', bx, 13.5)
-      lay_brick_rotated('FB', bx, 15.5)
-      lay_brick('FB', bx, 16.5)
-      lay_brick('FB/2', bx, 18.5)
-      lay_brick_rotated('FB', bx, 19.5)
-      lay_brick_rotated('FB', bx, 21.5)
-      lay_brick('FB', bx, 22.5)
-      lay_brick('FB/2', bx, 24.5)
-      lay_brick_rotated('FB', bx, 25.5)
-      lay_brick_rotated('FB', bx, 27.5)
-      lay_brick('FB/4', bx, 28.5)
+      lay_peeps_8b
       # row 9 port wall
       bx = 9
       lay_brick('IFB3/4', bx, 9)
-      lay_brick('IFB/2', bx, 16.5)
-      lay_brick('IFB', bx, 17.5)
-      lay_brick('IFB/2', bx, 22.5)
-      lay_brick('IFB', bx, 23.5)
       lay_brick('IFB/4', bx, 28.5)
       # chimney w/hole for soda kiln B
       lay_brick_rotated('FB', 1, 36)
@@ -562,6 +550,15 @@ module Monty
       lay_brick_rotated('IFB', 0, 37)
       lay_brick_rotated('IFB', 8, 37)
       @height += 2.5
+    end
+
+    def self.lay_peeps_8b
+      lay_brick('FB3/4', 8, 9)
+      6.times do |i|
+        lay_brick_rotated('FB', 8, 10.5 + (i * 3))
+        lay_brick_rotated('FB', 8, 12.5 + (i * 3))
+      end
+      lay_brick('FB/4', 8, 28.5)
     end
 
     def self.create_brick_row6
@@ -618,19 +615,7 @@ module Monty
       by = 0
       lay_brick_rotated('FB', bx, 8)
       lay_brick('FB', bx, 9)
-      lay_brick('FB', bx, 11)
-      lay_brick('FB/2', bx, 13)
-      # lay_brick('FB3/4', bx, 12.5)
-      lay_brick('FB', bx, 14)
-      lay_brick('FB/2', bx, 16)
-      lay_brick('FB', bx, 17)
-      lay_brick('FB/2', bx, 19)
-      lay_brick('FB', bx, 20)
-      lay_brick('FB/2', bx, 22)
-      lay_brick('FB', bx, 23)
-      lay_brick('FB/2', bx, 25)
-      lay_brick('FB', bx, 26)
-      lay_brick('FB/2', bx, 28)
+      lay_peeps_c
 
       # col 9
       bx = 9
@@ -639,15 +624,6 @@ module Monty
       lay_brick('IFB', bx, by + 2)
       by = 8
       lay_brick('IFB', bx, by + 1)
-      lay_brick('FB', bx, by + 3)
-      lay_brick('IFB/2', bx, by + 5)
-      lay_brick('FB', bx, by + 6)
-      lay_brick('IFB', bx, by + 8)
-      lay_brick('IFB', bx, by + 10)
-      lay_brick('FB', bx, by + 12)
-      lay_brick('IFB', bx, by + 14)
-      lay_brick('IFB', bx, by + 16)
-      lay_brick('FB', bx, by + 18)
       by += 20
       5.times do |i|
         lay_brick('IFB', bx, (i * 2) + by)
@@ -658,6 +634,15 @@ module Monty
       lay_brick_rotated('FB', 1, 37)
       lay_brick_rotated('FB', 7, 37)
       @height += 2.5
+    end
+
+    def self.lay_peeps_c
+      6.times do |i|
+        lay_brick('FB', 8, 11 + (i * 3))
+        lay_brick('FB/2', 8, 13 + (i * 3))
+        lay_brick('FB', 9, 11 + (i * 3))
+        lay_brick('IFB/2', 9, 13 + (i * 3))
+      end
     end
 
     def self.lay_bagwall_b
