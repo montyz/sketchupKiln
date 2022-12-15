@@ -40,16 +40,16 @@ module Monty
       create_brick_row4
       create_brick_row5
       create_brick_row6
-      # create_brick_row7
-      # create_brick_row8
-      # create_brick_row9
-      # create_brick_row10
-      # create_brick_row11
-      # create_brick_row12
-      # create_brick_row13
-      # create_brick_row14
-      # create_brick_row15
-      # create_brick_row16
+      create_brick_row7
+      create_brick_row8
+      create_brick_row9
+      create_brick_row10
+      create_brick_row11
+      create_brick_row12
+      create_brick_row13
+      create_brick_row14
+      create_brick_row15
+      create_brick_row16
       model.commit_operation
       hash = {}
       Sketchup.active_model.entities.each do |instance|
@@ -153,8 +153,12 @@ module Monty
         lay_brick_rotated('LG', 0, 24 + (i * 1.5))
       end
       # col 8
-      24.times do |i|
+      7.times do |i|
         lay_brick_rotated('LG', 8, i * 1.5)
+      end
+      lay_peeps_8b
+      6.times do |i|
+        lay_brick_rotated('LG', 8, 28.5 + (i * 1.5))
       end
       # chimney end
       3.times do |i|
@@ -221,9 +225,11 @@ module Monty
       lay_brick('FB/2', bx, 28)
       # col 9
       bx = 9
-      14.times do |i|
+      5.times do |i|
         lay_brick('IFB', bx, (i * 2) + 1)
       end
+      lay_peeps_9a
+      lay_brick('IFB/2', 9, 28)
       lay_brick('FB/2', 1, 36)
       lay_brick('FB/2', 8, 36)
       lay_brick_rotated('IFB', 0, 37)
@@ -537,7 +543,9 @@ module Monty
       # row 8 port wall
       bx = 8
       lay_brick_rotated('FB', bx, 8)
+      lay_brick('FB3/4', 8, 9)
       lay_peeps_8b
+      lay_brick('FB/4', 8, 28.5)
       # row 9 port wall
       bx = 9
       lay_brick('IFB3/4', bx, 9)
@@ -553,12 +561,10 @@ module Monty
     end
 
     def self.lay_peeps_8b
-      lay_brick('FB3/4', 8, 9)
       6.times do |i|
         lay_brick_rotated('FB', 8, 10.5 + (i * 3))
         lay_brick_rotated('FB', 8, 12.5 + (i * 3))
       end
-      lay_brick('FB/4', 8, 28.5)
     end
 
     def self.create_brick_row6
