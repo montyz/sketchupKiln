@@ -49,6 +49,7 @@ module Monty
       create_brick_row13
       create_brick_row14
       create_brick_row15
+      create_brick_row16
       model.commit_operation
       hash = {}
       Sketchup.active_model.entities.each do |instance|
@@ -59,27 +60,71 @@ module Monty
       end
     end
 
+    def self.create_brick_row16
+      add_kiln_layer
+      lay_bagwall_a
+      lay_brick('arch1_27', 5, 8)
+      @height += 2.5
+    end
+
     def self.create_brick_row15
       add_kiln_layer
+      lay_bagwall_b
       lay_brick_rotated('arch1_27', 0, 20)
       @height += 2.5
     end
+
     def self.create_brick_row14
       add_kiln_layer
+      lay_bagwall_a
+      # door frame
+      lay_brick_rotated('FB', 0, 16)
+      lay_brick_rotated('FB', 0, 23)
       @height += 2.5
     end
+
     def self.create_brick_row13
       add_kiln_layer
+      lay_bagwall_b
+      # door frame
+      lay_brick_rotated('FB', 0, 16)
+      lay_brick_rotated('FB', 0, 23)
       @height += 2.5
     end
+
     def self.create_brick_row12
       add_kiln_layer
+      lay_bagwall_a
+      # door frame
+      lay_brick_rotated('FB', 0, 16)
+      lay_brick_rotated('FB', 0, 23)
       @height += 2.5
     end
+
     def self.create_brick_row11
       add_kiln_layer
+      lay_bagwall_b
+      # door frame
+      lay_brick_rotated('FB', 0, 16)
+      lay_brick_rotated('FB', 0, 23)
+
+      8.times do |i|
+        lay_brick('IFB', 0, i * 2)
+      end
+      7.times do |i|
+        lay_brick('FB', 1, 1 + i * 2)
+      end
+      lay_brick('FB', 1, 15)
+      4.times do |i|
+        lay_brick_rotated('IFB', 1 + i * 2, 0)
+      end
+      3.times do |i|
+        lay_brick_rotated('FB', 2 + i * 2, 1)
+      end
+
       @height += 2.5
     end
+
     def self.create_brick_row10
       # header course
       add_kiln_layer
