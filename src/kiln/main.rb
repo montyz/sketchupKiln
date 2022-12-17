@@ -70,16 +70,32 @@ module Monty
     def self.create_brick_row15
       add_kiln_layer
       lay_bagwall_b
-      lay_brick_rotated('arch1_27', 0, 20)
       @height += 2.5
     end
 
     def self.create_brick_row14
       add_kiln_layer
       lay_bagwall_a
-      # door frame
-      lay_brick_rotated('FB', 0, 16)
-      lay_brick_rotated('FB', 0, 23)
+      lay_brick_rotated('arch1_27', 0, 20)
+
+      lay_brick_rotated('IFB', 0, 0)
+      lay_brick_rotated('FB', 2, 0)
+      lay_brick_rotated('FB', 4, 0)
+      lay_brick_rotated('FB', 6, 0)
+      lay_brick_rotated('IFB', 8, 0)
+      lay_brick_rotated('FB', 2, 1)
+      lay_brick_rotated('FB', 4, 1)
+      lay_brick_rotated('FB', 6, 1)
+
+      7.times do |i|
+        lay_brick('IFB', 0, 1 + (i * 2))
+      end
+      lay_brick_rotated('IFB/2', 0, 15)
+      lay_brick('FB/2', 1, 1)
+      7.times do |i|
+        lay_brick('FB', 1, 2 + (i * 2))
+      end
+
       @height += 2.5
     end
 
@@ -89,6 +105,25 @@ module Monty
       # door frame
       lay_brick_rotated('FB', 0, 16)
       lay_brick_rotated('FB', 0, 23)
+      lay_brick('LG', 1, 0)
+      2.times do |i|
+        lay_brick('FB', 3.5 + (i * 2), 0)
+      end
+      lay_brick('LG', 7.5, 0)
+      8.times do |i|
+        lay_brick('IFB', 0, i * 2)
+      end
+      lay_brick('FB/2', 1, 2)
+      6.times do |i|
+        lay_brick('FB', 1, 3 + (i * 2))
+      end
+      lay_brick('FB/2', 1, 15)
+      lay_brick('IFB/2', 0, 24)
+      lay_brick('IFB', 0, 25)
+      lay_brick('IFB', 0, 27)
+      lay_brick('FB', 1, 24)
+      lay_brick('FB', 1, 26)
+      lay_brick('FB', 1, 28)
       @height += 2.5
     end
 
@@ -98,6 +133,26 @@ module Monty
       # door frame
       lay_brick_rotated('FB', 0, 16)
       lay_brick_rotated('FB', 0, 23)
+      lay_brick('LG', 1, 0)
+      2.times do |i|
+        lay_brick('FB', 3.5 + (i * 2), 0)
+      end
+      lay_brick('LG', 7.5, 0)
+      lay_brick('IFB/2', 0, 0)
+      7.times do |i|
+        lay_brick('IFB', 0, 1 + (i * 2))
+      end
+      lay_brick('IFB/2', 0, 15)
+      7.times do |i|
+        lay_brick('FB', 1, 2 + (i * 2))
+      end
+      7.times do |i|
+        lay_brick('IFB', 0, 24 + (i * 2))
+      end
+      lay_brick('FB/2', 1, 24)
+      2.times do |i|
+        lay_brick('FB', 1, 25 + (i * 2))
+      end
       @height += 2.5
     end
 
@@ -108,16 +163,24 @@ module Monty
       lay_brick_rotated('FB', 0, 16)
       lay_brick_rotated('FB', 0, 23)
 
-      8.times do |i|
+      5.times do |i|
         lay_brick('IFB', 0, i * 2)
       end
-      7.times do |i|
+      lay_brick('IFB/2', 0, 10)
+      lay_brick('FB', 0, 11)
+      lay_brick('IFB/2', 0, 13)
+      lay_brick('FB', 0, 14)
+
+      6.times do |i|
         lay_brick('FB', 1, 1 + (i * 2))
       end
-      lay_brick('FB', 1, 15)
+      lay_brick('FB/2', 1, 13)
+      lay_brick('FB', 1, 14)
+      lay_brick('IFB/2', 1, 0)
       4.times do |i|
-        lay_brick_rotated('IFB', 1 + (i * 2), 0)
+        lay_brick('LG', 2 + (i * 1.5), 0)
       end
+      lay_brick('IFB/2', 8, 0)
       lay_brick('IFB', 0, 24)
       lay_brick('FB', 0, 26)
       lay_brick('IFB/2', 0, 28)
@@ -125,9 +188,6 @@ module Monty
       lay_brick('FB', 1, 26)
       lay_brick('FB/2', 1, 28)
 
-      3.times do |i|
-        lay_brick_rotated('FB', 2 + (i * 2), 1)
-      end
       lay_peeps_c
       5.times do |i|
         lay_brick('FB', 8, 1 + (i * 2))
@@ -861,7 +921,7 @@ module Monty
       face.pushpull(-h)
     end
 
-    def self.create_arch_1_11
+    def self.create_arch_1
       name = 'arch1_27'
       model = Sketchup.active_model
       definitions = model.definitions
@@ -869,11 +929,11 @@ module Monty
       compdefinition = definitions[name]
       compdefinition.material = 'DarkSeaGreen'
       group = compdefinition.entities.add_group
-      center = [0, 0, -47.203]
+      center = [0, 0, -47.599]
+      angle = 0.278
       xaxis = [0, 0, 1]
       vector = Geom::Vector3d.new 0, 1, 0
       normal = vector.normalize!
-      angle = 0.306
 
       arc1 = group.entities.add_arc center, xaxis, normal, 49.5, -angle, angle, 11
       arc2 = group.entities.add_arc center, xaxis, normal, 54, -angle, angle, 11
@@ -899,7 +959,7 @@ module Monty
     end
 
     def self.create_components
-      create_arch_1_11
+      create_arch_1
       l = 9.0
       w = 4.5
       h = 2.5
