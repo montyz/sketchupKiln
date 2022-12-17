@@ -50,6 +50,7 @@ module Monty
       create_brick_row14
       create_brick_row15
       create_brick_row16
+      create_brick_row17
       model.commit_operation
       hash = {}
       Sketchup.active_model.entities.each do |instance|
@@ -60,16 +61,59 @@ module Monty
       end
     end
 
+    def self.create_brick_row17
+      add_kiln_layer
+      lay_bagwall_b
+      @height += 2.5
+    end
+
     def self.create_brick_row16
       add_kiln_layer
       lay_bagwall_a
       lay_brick('arch1_27', 5, 8)
+      lay_brick('Skew3inch', 1, 8)
+      lay_brick('Skew3inch', 1, 8.666)
+      lay_brick('Skew3inch', 1, 9.333)
+      lay_brick_rotated('Skew3inch', 8.333, 8.666, 180.degrees)
+      lay_brick_rotated('Skew3inch', 8.333, 9.333, 180.degrees)
+      lay_brick_rotated('Skew3inch', 8.333, 10, 180.degrees)
+      5.times do |i|
+        lay_brick_rotated('IFB', i * 2, 0)
+      end
+      4.times do |i|
+        lay_brick_rotated('FB', 1 + (i * 2), 1)
+      end
+      7.times do |i|
+        lay_brick('IFB', 0, 1 + (i * 2))
+      end
+      lay_brick('IFB/2', 0, 15)
+      3.times do |i|
+        lay_brick('FB', 1, 2 + (i * 2))
+      end
+      3.times do |i|
+        lay_brick('FB', 1, 10 + (i * 2))
+      end
+
       @height += 2.5
     end
 
     def self.create_brick_row15
       add_kiln_layer
       lay_bagwall_b
+      8.times do |i|
+        lay_brick('IFB', 0, i * 2)
+      end
+      7.times do |i|
+        lay_brick('FB', 1, 1 + (i * 2))
+      end
+      lay_brick('FB/2', 1, 15)
+      # Bourry Box end
+      4.times do |i|
+        lay_brick_rotated('IFB', 1 + (i * 2), 0)
+      end
+      3.times do |i|
+        lay_brick_rotated('FB', 2 + (i * 2), 1)
+      end
       @height += 2.5
     end
 
@@ -77,6 +121,12 @@ module Monty
       add_kiln_layer
       lay_bagwall_a
       lay_brick_rotated('arch1_27', 0, 20)
+      lay_brick_rotated('Skew3inch', 0, 16)
+      lay_brick_rotated('Skew3inch', 0.666, 16)
+      lay_brick_rotated('Skew3inch', 1.333, 16)
+      lay_brick_rotated('Skew3inch', -0.666, 24, 270.degrees)
+      lay_brick_rotated('Skew3inch', 0, 24, 270.degrees)
+      lay_brick_rotated('Skew3inch', 0.666, 24, 270.degrees)
 
       lay_brick_rotated('IFB', 0, 0)
       lay_brick_rotated('FB', 2, 0)
@@ -794,13 +844,12 @@ module Monty
       assign_instance_name componentinstance
     end
 
-    def self.lay_brick_rotated(brick_type, bx, by)
+    def self.lay_brick_rotated(brick_type, bx, by, degrees_to_rotate = 90.degrees)
       @grid = "(#{bx}, #{by})"
       componentdefinition = find_componentdefinition(brick_type)
       w = componentdefinition.bounds.height
       target_point = Geom::Point3d.new(0, 0, 0)
       vector = Geom::Vector3d.new(0, 0, 1)
-      degrees_to_rotate = 90.degrees
       t = Geom::Transformation.rotation(target_point, vector, degrees_to_rotate)
       transformation = Geom::Transformation.new([(bx * @unit) + w, by * @unit, @height]) * t
       componentinstance = Sketchup.active_model.entities.add_instance(componentdefinition, transformation)
@@ -921,6 +970,18 @@ module Monty
       face.pushpull(-h)
     end
 
+    def self.create_skew_brick3
+      name = 'Skew3inch'
+      model = Sketchup.active_model
+      definitions = model.definitions
+      definitions.add name unless definitions[name]
+      compdefinition = definitions[name]
+      compdefinition.material = 'DarkKhaki'
+      group = compdefinition.entities.add_group
+      face = group.entities.add_face [0, 0, 0], [4.415, 0, 0], [1.945, 0, 7.5], [0, 0, 7.5]
+      face.pushpull(-3)
+    end
+
     def self.create_arch_1
       name = 'arch1_27'
       model = Sketchup.active_model
@@ -960,6 +1021,7 @@ module Monty
 
     def self.create_components
       create_arch_1
+      create_skew_brick3
       l = 9.0
       w = 4.5
       h = 2.5
