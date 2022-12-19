@@ -63,14 +63,8 @@ module Monty
 
     def self.create_brick_row17
       add_kiln_layer
-      lay_bagwall_b
+      lay_bagwall_b(include_chimney = false)
 
-      4.times do |i|
-        lay_brick_rotated('FB', 1 + (i * 2), 36)
-      end
-      5.times do |i|
-        lay_brick_rotated('IFB', i * 2, 37)
-      end
       @height += 2.5
     end
 
@@ -905,7 +899,7 @@ module Monty
       end
     end
 
-    def self.lay_bagwall_b
+    def self.lay_bagwall_b(include_chimney = true)
       @sub = 'lay_bagwall_b'
       lay_brick_rotated('LG', 1, 29)
       lay_brick_rotated('LG', 3, 29)
@@ -915,13 +909,15 @@ module Monty
       lay_brick_rotated('LG', 3, 30.5)
       lay_brick_rotated('LG', 5, 30.5)
       lay_brick_rotated('LG', 7, 30.5)
-      2.times do |i|
-        lay_brick('FB', 1, (i * 2) + 32)
-        lay_brick('FB', 8, (i * 2) + 32)
-      end
-      4.times do |i|
-        lay_brick('IFB', 0, (i * 2) + 29)
-        lay_brick('IFB', 9, (i * 2) + 29)
+      if include_chimney
+        2.times do |i|
+          lay_brick('FB', 1, (i * 2) + 32)
+          lay_brick('FB', 8, (i * 2) + 32)
+        end
+        4.times do |i|
+          lay_brick('IFB', 0, (i * 2) + 29)
+          lay_brick('IFB', 9, (i * 2) + 29)
+        end
       end
       @sub = ''
     end
