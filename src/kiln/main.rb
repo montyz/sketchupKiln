@@ -127,7 +127,7 @@ module Monty
       3.times do |i|
         lay_brick_rotated('FB', 2 + (i * 2), 1)
       end
-      lay_peeps_b
+      lay_peeps_b(true)
       4.times do |i|
         lay_brick('FB', 8, 1 + (i * 2))
       end
@@ -173,7 +173,7 @@ module Monty
       7.times do |i|
         lay_brick('FB', 1, 2 + (i * 2))
       end
-      lay_peeps_b
+      lay_peeps_b(true)
       lay_brick('FB3/4', 8, 1)
       4.times do |i|
         lay_brick('FB', 8, 2.5 + (i * 2))
@@ -729,8 +729,7 @@ module Monty
       end
       lay_brick('IFB3/4', 0, 9)
       lay_brick('IFB3/4', 0, 24)
-      lay_brick('IFB/4', 0, 28.5)
-
+      lay_brick('IFB/4', 0, 28.5) 
       lay_brick('FB', 1, 6)
       lay_brick('FB', 1, 8)
       lay_brick('FB/4', 1, 10)
@@ -758,12 +757,11 @@ module Monty
       bx = 8
       lay_brick_rotated('FB', bx, 8)
       lay_brick('FB3/4', 8, 9)
-      lay_peeps_b
+      lay_peeps_b(true)
       lay_brick('FB/4', 8, 28.5)
       # row 9 port wall
       bx = 9
       lay_brick('IFB3/4', bx, 9)
-      lay_brick('IFB/4', bx, 28.5)
       # chimney w/hole for soda kiln B
       lay_brick_rotated('FB', 1, 36)
       lay_brick_rotated('FB', 7, 36)
@@ -774,10 +772,14 @@ module Monty
       @height += 2.5
     end
 
-    def self.lay_peeps_b
+    def self.lay_peeps_b(make_last_lg = false)
       6.times do |i|
         lay_brick_rotated('FB', 8, 10.5 + (i * 3))
-        lay_brick_rotated('FB', 8, 12.5 + (i * 3))
+        if (make_last_lg && i ==5)
+          lay_brick_rotated('LG', 8, 12.5 + (i * 3))
+        else
+          lay_brick_rotated('FB', 8, 12.5 + (i * 3))
+        end
       end
     end
 
