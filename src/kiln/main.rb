@@ -64,6 +64,13 @@ module Monty
     def self.create_brick_row17
       add_kiln_layer
       lay_bagwall_b
+
+      4.times do |i|
+        lay_brick_rotated('FB', 1 + (i * 2), 36)
+      end
+      5.times do |i|
+        lay_brick_rotated('IFB', i * 2, 37)
+      end
       @height += 2.5
     end
 
@@ -93,6 +100,13 @@ module Monty
       3.times do |i|
         lay_brick('FB', 1, 10 + (i * 2))
       end
+      7.times do |i|
+        lay_brick('IFB', 0, 24 + (i * 2))
+      end
+      lay_brick('FB/2', 1, 24)
+      2.times do |i|
+        lay_brick('FB', 1, 25 + (i * 2))
+      end
       lay_peeps_c
       3.times do |i|
         lay_brick('FB', 8, 2 + (i * 2))
@@ -106,6 +120,10 @@ module Monty
       end
       4.times do |i|
         lay_brick_rotated('IFB', 1 + (i * 2), 37)
+      end
+      lay_brick('IFB/2', 9, 29)
+      4.times do |i|
+        lay_brick('IFB', 9, 30 + (i * 2))
       end
       @height += 2.5
     end
@@ -127,6 +145,15 @@ module Monty
       3.times do |i|
         lay_brick_rotated('FB', 2 + (i * 2), 1)
       end
+      lay_brick('IFB/2', 0, 24)
+      2.times do |i|
+        lay_brick('IFB', 0, 25 + (i * 2))
+      end
+      2.times do |i|
+        lay_brick('FB', 1, 24 + (i * 2))
+      end
+      lay_brick('FB/2', 1, 28)
+
       lay_peeps_b(true)
       4.times do |i|
         lay_brick('FB', 8, 1 + (i * 2))
@@ -173,6 +200,13 @@ module Monty
       7.times do |i|
         lay_brick('FB', 1, 2 + (i * 2))
       end
+      7.times do |i|
+        lay_brick('IFB', 0, 24 + (i * 2))
+      end
+      lay_brick('FB/2', 1, 24)
+      2.times do |i|
+        lay_brick('FB', 1, 25 + (i * 2))
+      end
       lay_peeps_b(true)
       lay_brick('FB3/4', 8, 1)
       4.times do |i|
@@ -187,6 +221,10 @@ module Monty
       end
       4.times do |i|
         lay_brick_rotated('IFB', 1 + (i * 2), 37)
+      end
+      lay_brick('IFB/2', 9, 29)
+      4.times do |i|
+        lay_brick('IFB', 9, 30 + (i * 2))
       end
       @height += 2.5
     end
@@ -775,7 +813,7 @@ module Monty
     def self.lay_peeps_b(make_last_lg = false)
       6.times do |i|
         lay_brick_rotated('FB', 8, 10.5 + (i * 3))
-        if (make_last_lg && i ==5)
+        if make_last_lg && i == 5
           lay_brick_rotated('LG', 8, 12.5 + (i * 3))
         else
           lay_brick_rotated('FB', 8, 12.5 + (i * 3))
