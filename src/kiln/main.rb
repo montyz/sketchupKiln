@@ -729,7 +729,7 @@ module Monty
       end
       lay_brick('IFB3/4', 0, 9)
       lay_brick('IFB3/4', 0, 24)
-      lay_brick('IFB/4', 0, 28.5) 
+      lay_brick('IFB/4', 0, 28.5)
       lay_brick('FB', 1, 6)
       lay_brick('FB', 1, 8)
       lay_brick('FB/4', 1, 10)
