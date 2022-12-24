@@ -30,6 +30,12 @@ module Monty
     @unit = 4.5
     @layer = nil
     @layer_name = ''
+    @a27_center = [0, 0, -47.599]
+    @a27_angle = 0.278
+    @a27_xaxis = [0, 0, 1]
+    @a27_vector = Geom::Vector3d.new 0, 1, 0
+    @a27_normal = @a27_vector.normalize!
+
     def self.create_kiln
       model = Sketchup.active_model
       model.start_operation('Create Kiln', true)
@@ -72,6 +78,7 @@ module Monty
       add_kiln_layer
       lay_bagwall_a
       lay_brick('arch1_27', 5, 8)
+      lay_brick('arch1_27_refractory', 5, 8)
       lay_brick('Skew3inch', 1, 8)
       lay_brick('Skew3inch', 1, 8.666)
       lay_brick('Skew3inch', 1, 9.333)
@@ -170,6 +177,7 @@ module Monty
       add_kiln_layer
       lay_bagwall_a
       lay_brick_rotated('arch1_27', 0, 20)
+      lay_brick_rotated('arch1_27_refractory', 0, 20)
       lay_brick_rotated('Skew3inch', 0, 16)
       lay_brick_rotated('Skew3inch', 0.666, 16)
       lay_brick_rotated('Skew3inch', 1.333, 16)
@@ -1093,7 +1101,7 @@ module Monty
       compdefinition = definitions[name]
       compdefinition.material = 'DarkKhaki'
       group = compdefinition.entities.add_group
-      face = group.entities.add_face [0, 0, 0], [4.415, 0, 0], [1.945, 0, 7.5], [0, 0, 7.5]
+      face = group.entities.add_face [0, 0, 0], [4.415, 0, 0], [2.356, 0, 7.5], [0, 0, 7.5]
       face.pushpull(-3)
     end
 
@@ -1105,14 +1113,9 @@ module Monty
       compdefinition = definitions[name]
       compdefinition.material = 'DarkSeaGreen'
       group = compdefinition.entities.add_group
-      center = [0, 0, -47.599]
-      angle = 0.278
-      xaxis = [0, 0, 1]
-      vector = Geom::Vector3d.new 0, 1, 0
-      normal = vector.normalize!
 
-      arc1 = group.entities.add_arc center, xaxis, normal, 49.5, -angle, angle, 11
-      arc2 = group.entities.add_arc center, xaxis, normal, 54, -angle, angle, 11
+      arc1 = group.entities.add_arc @a27_center, @a27_xaxis, @a27_normal, 49.5, -@a27_angle, @a27_angle, 11
+      arc2 = group.entities.add_arc @a27_center, @a27_xaxis, @a27_normal, 54, -@a27_angle, @a27_angle, 11
       # ¿make each one a named brick for the staggered center arch and so they can be counted?
       11.times do |i|
         edge1 = arc1[i]
@@ -1122,20 +1125,42 @@ module Monty
         face = group.entities.add_face [edge1, edge2, edge3, edge4]
         face.pushpull(-9.0)
       end
-      # # add an edge to close the shape.
-      # closer1 = group.entities.add_line(arc1[0].start, arc2[-1].end)
-      # closer2 = group.entities.add_line(arc2[0].start, arc1[-1].end)
-      # # let the edge find it's own face.
-      # edges = arc1
-      # edges.push(closer2)
-      # edges.push(*arc2)
-      # edges.push(closer1)
-      # face = group.entities.add_face edges
-      # face.pushpull(-9.0)
+    end
+
+    def self.create_arch_refractory
+      name = 'arch1_27_refractory'
+      model = Sketchup.active_model
+      definitions = model.definitions
+      definitions.add name unless definitions[name]
+      compdefinition = definitions[name]
+      compdefinition.material = 'DarkSalmon'
+      group = compdefinition.entities.add_group
+
+      arc2 = group.entities.add_arc @a27_center, @a27_xaxis, @a27_normal, 54, -@a27_angle, @a27_angle, 11
+      refractory_x = 15.729
+      refractory_y = 55.099 - 47.599
+      puts(arc2[0].start.position)
+      puts(arc2[1].start.position)
+      face = group.entities.add_face [[-refractory_x, 0, refractory_y],
+                                      arc2[0].start,
+                                      arc2[1].start,
+                                      arc2[2].start,
+                                      arc2[3].start,
+                                      arc2[4].start,
+                                      arc2[5].start,
+                                      arc2[6].start,
+                                      arc2[7].start,
+                                      arc2[8].start,
+                                      arc2[9].start,
+                                      arc2[10].start,
+                                      arc2[10].end,
+                                      [refractory_x, 0, refractory_y]]
+      face.pushpull(-9.0)
     end
 
     def self.create_components
       create_arch_1
+      create_arch_refractory
       create_skew_brick3
       l = 9.0
       w = 4.5
