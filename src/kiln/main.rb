@@ -57,6 +57,7 @@ module Monty
       create_brick_row15
       create_brick_row16
       create_brick_row17
+      create_brick_row18
       model.commit_operation
       hash = {}
       Sketchup.active_model.entities.each do |instance|
@@ -67,9 +68,84 @@ module Monty
       end
     end
 
+    def self.create_brick_row18
+      add_kiln_layer
+      lay_brick_rotated('IFB', 1, 0)
+      lay_brick_rotated('FB', 3, 0)
+      lay_brick_rotated('FB', 5, 0)
+      lay_brick_rotated('IFB', 7, 0)
+      19.times do |i|
+        lay_brick('IFB', 0, i * 2)
+        lay_brick('IFB', 9, i * 2)
+      end
+      4.times do |i|
+        lay_brick_rotated('IFB', 1 + (i * 2), 37)
+      end
+      4.times do |i|
+        lay_brick('FB', 1, 1 + (i * 2))
+        lay_brick('FB', 8, 1 + (i * 2))
+      end
+      3.times do |i|
+        lay_brick_rotated('FB', 2 + (i * 2), 1)
+        lay_brick_rotated('FB', 2 + (i * 2), 8)
+      end
+      4.times do |i|
+        lay_brick_rotated('FB', 1 + (i * 2), 9)
+      end
+      3.times do |i|
+        lay_brick('FB', 1, 31 + (i * 2))
+        lay_brick('FB', 8, 31 + (i * 2))
+      end
+      3.times do |i|
+        lay_brick_rotated('FB', 2 + (i * 2), 31)
+        lay_brick_rotated('FB', 2 + (i * 2), 36)
+      end
+      8.times do |i|
+        lay_brick('FB', 1 + i, 29)
+      end
+      19.times do |i|
+        lay_brick('arch1_27', 5, 10 + i)
+      end
+      34.times do |i|
+        lay_brick('Skew', 1, 10 + (i * 2.5 / 4.5))
+        lay_brick_rotated('Skew', 8.445, 10.666 + (i * 2.5 / 4.5), 180.degrees)
+      end
+      @height += 2.5
+    end
+
     def self.create_brick_row17
       add_kiln_layer
       lay_bagwall_b(include_chimney = false)
+      3.times do |i|
+        lay_brick('LG', i * 1.5, 0)
+      end
+      lay_brick('FB', 4.5, 0)
+      3.times do |i|
+        lay_brick('LG', 5.5 + (i * 1.5), 0)
+      end
+      4.times do |i|
+        lay_brick_rotated('LG', 0, 2 + (i * 1.5))
+        lay_brick_rotated('LG', 8, 2 + (i * 1.5))
+      end
+      lay_brick('IFB', 0, 8)
+      lay_brick('IFB', 9, 8)
+      12.times do |i|
+        lay_brick_rotated('LG', 0, 10 + (i * 1.5))
+        lay_brick_rotated('LG', 8, 10 + (i * 1.5))
+      end
+      lay_brick_rotated('FB', 0, 28)
+      lay_brick_rotated('FB', 8, 28)
+      lay_brick('IFB', 0, 29)
+      lay_brick('IFB/2', 0, 31)
+      lay_brick('IFB', 9, 29)
+      lay_brick('IFB/2', 9, 31)
+      4.times do |i|
+        lay_brick_rotated('LG', 0, 32 + (i * 1.5))
+        lay_brick_rotated('LG', 8, 32 + (i * 1.5))
+      end
+      4.times do |i|
+        lay_brick('LG', 2 + (i * 1.5), 36)
+      end
 
       @height += 2.5
     end
@@ -77,14 +153,6 @@ module Monty
     def self.create_brick_row16
       add_kiln_layer
       lay_bagwall_a
-      lay_brick('arch1_27', 5, 8)
-      lay_brick('arch1_27_refractory', 5, 8)
-      lay_brick('Skew3inch', 1, 8)
-      lay_brick('Skew3inch', 1, 8.666)
-      lay_brick('Skew3inch', 1, 9.333)
-      lay_brick_rotated('Skew3inch', 8.333, 8.666, 180.degrees)
-      lay_brick_rotated('Skew3inch', 8.333, 9.333, 180.degrees)
-      lay_brick_rotated('Skew3inch', 8.333, 10, 180.degrees)
       5.times do |i|
         lay_brick_rotated('IFB', i * 2, 0)
       end
@@ -132,11 +200,26 @@ module Monty
     def self.create_brick_row15
       add_kiln_layer
       lay_bagwall_b
+      lay_brick('arch1_27', 5, 8)
+      lay_brick('arch1_27_refractory', 5, 8)
+      lay_brick('arch1_27', 5, 9)
+      lay_brick('arch1_27_refractory', 5, 9)
+      lay_brick('Skew3inch', 1, 8)
+      lay_brick('Skew3inch', 1, 8.666)
+      lay_brick('Skew3inch', 1, 9.333)
+      lay_brick_rotated('Skew3inch', 8.333, 8.666, 180.degrees)
+      lay_brick_rotated('Skew3inch', 8.333, 9.333, 180.degrees)
+      lay_brick_rotated('Skew3inch', 8.333, 10, 180.degrees)
       8.times do |i|
         lay_brick('IFB', 0, i * 2)
       end
-      7.times do |i|
+      3.times do |i|
         lay_brick('FB', 1, 1 + (i * 2))
+      end
+      lay_brick('FB/2', 1, 7)
+      lay_brick('FB/2', 1, 10)
+      2.times do |i|
+        lay_brick('FB', 1, 11 + (i * 2))
       end
       lay_brick('FB/2', 1, 15)
       # Bourry Box end
@@ -156,10 +239,11 @@ module Monty
       lay_brick('FB/2', 1, 28)
 
       lay_peeps_b(true)
-      4.times do |i|
+      3.times do |i|
         lay_brick('FB', 8, 1 + (i * 2))
       end
-      lay_brick('FB3/4', 8, 9)
+      lay_brick('FB/2', 8, 7)
+      lay_brick('FB/4', 8, 10)
       5.times do |i|
         lay_brick('IFB', 9, i * 2)
       end
@@ -178,6 +262,8 @@ module Monty
       lay_bagwall_a
       lay_brick_rotated('arch1_27', 0, 20)
       lay_brick_rotated('arch1_27_refractory', 0, 20)
+      lay_brick_rotated('arch1_27', 1, 20)
+      lay_brick_rotated('arch1_27_refractory', 1, 20)
       lay_brick_rotated('Skew3inch', 0, 16)
       lay_brick_rotated('Skew3inch', 0.666, 16)
       lay_brick_rotated('Skew3inch', 1.333, 16)
@@ -1105,6 +1191,18 @@ module Monty
       face.pushpull(-3)
     end
 
+    def self.create_skew_brick
+      name = 'Skew'
+      model = Sketchup.active_model
+      definitions = model.definitions
+      definitions.add name unless definitions[name]
+      compdefinition = definitions[name]
+      compdefinition.material = 'Lavender'
+      group = compdefinition.entities.add_group
+      face = group.entities.add_face [0, 0, 0], [4.415, 0, 0], [2.356, 0, 7.5], [0, 0, 7.5]
+      face.pushpull(-2.5)
+    end
+
     def self.create_arch_1
       name = 'arch1_27'
       model = Sketchup.active_model
@@ -1123,7 +1221,7 @@ module Monty
         edge3 = group.entities.add_line(arc2[i].end, arc2[i].start)
         edge4 = group.entities.add_line(arc2[i].start, arc1[i].start)
         face = group.entities.add_face [edge1, edge2, edge3, edge4]
-        face.pushpull(-9.0)
+        face.pushpull(-4.5)
       end
     end
 
@@ -1139,8 +1237,6 @@ module Monty
       arc2 = group.entities.add_arc @a27_center, @a27_xaxis, @a27_normal, 54, -@a27_angle, @a27_angle, 11
       refractory_x = 15.729
       refractory_y = 55.099 - 47.599
-      puts(arc2[0].start.position)
-      puts(arc2[1].start.position)
       face = group.entities.add_face [[-refractory_x, 0, refractory_y],
                                       arc2[0].start,
                                       arc2[1].start,
@@ -1155,13 +1251,14 @@ module Monty
                                       arc2[10].start,
                                       arc2[10].end,
                                       [refractory_x, 0, refractory_y]]
-      face.pushpull(-9.0)
+      face.pushpull(-4.5)
     end
 
     def self.create_components
       create_arch_1
       create_arch_refractory
       create_skew_brick3
+      create_skew_brick
       l = 9.0
       w = 4.5
       h = 2.5
