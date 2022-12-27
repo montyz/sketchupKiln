@@ -76,17 +76,22 @@ module Monty
 
     def self.create_brick_row19
       add_kiln_layer
-      4.times do |i|
+      18.times do |i|
         lay_brick('IFB', 0, 1 + (i * 2))
-        lay_brick('IFB', 9, 1 + (i * 2))
+      end
+      4.times do |i|
+        lay_brick('FB', 9, 1 + (i * 2))
+      end
+      14.times do |i|
+        lay_brick('IFB', 9, 9 + (i * 2))
       end
       lay_brick_rotated('IFB', 0, 0)
       lay_brick_rotated('FB3/4', 2, 0)
       lay_brick_rotated('FB', 4, 0)
       lay_brick_rotated('FB3/4', 6.5, 0)
       lay_brick_rotated('IFB', 8, 0)
-      5.times do |i|
-        lay_brick_rotated('IFB', i * 2, 9)
+      4.times do |i|
+        lay_brick_rotated('IFB', 1 + (i * 2), 9)
       end
       lay_brick_rotated('FB/4', 1, 1)
       lay_brick_rotated('FB', 1.5, 1)
@@ -98,9 +103,9 @@ module Monty
       lay_brick_rotated('FB', 4, 8)
       lay_brick_rotated('FB', 6.5, 8)
       lay_brick_rotated('FB/4', 8.5, 8)
-      6.times do |i|
-        lay_brick_rotated('FB', 1, 2 + i)
-        lay_brick_rotated('FB', 7, 2 + i)
+      3.times do |i|
+        lay_brick('LG', 1, 2 + (i * 2))
+        lay_brick('LG', 7.5, 2 + (i * 2))
       end
 
       @height += 2.5
@@ -1292,11 +1297,24 @@ module Monty
       face.pushpull(-4.5)
     end
 
+    def self.create_rod
+      name = "Rod"
+      model = Sketchup.active_model
+      definitions = model.definitions
+      definitions.add name unless definitions[name]
+      compdefinition = definitions[name]
+      compdefinition.material = "DarkRed"
+      group = compdefinition.entities.add_group
+      face = group.entities.add_face(group.entities.add_circle([0, 0, 1], Y_AXIS, 1))
+      face.pushpull(-40.5)
+    end
+
     def self.create_components
       create_arch_1
       create_arch_refractory
       create_skew_brick3
       create_skew_brick
+      create_rod
       l = 9.0
       w = 4.5
       h = 2.5
