@@ -253,18 +253,19 @@ module Monty
       lay_brick_rotated('Skew3inch', 8.333, 8.666, 180.degrees)
       lay_brick_rotated('Skew3inch', 8.333, 9.333, 180.degrees)
       lay_brick_rotated('Skew3inch', 8.333, 10, 180.degrees)
-      8.times do |i|
+      5.times do |i|
         lay_brick('IFB', 0, i * 2)
       end
+      lay_brick('IFB/4', 0, 10)
       3.times do |i|
         lay_brick('FB', 1, 1 + (i * 2))
       end
       lay_brick('FB/2', 1, 7)
-      lay_brick('FB/2', 1, 10)
-      2.times do |i|
-        lay_brick('FB', 1, 11 + (i * 2))
-      end
-      lay_brick('FB/2', 1, 15)
+      lay_brick('FB/4', 1, 10)
+      lay_brick_rotated('FB', 0, 10.5)
+      lay_brick_rotated('FB', 0, 12.5)
+      lay_brick_rotated('FB', 0, 13.5)
+      #lay_brick_rotated('FB/4/2', 1, 15)
       # Bourry Box end
       4.times do |i|
         lay_brick_rotated('IFB', 1 + (i * 2), 0)
@@ -323,10 +324,12 @@ module Monty
       lay_brick_rotated('FB', 4, 1)
       lay_brick_rotated('FB', 6, 1)
 
-      7.times do |i|
+      5.times do |i|
         lay_brick('IFB', 0, 1 + (i * 2))
       end
-      lay_brick_rotated('IFB/2', 0, 15)
+      lay_brick('FB', 0, 11)
+      lay_brick('IFB/2', 0, 13)
+      lay_brick('FB', 0, 14)
       lay_brick('FB/2', 1, 1)
       7.times do |i|
         lay_brick('FB', 1, 2 + (i * 2))
