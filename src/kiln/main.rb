@@ -7,7 +7,8 @@ require 'sketchup'
 # √ iterate over all instances and sum by type
 # X how to define my own units?
 # X how to create ruby DSL?
-# use the oversize bricks in header courses
+# √ use the oversize bricks in header courses
+# **** leave 8" spaces between shelves under stoke holes ****
 # use 2" slabs & squares in air intake
 # use 2" slabs & squares over door arches?
 # course a
@@ -853,8 +854,13 @@ module Monty
         lay_brick('IFB', bx, (i * 2) + by)
       end
       # shelves
-      6.times do |i|
-        lay_brick('shelf', 2.333, 11 + (i * 3))
+      lay_brick('shelf', 2.333, 10.833)
+
+      2.times do |i|
+        lay_brick('shelf', 2.333, 15.5 + (i * 2.833))
+      end
+      2.times do |i|
+        lay_brick('shelf', 2.333, 23 + (i * 2.833))
       end
       # chimney w/hole for soda kiln A
       lay_brick_rotated('FB/2', 2, 36)
