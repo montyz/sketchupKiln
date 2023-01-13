@@ -1102,8 +1102,9 @@ module Monty
     end
 
     def self.reject_coordinates(bx, _by)
-      return true if bx <= 2
-      return true if @height / 2.5 >= 18
+      # return true if bx >= 7
+      # return true if bx <= 2
+      # return true if @height / 2.5 >= 17
 
       false
     end
