@@ -266,7 +266,7 @@ module Monty
       lay_brick_rotated('FB', 0, 10.5)
       lay_brick_rotated('FB', 0, 12.5)
       lay_brick_rotated('FB', 0, 13.5)
-      #lay_brick_rotated('FB/4/2', 1, 15)
+      # lay_brick_rotated('FB/4/2', 1, 15)
       # Bourry Box end
       4.times do |i|
         lay_brick_rotated('IFB', 1 + (i * 2), 0)
@@ -936,7 +936,6 @@ module Monty
       lay_brick_rotated('FB', bx, 8)
       lay_brick('FB3/4', 8, 9)
       lay_peeps_b(true)
-      lay_brick('FB/4', 8, 28.5)
       # row 9 port wall
       bx = 9
       lay_brick('IFB3/4', bx, 9)
@@ -951,13 +950,9 @@ module Monty
     end
 
     def self.lay_peeps_b(make_last_lg = false)
-      6.times do |i|
-        lay_brick_rotated('FB', 8, 10.5 + (i * 3))
-        if make_last_lg && i == 5
-          lay_brick_rotated('LG', 8, 12.5 + (i * 3))
-        else
-          lay_brick_rotated('FB', 8, 12.5 + (i * 3))
-        end
+      lay_brick_rotated('FB', 8, 10.5)
+      7.times do |i|
+        lay_brick_rotated('LG', 8, 12.5 + (i * 2.5))
       end
     end
 
@@ -1037,11 +1032,14 @@ module Monty
     end
 
     def self.lay_peeps_c
-      6.times do |i|
-        lay_brick('FB', 8, 11 + (i * 3))
-        lay_brick('FB/2', 8, 13 + (i * 3))
-        lay_brick('FB', 9, 11 + (i * 3))
-        lay_brick('IFB/2', 9, 13 + (i * 3))
+      7.times do |i|
+        lay_brick('FB', 8, 11 + (i * 2.5))
+        if i < 6 then
+          lay_brick_rotated('FB/2L', 8, 13 + (i * 2.5))
+        else
+          lay_brick('FB/2', 8, 13 + (i * 2.5))
+        end
+        lay_brick('FB', 9, 11 + (i * 2.5))
       end
     end
 
@@ -1095,7 +1093,16 @@ module Monty
       @sub = ''
     end
 
+    def self.reject_coordinates(bx, _by)
+      return true if bx <= 2
+      return true if @height / 2.5 >= 12
+
+      false
+    end
+
     def self.lay_brick(brick_type, bx, by)
+      return if reject_coordinates(bx, by)
+
       @grid = "(#{bx}, #{by})"
       componentdefinition = find_componentdefinition(brick_type)
       transformation = Geom::Transformation.new([bx * @unit, by * @unit, @height])
@@ -1106,6 +1113,8 @@ module Monty
     end
 
     def self.lay_brick_rotated(brick_type, bx, by, degrees_to_rotate = 90.degrees)
+      return if reject_coordinates(bx, by)
+
       @grid = "(#{bx}, #{by})"
       componentdefinition = find_componentdefinition(brick_type)
       w = componentdefinition.bounds.height
@@ -1120,6 +1129,8 @@ module Monty
     end
 
     def self.lay_brick_rotated_vertically(brick_type, bx, by)
+      return if reject_coordinates(bx, by)
+
       @grid = "(#{bx}, #{by})"
       componentdefinition = find_componentdefinition(brick_type)
       d = componentdefinition.bounds.depth
@@ -1307,12 +1318,12 @@ module Monty
     end
 
     def self.create_rod
-      name = "Rod"
+      name = 'Rod'
       model = Sketchup.active_model
       definitions = model.definitions
       definitions.add name unless definitions[name]
       compdefinition = definitions[name]
-      compdefinition.material = "DarkRed"
+      compdefinition.material = 'DarkRed'
       group = compdefinition.entities.add_group
       face = group.entities.add_face(group.entities.add_circle([0, 0, 1], Y_AXIS, 1))
       face.pushpull(-40.5)
