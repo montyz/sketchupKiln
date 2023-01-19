@@ -264,8 +264,8 @@ module Monty
       lay_brick('FB/2', 1, 7)
       lay_brick('FB/4', 1, 10)
       lay_brick_rotated('FB', 0, 10.5)
-      lay_brick_rotated('FB', 0, 12.5)
-      lay_brick_rotated('FB', 0, 13.5)
+      lay_brick_rotated('LG', 0, 12.5)
+      lay_brick_rotated('FB', 0, 15)
       # lay_brick_rotated('FB/4/2', 1, 15)
       # Bourry Box end
       4.times do |i|
@@ -528,11 +528,10 @@ module Monty
       lay_brick_rotated('FB', 0, 12.5)
       lay_brick_rotated('FB', 0, 13.5)
       lay_brick_rotated('LG', 0, 15.5)
-      lay_brick_rotated('LG', 0, 24)
-      lay_brick_rotated('FB', 0, 25.5)
-      lay_brick_rotated('FB', 0, 27.5)
-      5.times do |i|
-        lay_brick_rotated('LG', 0, 28.5 + (i * 1.5))
+      lay_brick_rotated('FB', 0, 24)
+      lay_brick_rotated('FB', 0, 26)
+      6.times do |i|
+        lay_brick_rotated('LG', 0, 27 + (i * 1.5))
       end
       # col 8
       7.times do |i|
@@ -1102,8 +1101,8 @@ module Monty
     end
 
     def self.reject_coordinates(bx, _by)
-      # return true if bx >= 7
-      return true if bx <= 2
+      return true if bx >= 7
+      # return true if bx <= 2
       # return true if @height / 2.5 >= 8
 
       false
