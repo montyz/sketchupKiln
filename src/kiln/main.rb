@@ -213,8 +213,11 @@ module Monty
       3.times do |i|
         lay_brick('FB', 1, 10 + (i * 2))
       end
-      7.times do |i|
-        lay_brick('IFB', 0, 24 + (i * 2))
+      2.times do |i|
+        lay_brick('FB', 0, 24 + (i * 2))
+      end
+      5.times do |i|
+        lay_brick('IFB', 0, 28 + (i * 2))
       end
       lay_brick('FB/2', 1, 24)
       2.times do |i|
@@ -274,14 +277,10 @@ module Monty
       3.times do |i|
         lay_brick_rotated('FB', 2 + (i * 2), 1)
       end
-      lay_brick('IFB/2', 0, 24)
-      2.times do |i|
-        lay_brick('IFB', 0, 25 + (i * 2))
-      end
-      2.times do |i|
-        lay_brick('FB', 1, 24 + (i * 2))
-      end
-      lay_brick('FB/2', 1, 28)
+      lay_brick_rotated('LG', 0, 24)
+      lay_brick_rotated('FB', 0, 26.5)
+      lay_brick('IFB3/4', 0, 27.5)
+      lay_brick('FB3/4', 1, 27.5)
 
       lay_peeps_b(true)
       3.times do |i|
@@ -335,8 +334,10 @@ module Monty
       7.times do |i|
         lay_brick('FB', 1, 2 + (i * 2))
       end
-      7.times do |i|
-        lay_brick('IFB', 0, 24 + (i * 2))
+      lay_brick('FB', 0, 24)
+      lay_brick('FB', 0, 26)
+      5.times do |i|
+        lay_brick('IFB', 0, 28 + (i * 2))
       end
       lay_brick('FB/2', 1, 24)
       2.times do |i|
@@ -480,9 +481,9 @@ module Monty
         lay_brick('LG', 2 + (i * 1.5), 0)
       end
       lay_brick('IFB/2', 8, 0)
-      lay_brick('IFB', 0, 24)
-      lay_brick('FB', 0, 26)
-      lay_brick('IFB/2', 0, 28)
+      lay_brick('FB', 0, 24)
+      lay_brick('IFB/2', 0, 26)
+      lay_brick('IFB', 0, 27)
       lay_brick('FB', 1, 24)
       lay_brick('FB', 1, 26)
       lay_brick('FB/2', 1, 28)
@@ -507,7 +508,7 @@ module Monty
       add_kiln_layer
       lay_bagwall_a_header_course
       # door frame
-      lay_brick_rotated('FB', 0, 23)
+      lay_brick_rotated('LG', 0, 23)
 
       2.times do |i|
         lay_brick_rotated('LG', 2.5, i * 1.5)
@@ -528,10 +529,8 @@ module Monty
       lay_brick_rotated('FB', 0, 12.5)
       lay_brick_rotated('FB', 0, 13.5)
       lay_brick_rotated('LG', 0, 15.5)
-      lay_brick_rotated('FB', 0, 24)
-      lay_brick_rotated('FB', 0, 26)
-      6.times do |i|
-        lay_brick_rotated('LG', 0, 27 + (i * 1.5))
+      7.times do |i|
+        lay_brick_rotated('LG', 0, 25.5 + (i * 1.5))
       end
       # col 8
       7.times do |i|
@@ -569,9 +568,9 @@ module Monty
       lay_brick('IFB/2', bx, 13)
       lay_brick('FB', bx, 14)
 
-      lay_brick('IFB', bx, 24)
-      lay_brick('FB', bx, 26)
-      lay_brick('IFB/2', bx, 28)
+      lay_brick('FB', bx, 24)
+      lay_brick('IFB/2', bx, 26)
+      lay_brick('IFB', bx, 27)
       # col 1
       bx += 1
       lay_brick('FB/2', bx, 1)
@@ -776,8 +775,9 @@ module Monty
       # door frame
       lay_brick_rotated('FB', 0, 16)
       lay_brick_rotated('FB', 0, 23)
-      lay_brick('IFB', bx, 24)
-      lay_brick('FB', bx, 26)
+      lay_brick('IFB/2', bx, 24)
+      lay_brick('FB', bx, 25)
+      lay_brick('IFB/2', bx, 27)
       5.times do |i|
         lay_brick('IFB', bx, (i * 2) + 28)
       end
@@ -895,8 +895,8 @@ module Monty
       lay_brick_rotated('FB', 0, 10.5)
       lay_brick_rotated('FB', 0, 12.5)
       lay_brick_rotated('FB', 0, 13.5)
-      lay_brick_rotated('FB', 0, 25.5)
-      lay_brick_rotated('FB', 0, 27.5)
+      lay_brick_rotated('FB', 0, 24.5)
+      lay_brick_rotated('FB', 0, 26.5)
 
       lay_brick_rotated('IFB', 0, 0)
       lay_brick_rotated('IFB', 8, 0)
@@ -904,13 +904,13 @@ module Monty
         lay_brick('IFB', 0, 1 + (i * 2))
       end
       lay_brick('IFB3/4', 0, 9)
-      lay_brick('IFB3/4', 0, 24)
-      lay_brick('IFB/4', 0, 28.5)
+      lay_brick('IFB/4', 0, 24)
+      lay_brick('IFB3/4', 0, 27.5)
       lay_brick('FB', 1, 6)
       lay_brick('FB', 1, 8)
       lay_brick('FB/4', 1, 10)
-      lay_brick('FB3/4', 1, 24)
-      lay_brick('FB/4', 1, 28.5)
+      lay_brick('FB/4', 1, 24)
+      lay_brick('FB3/4', 1, 27.5)
 
       2.times do |i|
         lay_brick('IFB', 9, 1 + (i * 2))
@@ -973,8 +973,9 @@ module Monty
       lay_brick('FB', 0, 11)
       lay_brick('IFB/2', 0, 13)
       lay_brick('FB', 0, 14)
-      lay_brick('IFB', 0, 24)
-      lay_brick('FB', 0, 26)
+      lay_brick('IFB/2', 0, 24)
+      lay_brick('FB', 0, 25)
+      lay_brick('IFB/2', 0, 27)
       5.times do |i|
         lay_brick('IFB', 0, 28 + (i * 2))
       end
@@ -987,9 +988,9 @@ module Monty
       lay_brick('FB', 1, 11)
       lay_brick('FB/2', 1, 13)
       lay_brick('FB', 1, 14)
-      lay_brick('FB', 1, 24)
-      lay_brick('FB', 1, 26)
-      lay_brick('FB/2', 1, 28)
+      lay_brick('FB/2', 1, 24)
+      lay_brick('FB', 1, 25)
+      lay_brick('FB', 1, 27)
 
       4.times do |i|
         lay_brick_rotated('LG', 2.5, i * 1.5)
