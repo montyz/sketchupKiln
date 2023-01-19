@@ -434,13 +434,10 @@ module Monty
       2.times do |i|
         lay_brick('FB', 1, 25 + (i * 2))
       end
-      5.times do |i|
+      13.times do |i|
         lay_brick('FB', 8, 2 + (i * 2))
       end
-      lay_brick('FB/2', 8, 12)
-      8.times do |i|
-        lay_brick('FB', 8, 13 + (i * 2))
-      end
+      lay_brick('FB/2', 8, 28)
       lay_brick('IFB/2', 9, 0)
       5.times do |i|
         lay_brick('IFB', 9, 1 + (i * 2))
@@ -1040,16 +1037,17 @@ module Monty
     def self.lay_peeps_c(use_half_at_end = true)
       7.times do |i|
         lay_brick('FB', 8, 11 + (i * 2.5))
-        if i < 6 then
-          lay_brick_rotated('FB/2L', 8, 13 + (i * 2.5))
-        else
-          if use_half_at_end then
-            lay_brick('FB/2', 8, 13 + (i * 2.5))
-          else
-            lay_brick_rotated('FB', 8, 13 + (i * 2.5))
-          end
-        end
         lay_brick('FB', 9, 11 + (i * 2.5))
+        if i < 6
+          lay_brick('FB/4', 8, 13 + (i * 2.5))
+          lay_brick('IFB/4', 9, 13 + (i * 2.5))
+          # lay_brick_rotated('FB/2L', 8, 13 + (i * 2.5))
+        elsif use_half_at_end
+          lay_brick('FB/2', 8, 13 + (i * 2.5))
+        else
+          lay_brick('FB/2', 8, 13 + (i * 2.5))
+          lay_brick('IFB/2', 9, 13 + (i * 2.5))
+        end
       end
     end
 
@@ -1106,7 +1104,7 @@ module Monty
     def self.reject_coordinates(bx, _by)
       # return true if bx >= 7
       return true if bx <= 2
-      # return true if @height / 2.5 >= 17
+      # return true if @height / 2.5 >= 8
 
       false
     end
