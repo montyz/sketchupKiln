@@ -873,15 +873,17 @@ module Monty
     def self.lay_peeps_a
       lay_brick('IFB', 9, 8 + 1)
       lay_brick('FB', 9, 8 + 3)
-      lay_brick('IFB/2', 9, 8 + 5)
-      lay_brick('FB', 9, 8 + 6)
-      lay_brick('IFB/2', 9, 8 + 8)
-      lay_brick('FB', 9, 8 + 9)
-      lay_brick('IFB/2', 9, 8 + 11)
-      lay_brick('FB', 9, 8 + 12)
-      lay_brick('IFB/2', 9, 8 + 14)
-      lay_brick('FB', 9, 8 + 15)
-      lay_brick('IFB/2', 9, 8 + 17)
+      lay_brick('IFB/4', 9, 8 + 5)
+      lay_brick('FB', 9, 8 + 5.5)
+      lay_brick('IFB/4', 9, 8 + 7.5)
+      lay_brick('FB', 9, 8 + 8)
+      lay_brick('IFB/4', 9, 8 + 10)
+      lay_brick('FB', 9, 8 + 10.5)
+      lay_brick('IFB/4', 9, 8 + 12.5)
+      lay_brick('FB', 9, 8 + 13)
+      lay_brick('IFB/4', 9, 8 + 15)
+      lay_brick('FB', 9, 8 + 15.5)
+      lay_brick('IFB/4', 9, 8 + 17.5)
       lay_brick('FB', 9, 8 + 18)
     end
 
@@ -1103,7 +1105,7 @@ module Monty
 
     def self.reject_coordinates(bx, _by)
       # return true if bx >= 7
-      # return true if bx <= 2
+      return true if bx <= 2
       # return true if @height / 2.5 >= 17
 
       false
