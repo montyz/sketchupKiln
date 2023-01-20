@@ -60,6 +60,7 @@ module Monty
       create_brick_row17
       create_brick_row18
       create_brick_row19
+      create_brick_row20
       model.commit_operation
       hash = {}
       Sketchup.active_model.entities.each do |instance|
@@ -72,6 +73,29 @@ module Monty
 
     def self.create_brick_row20
       add_kiln_layer
+      15.times do |i|
+        lay_brick('IFB', 0, i * 2)
+      end
+      4.times do |i|
+        lay_brick('FB', 1, 1 + (i * 2))
+      end
+      3.times do |i|
+        lay_brick_rotated('FB', 2 + (i * 2), 1)
+        lay_brick_rotated('FB', 2 + (i * 2), 8)
+      end
+      4.times do |i|
+        lay_brick_rotated('IFB', 1 + (i * 2), 0)
+        lay_brick_rotated('IFB', 1 + (i * 2), 9)
+      end
+      lay_brick('IFB', 9, 0)
+      6.times do |i|
+        lay_brick_rotated('FB', 8, 2 + i)
+      end
+      11.times do |i|
+        lay_brick('IFB', 9, 8 + (i * 2))
+      end
+      lay_brick('FB/2', 8, 1)
+      lay_brick('FB/2', 8, 8)
       @height += 2.5
     end
 
@@ -81,7 +105,7 @@ module Monty
         lay_brick('IFB', 0, 1 + (i * 2))
       end
       4.times do |i|
-        lay_brick('FB', 9, 1 + (i * 2))
+        lay_brick('IFB', 9, 1 + (i * 2))
       end
       14.times do |i|
         lay_brick('IFB', 9, 9 + (i * 2))
@@ -108,7 +132,8 @@ module Monty
         lay_brick('LG', 1, 2 + (i * 2))
         lay_brick('LG', 7.5, 2 + (i * 2))
       end
-
+      lay_brick('Rod', 4, 0)
+      lay_brick('Rod', 6.5, 0)
       @height += 2.5
     end
 
@@ -1101,10 +1126,10 @@ module Monty
       @sub = ''
     end
 
-    def self.reject_coordinates(bx, _by)
-      return true if bx >= 7
+    def self.reject_coordinates(_bx, _by)
+      # return true if bx >= 7
       # return true if bx <= 2
-      # return true if @height / 2.5 >= 8
+      return true if @height / 2.5 <= 19
 
       false
     end
@@ -1334,8 +1359,8 @@ module Monty
       compdefinition = definitions[name]
       compdefinition.material = 'DarkRed'
       group = compdefinition.entities.add_group
-      face = group.entities.add_face(group.entities.add_circle([0, 0, 1], Y_AXIS, 1))
-      face.pushpull(-40.5)
+      face = group.entities.add_face(group.entities.add_circle([-1, 1, 1], Y_AXIS, 1))
+      face.pushpull(40.5)
     end
 
     def self.create_components
