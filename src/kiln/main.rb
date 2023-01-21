@@ -61,6 +61,8 @@ module Monty
       create_brick_row18
       create_brick_row19
       create_brick_row20
+      create_brick_row21
+      create_brick_row22
       model.commit_operation
       hash = {}
       Sketchup.active_model.entities.each do |instance|
@@ -69,6 +71,107 @@ module Monty
       hash.each do |key, value|
         puts "#{key}: #{value}"
       end
+    end
+
+    def self.create_brick_row29
+      add_kiln_layer
+      @height += 2.5
+    end
+
+    def self.create_brick_row28
+      add_kiln_layer
+      @height += 2.5
+    end
+
+    def self.create_brick_row27
+      add_kiln_layer
+      @height += 2.5
+    end
+
+    def self.create_brick_row26
+      add_kiln_layer
+      @height += 2.5
+    end
+
+    def self.create_brick_row25
+      add_kiln_layer
+      @height += 2.5
+    end
+
+    def self.create_brick_row24
+      add_kiln_layer
+      @height += 2.5
+    end
+
+    def self.create_brick_row23
+      add_kiln_layer
+      4.times do |i|
+        lay_brick('IFB', 0, 1 + (i * 2))
+      end
+      5.times do |i|
+        lay_brick_rotated('IFB', i * 2, 0)
+        lay_brick_rotated('IFB', i * 2, 9)
+      end
+      3.times do |i|
+        lay_brick('FB', 1, 2 + (i * 2))
+      end
+      4.times do |i|
+        lay_brick_rotated('FB', 1 + (i * 2), 1)
+        lay_brick_rotated('FB', 1 + (i * 2), 8)
+      end
+      lay_brick('IFB/2', 9, 1)
+      lay_brick('IFB/2', 9, 8)
+      lay_brick_rotated('FB', 8, 2)
+      lay_brick_rotated('FB', 8, 7)
+      @height += 2.5
+    end
+
+    def self.create_brick_row22
+      add_kiln_layer
+      5.times do |i|
+        lay_brick('IFB', 0, i * 2)
+      end
+      4.times do |i|
+        lay_brick('FB', 1, 1 + (i * 2))
+      end
+      3.times do |i|
+        lay_brick_rotated('FB', 2 + (i * 2), 1)
+        lay_brick_rotated('FB', 2 + (i * 2), 8)
+      end
+      4.times do |i|
+        lay_brick_rotated('IFB', 1 + (i * 2), 0)
+        lay_brick_rotated('IFB', 1 + (i * 2), 9)
+      end
+      lay_brick('IFB', 9, 0)
+      lay_brick('IFB', 9, 8)
+      lay_brick('FB/2', 8, 1)
+      lay_brick('FB/2', 8, 8)
+      lay_brick_rotated('FB', 8, 2)
+      lay_brick_rotated('FB', 8, 7)
+      @height += 2.5
+    end
+
+    def self.create_brick_row21
+      add_kiln_layer
+      4.times do |i|
+        lay_brick('IFB', 0, 1 + (i * 2))
+      end
+      5.times do |i|
+        lay_brick_rotated('IFB', i * 2, 0)
+        lay_brick_rotated('IFB', i * 2, 9)
+      end
+      3.times do |i|
+        lay_brick('FB', 1, 2 + (i * 2))
+      end
+      4.times do |i|
+        lay_brick_rotated('FB', 1 + (i * 2), 1)
+        lay_brick_rotated('FB', 1 + (i * 2), 8)
+      end
+      lay_brick('IFB/2', 9, 1)
+      lay_brick('IFB/2', 9, 8)
+      lay_brick_rotated('FB', 8, 2)
+      lay_brick_rotated('FB', 8, 7)
+      @height += 2.5
     end
 
     def self.create_brick_row20
@@ -83,8 +186,11 @@ module Monty
         lay_brick_rotated('FB', 2 + (i * 2), 1)
         lay_brick_rotated('FB', 2 + (i * 2), 8)
       end
+      lay_brick_rotated('IFB', 1, 0)
+      lay_brick_rotated('FB', 3, 0)
+      lay_brick_rotated('FB', 5, 0)
+      lay_brick_rotated('IFB', 7, 0)
       4.times do |i|
-        lay_brick_rotated('IFB', 1 + (i * 2), 0)
         lay_brick_rotated('IFB', 1 + (i * 2), 9)
       end
       lay_brick('IFB', 9, 0)
