@@ -70,6 +70,15 @@ module Monty
       create_brick_row25
       create_brick_row26
       create_brick_row27
+      20.times do
+        add_kiln_layer
+        chimney_course_a
+        @height += 2.5
+        add_kiln_layer
+        chimney_course_b
+        @height += 2.5
+      end
+
       model.commit_operation
       hash = {}
       Sketchup.active_model.entities.each do |instance|
@@ -78,16 +87,6 @@ module Monty
       hash.each do |key, value|
         puts "#{key}: #{value}"
       end
-    end
-
-    def self.create_brick_row29
-      add_kiln_layer
-      @height += 2.5
-    end
-
-    def self.create_brick_row28
-      add_kiln_layer
-      @height += 2.5
     end
 
     def self.create_brick_row27
@@ -113,7 +112,7 @@ module Monty
         lay_brick_rotated('Skew', 2 + (i * 2.5 / 4.5), 1, 90.degrees)
         lay_brick_rotated('Skew', 1.5 + (i * 2.5 / 4.5), 9, 270.degrees)
       end
-
+      chimney_course_b
       @height += 2.5
     end
 
@@ -139,24 +138,55 @@ module Monty
         lay_brick_rotated('Skew', 8 + (i * 2.5 / 4.5), 2, 90.degrees)
         lay_brick_rotated('Skew', 7.5 + (i * 2.5 / 4.5), 8, 270.degrees)
       end
-
+      chimney_course_a
       @height += 2.5
     end
 
     def self.create_brick_row25
-      create_brick_row23
+      add_kiln_layer
+      create_brick_row21_bourry_box
+      # chimney with peep
+      3.times do |i|
+        lay_brick_rotated('FB', 2 + (i * 2), 31.625)
+      end
+      2.times do |i|
+        lay_brick('FB', 1, 31.625 + (i * 2))
+        lay_brick('FB', 8, 31.625 + (i * 2))
+      end
+      lay_brick_rotated('FB', 1 , 35.625)
+      lay_brick_rotated('FB3/4', 3 , 35.625)
+      lay_brick_rotated('FB3/4', 5.5 , 35.625)
+      lay_brick_rotated('FB', 7, 35.625)
+
+      @height += 2.5
     end
 
     def self.create_brick_row24
-      create_brick_row22
+      add_kiln_layer
+      create_brick_row22_bourry_box
+      # chimney with peep
+      4.times do |i|
+        lay_brick_rotated('FB', 1 + (i * 2), 31.625)
+      end
+      2.times do |i|
+        lay_brick('FB', 1, 32.625 + (i * 2))
+        lay_brick('FB', 8, 32.625 + (i * 2))
+      end
+      lay_brick_rotated('FB', 2, 35.625)
+      lay_brick_rotated('FB/4', 4, 35.625)
+      lay_brick_rotated('FB/4', 5.5, 35.625)
+      lay_brick_rotated('FB', 6, 35.625)
+      @height += 2.5
     end
 
     def self.create_brick_row23
-      create_brick_row21
+      add_kiln_layer
+      create_brick_row21_bourry_box
+      chimney_course_b
+      @height += 2.5
     end
 
-    def self.create_brick_row22
-      add_kiln_layer
+    def self.create_brick_row22_bourry_box
       5.times do |i|
         lay_brick('IFB', 0, i * 2)
       end
@@ -179,11 +209,42 @@ module Monty
       lay_brick('FB/2', 8, 8)
       lay_brick_rotated('FB', 8, 2)
       lay_brick_rotated('FB', 8, 7)
+    end
+
+    def self.create_brick_row22
+      add_kiln_layer
+      create_brick_row22_bourry_box
+      chimney_course_a
       @height += 2.5
     end
 
-    def self.create_brick_row21
-      add_kiln_layer
+    def self.chimney_course_a
+      4.times do |i|
+        lay_brick_rotated('FB', 1 + (i * 2), 31.625)
+      end
+      2.times do |i|
+        lay_brick('FB', 1, 32.625 + (i * 2))
+        lay_brick('FB', 8, 32.625 + (i * 2))
+      end
+      3.times do |i|
+        lay_brick_rotated('FB', 2 + (i * 2), 35.625)
+      end
+    end
+
+    def self.chimney_course_b
+      3.times do |i|
+        lay_brick_rotated('FB', 2 + (i * 2), 31.625)
+      end
+      2.times do |i|
+        lay_brick('FB', 1, 31.625 + (i * 2))
+        lay_brick('FB', 8, 31.625 + (i * 2))
+      end
+      4.times do |i|
+        lay_brick_rotated('FB', 1 + (i * 2), 35.625)
+      end
+    end
+
+    def self.create_brick_row21_bourry_box
       4.times do |i|
         lay_brick('IFB', 0, 1 + (i * 2))
       end
@@ -210,6 +271,22 @@ module Monty
       lay_brick('IFB/2', 9, 8)
       lay_brick_rotated('FB', 8, 2)
       lay_brick_rotated('FB', 8, 7)
+    end
+
+    def self.create_brick_row21
+      add_kiln_layer
+      create_brick_row21_bourry_box
+      # chimney
+      3.times do |i|
+        lay_brick_rotated('FB', 2 + (i * 2), 31.625)
+      end
+      lay_brick('FB/2', 1, 31.625)
+      lay_brick('FB/2', 8, 31.625)
+      8.times do |i|
+        lay_brick('FB', 1 + i, 35.625)
+      end
+      lay_brick('LFB', 1, 32.625)
+      lay_brick('LFB', 8, 32.625)
       @height += 2.5
     end
 
@@ -240,12 +317,12 @@ module Monty
       lay_brick('FB/2', 8, 1)
       lay_brick('FB/2', 8, 8)
       # chimney
-      3.times do |i|
-        lay_brick_rotated('FB', 2 + (i * 2), 31.5)
+      4.times do |i|
+        lay_brick_rotated('FB', 1 + (i * 2), 31.75)
       end
-      3.times do |i|
-        lay_brick_rotated('FB', 2 + (i * 2), 35.5)
-        lay_brick_rotated('FB', 2 + (i * 2), 36.5)
+      4.times do |i|
+        lay_brick_rotated('FB', 1 + (i * 2), 35.5)
+        lay_brick_rotated('FB', 1 + (i * 2), 36.5)
       end
 
       @height += 2.5
@@ -1304,8 +1381,8 @@ module Monty
     def self.reject_coordinates(_bx, by)
       # return true if bx >= 7
       # return true if bx <= 2
-      return true if by < 26
-      return true if @height / 2.5 <= 18
+      # return true if by < 26
+      # return true if @height / 2.5 <= 18
 
       false
     end
