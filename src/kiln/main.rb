@@ -215,7 +215,7 @@ module Monty
 
     def self.create_brick_row20
       add_kiln_layer
-      15.times do |i|
+      5.times do |i|
         lay_brick('IFB', 0, i * 2)
       end
       4.times do |i|
@@ -236,9 +236,7 @@ module Monty
       6.times do |i|
         lay_brick_rotated('FB', 8, 2 + i)
       end
-      11.times do |i|
-        lay_brick('IFB', 9, 8 + (i * 2))
-      end
+      lay_brick('IFB', 9, 8)
       lay_brick('FB/2', 8, 1)
       lay_brick('FB/2', 8, 8)
       @height += 2.5
@@ -246,13 +244,13 @@ module Monty
 
     def self.create_brick_row19
       add_kiln_layer
-      18.times do |i|
+      15.times do |i|
         lay_brick('IFB', 0, 1 + (i * 2))
       end
       4.times do |i|
         lay_brick('IFB', 9, 1 + (i * 2))
       end
-      14.times do |i|
+      11.times do |i|
         lay_brick('IFB', 9, 9 + (i * 2))
       end
       lay_brick_rotated('IFB', 0, 0)
@@ -279,6 +277,23 @@ module Monty
       end
       lay_brick('Rod', 4, 0)
       lay_brick('Rod', 6.5, 0)
+      # chimney
+      lay_brick('FB/2', 0, 31)
+      lay_brick('FB/2', 9, 31)
+      3.times do |i|
+        lay_brick('FB', 0, 32 + (i * 2))
+        lay_brick('FB', 9, 32 + (i * 2))
+      end
+      3.times do |i|
+        lay_brick('FB', 1, 31.5 + (i * 2))
+        lay_brick('FB', 8, 31.5 + (i * 2))
+      end
+      3.times do |i|
+        lay_brick_rotated('FB', 2 + (i * 2), 31.5)
+      end
+      6.times do |i|
+        lay_brick('FB', 2 + i, 35.5)
+      end
       @height += 2.5
     end
 
@@ -288,12 +303,18 @@ module Monty
       lay_brick_rotated('FB', 3, 0)
       lay_brick_rotated('FB', 5, 0)
       lay_brick_rotated('IFB', 7, 0)
-      19.times do |i|
+      15.times do |i|
         lay_brick('IFB', 0, i * 2)
         lay_brick('IFB', 9, i * 2)
       end
-      4.times do |i|
-        lay_brick_rotated('IFB', 1 + (i * 2), 37)
+      lay_brick('IFB/2', 0, 30)
+      lay_brick('IFB/2', 9, 30)
+      3.times do |i|
+        lay_brick('IFB', 0, 31 + (i * 2))
+        lay_brick('IFB', 9, 31 + (i * 2))
+      end
+      5.times do |i|
+        lay_brick_rotated('IFB', i * 2, 37)
       end
       4.times do |i|
         lay_brick('FB', 1, 1 + (i * 2))
@@ -306,13 +327,13 @@ module Monty
       4.times do |i|
         lay_brick_rotated('FB', 1 + (i * 2), 9)
       end
-      3.times do |i|
-        lay_brick('FB', 1, 31 + (i * 2))
-        lay_brick('FB', 8, 31 + (i * 2))
+      2.times do |i|
+        lay_brick('FB', 1, 32 + (i * 2))
+        lay_brick('FB', 8, 32 + (i * 2))
       end
-      3.times do |i|
-        lay_brick_rotated('FB', 2 + (i * 2), 31)
-        lay_brick_rotated('FB', 2 + (i * 2), 36)
+      4.times do |i|
+        lay_brick_rotated('FB', 1 + (i * 2), 31)
+        lay_brick_rotated('FB', 1 + (i * 2), 36)
       end
       8.times do |i|
         lay_brick('FB', 1 + i, 29)
@@ -1271,10 +1292,11 @@ module Monty
       @sub = ''
     end
 
-    def self.reject_coordinates(_bx, _by)
+    def self.reject_coordinates(_bx, by)
       # return true if bx >= 7
       # return true if bx <= 2
-      # return true if @height / 2.5 <= 19
+      return true if by < 26
+      return true if @height / 2.5 <= 18
 
       false
     end
