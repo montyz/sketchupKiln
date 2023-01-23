@@ -239,6 +239,15 @@ module Monty
       lay_brick('IFB', 9, 8)
       lay_brick('FB/2', 8, 1)
       lay_brick('FB/2', 8, 8)
+      # chimney
+      3.times do |i|
+        lay_brick_rotated('FB', 2 + (i * 2), 31.5)
+      end
+      3.times do |i|
+        lay_brick_rotated('FB', 2 + (i * 2), 35.5)
+        lay_brick_rotated('FB', 2 + (i * 2), 36.5)
+      end
+
       @height += 2.5
     end
 
