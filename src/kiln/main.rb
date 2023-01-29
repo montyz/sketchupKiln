@@ -1378,7 +1378,7 @@ module Monty
       @sub = ''
     end
 
-    def self.reject_coordinates(_bx, by)
+    def self.reject_coordinates(bx, by)
       # return true if bx >= 7
       # return true if bx <= 2
       # return true if by < 26
