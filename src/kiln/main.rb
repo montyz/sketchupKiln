@@ -70,12 +70,16 @@ module Monty
       create_brick_row25
       create_brick_row26
       create_brick_row27
-      20.times do
-        add_kiln_layer
-        chimney_course_a
-        @height += 2.5
+      create_brick_row28
+      create_brick_row29
+      create_brick_row30
+      create_brick_row31
+      15.times do
         add_kiln_layer
         chimney_course_b
+        @height += 2.5
+        add_kiln_layer
+        chimney_course_a
         @height += 2.5
       end
 
@@ -89,7 +93,7 @@ module Monty
       end
     end
 
-    def self.create_brick_row27
+    def self.create_brick_row31
       add_kiln_layer
       6.times do |i|
         lay_brick_rotated('arch1_27', 2 + i, 5)
@@ -104,14 +108,38 @@ module Monty
         lay_brick_rotated('IFB', 1 + (i * 2), 0)
         lay_brick_rotated('IFB', 1 + (i * 2), 9)
       end
-      lay_brick('IFB', 9, 0)
-      lay_brick('IFB', 9, 8)
-      lay_brick('IFB/2', 8, 1)
-      lay_brick('IFB/2', 8, 8)
       11.times do |i|
         lay_brick_rotated('Skew', 2 + (i * 2.5 / 4.5), 1, 90.degrees)
         lay_brick_rotated('Skew', 1.5 + (i * 2.5 / 4.5), 9, 270.degrees)
       end
+      chimney_course_a
+      @height += 2.5
+    end
+
+    def self.create_brick_row30
+      add_kiln_layer
+      create_brick_row22_bourry_box(include_door=false, span_over_door=true)
+      chimney_course_a
+      @height += 2.5
+    end
+
+    def self.create_brick_row29
+      add_kiln_layer
+      create_brick_row21_bourry_box(include_door=false, span_over_door=true)
+      chimney_course_b
+      @height += 2.5
+    end
+
+    def self.create_brick_row28
+      add_kiln_layer
+      create_brick_row22_bourry_box(include_door=false)
+      chimney_course_a
+      @height += 2.5
+    end
+
+    def self.create_brick_row27
+      add_kiln_layer
+      create_brick_row21_bourry_box(include_door=false)
       chimney_course_b
       @height += 2.5
     end
@@ -186,7 +214,7 @@ module Monty
       @height += 2.5
     end
 
-    def self.create_brick_row22_bourry_box
+    def self.create_brick_row22_bourry_box(include_door = true, span_over_door = false)
       5.times do |i|
         lay_brick('IFB', 0, i * 2)
       end
@@ -207,8 +235,10 @@ module Monty
       lay_brick('IFB', 9, 8)
       lay_brick('FB/2', 8, 1)
       lay_brick('FB/2', 8, 8)
-      lay_brick_rotated('FB', 8, 2)
-      lay_brick_rotated('FB', 8, 7)
+      if include_door
+        lay_brick_rotated('FB', 8, 2)
+        lay_brick_rotated('FB', 8, 7)
+      end
     end
 
     def self.create_brick_row22
@@ -244,7 +274,7 @@ module Monty
       end
     end
 
-    def self.create_brick_row21_bourry_box
+    def self.create_brick_row21_bourry_box(include_door = true, span_over_door = false)
       4.times do |i|
         lay_brick('IFB', 0, 1 + (i * 2))
       end
@@ -267,10 +297,18 @@ module Monty
       lay_brick_rotated('FB/2', 5.5, 1)
       lay_brick_rotated('FB/4', 7.5, 0)
       lay_brick_rotated('FB3/4', 7.5, 1)
-      lay_brick('IFB/2', 9, 1)
-      lay_brick('IFB/2', 9, 8)
-      lay_brick_rotated('FB', 8, 2)
-      lay_brick_rotated('FB', 8, 7)
+      if span_over_door
+        4.times do |i|
+          lay_brick('IFB', 9, 1 + (i * 2))
+        end
+      else
+        lay_brick('IFB/2', 9, 1)
+        lay_brick('IFB/2', 9, 8)
+      end
+      if include_door
+        lay_brick_rotated('FB', 8, 2)
+        lay_brick_rotated('FB', 8, 7)
+      end
     end
 
     def self.create_brick_row21
@@ -1382,7 +1420,7 @@ module Monty
       # return true if bx >= 7
       # return true if bx <= 2
       # return true if by < 26
-      # return true if @height / 2.5 <= 18
+      # return true if @height / 2.5 > 18
 
       false
     end
