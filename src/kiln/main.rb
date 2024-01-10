@@ -18,6 +18,10 @@ require 'sketchup'
 # arches
 # build the cast headers
 
+# to install for sketchup:
+# ln -s /Users/monty/code/sketchupKiln/src/kiln.rb '/Users/monty/Library/Application Support/SketchUp 2017/SketchUp/Plugins/kiln.rb'
+# ln -s /Users/monty/code/sketchupKiln/src/kiln '/Users/monty/Library/Application Support/SketchUp 2017/SketchUp/Plugins/kiln'
+
 # to reload from Sketchup Ruby Console:
 # Monty::KilnTool.reload_files
 module Monty
@@ -38,6 +42,16 @@ module Monty
     @arch_normal = @arch_vector.normalize!
     @a18_center = [0, 0, -48.566]
     @a18_angle = 0.195
+
+    def self.reject_coordinates(bx, by)
+      # return true if bx >= 7
+      # return true if bx <= 2
+      # return true if by < 26
+      return true if @height / 2.5 > 6
+      # return true if @height / 2.5 != 6
+
+      false
+    end
 
     def self.create_kiln
       model = Sketchup.active_model
@@ -1166,12 +1180,18 @@ module Monty
       end
       # shelves
       lay_brick('shelf', 2.333, 10.833)
+      lay_brick_rotated_vertically('cone', 3, 13)
+      lay_brick_rotated_vertically('cone', 7.5, 13)
 
       2.times do |i|
         lay_brick('shelf', 2.333, 15.5 + (i * 2.833))
+        lay_brick_rotated_vertically('cone', 3, 17.666 + (i * 2.833))
+        lay_brick_rotated_vertically('cone', 7.5, 17.666 + (i * 2.833))  
       end
       2.times do |i|
         lay_brick('shelf', 2.333, 23 + (i * 2.833))
+        lay_brick_rotated_vertically('cone', 3, 23 + (i * 2.833))
+        lay_brick_rotated_vertically('cone', 7.5, 23 + (i * 2.833))  
       end
       # chimney w/hole for soda kiln A
       lay_brick_rotated('FB/2', 2, 36)
@@ -1414,15 +1434,6 @@ module Monty
       lay_brick('FB', 6.5, 29)
       lay_brick('FB/2', 6.5, 31)
       @sub = ''
-    end
-
-    def self.reject_coordinates(bx, by)
-      # return true if bx >= 7
-      # return true if bx <= 2
-      # return true if by < 26
-      # return true if @height / 2.5 > 18
-
-      false
     end
 
     def self.lay_brick(brick_type, bx, by)
@@ -1676,6 +1687,18 @@ module Monty
       face.pushpull(40.5)
     end
 
+    def self.create_cone
+      name = 'cone'
+      model = Sketchup.active_model
+      definitions = model.definitions
+      definitions.add name unless definitions[name]
+      compdefinition = definitions[name]
+      compdefinition.material = 'DarkRed'
+      group = compdefinition.entities.add_group
+      face = group.entities.add_face(group.entities.add_circle([-1, 1, 1], Y_AXIS, 1))
+      face.pushpull(2.5)
+    end
+
     def self.create_components
       create_arch_1
       create_arch_2
@@ -1683,6 +1706,7 @@ module Monty
       create_skew_brick3
       create_skew_brick
       create_rod
+      create_cone
       l = 9.0
       w = 4.5
       h = 2.5
