@@ -47,7 +47,7 @@ module Monty
       # return true if bx >= 7
       # return true if bx <= 2
       # return true if by < 26
-      return true if @height / 2.5 > 6
+      # return true if @height / 2.5 > 7
       # return true if @height / 2.5 != 6
 
       false
@@ -887,57 +887,47 @@ module Monty
       lay_brick_rotated('FB', 0, 16)
       lay_brick_rotated('FB', 0, 23)
       # col 0
-      bx = 0
-      by = 0
-      lay_brick_rotated('IFB', bx, by)
+      lay_brick_rotated('IFB', 0, 0)
       5.times do |i|
-        lay_brick('IFB', bx, (i * 2) + 1)
+        lay_brick('IFB', 0, (i * 2) + 1)
       end
-      lay_brick('FB', bx, 11)
-      lay_brick('IFB/2', bx, 13)
-      lay_brick('FB', bx, 14)
+      lay_brick('FB', 0, 11)
+      lay_brick('IFB/2', 0, 13)
+      lay_brick('FB', 0, 14)
 
-      lay_brick('FB', bx, 24)
-      lay_brick('IFB/2', bx, 26)
-      lay_brick('IFB', bx, 27)
+      lay_brick('FB', 0, 24)
+      lay_brick('IFB/2', 0, 26)
+      lay_brick('IFB', 0, 27)
       # col 1
-      bx += 1
-      lay_brick('FB/2', bx, 1)
+      lay_brick('FB/2', 1, 1)
       7.times do |i|
-        lay_brick('FB', bx, 2 + (i * 2))
+        lay_brick('FB', 1, 2 + (i * 2))
       end
       2.times do |i|
-        lay_brick('FB', bx, 24 + (i * 2))
+        lay_brick('FB', 1, 24 + (i * 2))
       end
-      lay_brick('FB/2', bx, 28)
+      lay_brick('FB/2', 1, 28)
       # col 2
-      bx += 1
-      by = 0
-      lay_brick('FB', bx, by)
+      lay_brick('FB', 2, 0)
       # col 3
       lay_brick('FB/2', 2, 2)
       # col 4
-      bx = 4
       2.times do |i|
-        lay_brick_rotated('LG', bx, by + (i * 1.5))
+        lay_brick_rotated('LG', 4, 0 + (i * 1.5))
       end
       # col 7
-      bx = 7
-      lay_brick('FB', bx, by)
-      by += 2
-      lay_brick('FB/2', bx, by)
+      lay_brick('FB', 7, 0)
+      lay_brick('FB/2', 7, 2)
       # col 8
-      bx = 8
-      lay_brick_rotated('IFB', bx, 0)
-      lay_brick('FB/2', bx, 1)
+      lay_brick_rotated('IFB', 8, 0)
+      lay_brick('FB/2', 8, 1)
       13.times do |i|
-        lay_brick('FB', bx, 2 + (i * 2))
+        lay_brick('FB', 8, 2 + (i * 2))
       end
-      lay_brick('FB/2', bx, 28)
+      lay_brick('FB/2', 8, 28)
       # col 9
-      bx = 9
       5.times do |i|
-        lay_brick('IFB', bx, (i * 2) + 1)
+        lay_brick('IFB', 9, (i * 2) + 1)
       end
       lay_peeps_a
       lay_brick('IFB/2', 9, 28)
@@ -1016,67 +1006,58 @@ module Monty
       lay_bagwall_b
 
       # col 0
-      bx = 0
-      by = 0
       # door frame
       lay_brick_rotated('FB', 0, 16)
       lay_brick_rotated('FB', 0, 23)
 
-      lay_brick_rotated('IFB', bx, by)
+      lay_brick_rotated('IFB', 0, 0)
       7.times do |i|
-        lay_brick('IFB', bx, (i * 2) + 1)
+        lay_brick('IFB', 0, (i * 2) + 1)
       end
-      lay_brick('IFB/2', bx, 15)
-      lay_brick('IFB/2', bx, 24)
+      lay_brick('IFB/2', 0, 15)
+      lay_brick('IFB/2', 0, 24)
       2.times do |i|
-        lay_brick('IFB', bx, 25 + (i * 2))
+        lay_brick('IFB', 0, 25 + (i * 2))
       end
       # col 1
-      bx += 1
-      lay_brick('IFB/2', bx, 1)
-      lay_brick_rotated('LG', bx, 2)
-      lay_brick_rotated('FB', bx, 3.5)
-      lay_brick('FB3/4', bx, 4.5)
+      lay_brick('IFB/2', 1, 1)
+      lay_brick_rotated('LG', 1, 2)
+      lay_brick_rotated('FB', 1, 3.5)
+      lay_brick('FB3/4', 1, 4.5)
       5.times do |i|
-        lay_brick('FB', bx, 6 + (2 * i))
+        lay_brick('FB', 1, 6 + (2 * i))
       end
       2.times do |i|
-        lay_brick('FB', bx, 24 + (i * 2))
+        lay_brick('FB', 1, 24 + (i * 2))
       end
-      lay_brick('FB/2', bx, 28)
+      lay_brick('FB/2', 1, 28)
       # col 2
-      bx += 1
-      by = 0
-      lay_brick('FB', bx, by)
+      lay_brick('FB', 2, 0)
       # col 4
-      bx = 4
       3.times do |i|
-        lay_brick_rotated('LG', bx, by + (i * 1.5))
+        lay_brick_rotated('LG', 4, 0 + (i * 1.5))
       end
       # col 7
-      bx = 7
-      lay_brick('FB', bx, by)
-      lay_brick_rotated('LG', bx, 2)
-      lay_brick_rotated('FB', bx, 3.5)
+      lay_brick('FB', 7, 0)
+      lay_brick_rotated('LG', 7, 2)
+      lay_brick_rotated('FB', 7, 3.5)
       # col 8
-      bx = 8
-      lay_brick_rotated('IFB', bx, 0)
-      lay_brick('IFB/2', bx, 1)
+      lay_brick_rotated('IFB', 8, 0)
+      lay_brick('IFB/2', 8, 1)
       lay_brick('FB/4', 8, 4.5)
-      lay_brick_rotated('FB', bx, 5)
-      lay_brick_rotated('FB', bx, 8)
-      lay_brick('FB/2', bx, 9)
+      lay_brick_rotated('FB', 8, 5)
+      lay_brick_rotated('FB', 8, 8)
+      lay_brick('FB/2', 8, 9)
       9.times do |i|
-        lay_brick('FB', bx, 10 + (i * 2))
+        lay_brick('FB', 8, 10 + (i * 2))
       end
-      lay_brick('FB/2', bx, 28)
+      lay_brick('FB/2', 8, 28)
       # col 9
-      bx = 9
       2.times do |i|
-        lay_brick('IFB', bx, (i * 2) + 1)
+        lay_brick('IFB', 9, (i * 2) + 1)
       end
       10.times do |i|
-        lay_brick('IFB', bx, (i * 2) + 9)
+        lay_brick('IFB', 9, (i * 2) + 9)
       end
       # chimney w/hole for soda kiln B
       lay_brick_rotated('FB', 1, 36)
@@ -1092,91 +1073,72 @@ module Monty
     def self.create_brick_row4
       add_kiln_layer
       # col 0
-      bx = 0
-      by = 0
       5.times do |i|
-        lay_brick('IFB', bx, (i * 2) + by)
+        lay_brick('IFB', 0, (i * 2) + 0)
       end
-      lay_brick('IFB/2', bx, 10)
-      lay_brick('FB', bx, 11)
-      lay_brick('IFB/2', bx, 13)
-      lay_brick('FB', bx, 14)
+      lay_brick('IFB/2', 0, 10)
+      lay_brick('FB', 0, 11)
+      lay_brick('IFB/2', 0, 13)
+      lay_brick('FB', 0, 14)
       # door frame
       lay_brick_rotated('FB', 0, 16)
       lay_brick_rotated('FB', 0, 23)
-      lay_brick('IFB/2', bx, 24)
-      lay_brick('FB', bx, 25)
-      lay_brick('IFB/2', bx, 27)
+      lay_brick('IFB/2', 0, 24)
+      lay_brick('FB', 0, 25)
+      lay_brick('IFB/2', 0, 27)
       5.times do |i|
-        lay_brick('IFB', bx, (i * 2) + 28)
+        lay_brick('IFB', 0, (i * 2) + 28)
       end
 
       # kiln shelf to size flue hole
       # lay_brick_rotated_vertically('shelf', 2.33, 38)
 
       # col 1
-      bx += 1
-      lay_brick('IFB', bx, by)
-      by += 2
-      lay_brick_rotated('FB', bx, by)
-      by += 1
+      lay_brick('IFB', 1, 0)
+      lay_brick_rotated('FB', 1, 2)
       2.times do |i|
-        lay_brick_rotated('LG', bx, (i * 1.5) + by)
+        lay_brick_rotated('LG', 1, (i * 1.5) + 3)
       end
-      lay_brick('FB/2', bx, 6)
+      lay_brick('FB/2', 1, 6)
       3.times do |i|
-        lay_brick('FB', bx, 7 + (i * 2))
+        lay_brick('FB', 1, 7 + (i * 2))
       end
-      lay_brick('FB/2', bx, 13)
-      lay_brick('FB', bx, 14)
-      lay_brick('FB/2', bx, 24)
+      lay_brick('FB/2', 1, 13)
+      lay_brick('FB', 1, 14)
+      lay_brick('FB/2', 1, 24)
       2.times do |i|
-        lay_brick('FB', bx, (i * 2) + 25)
+        lay_brick('FB', 1, (i * 2) + 25)
       end
 
       # col 2
-      bx += 1
-      by = 0
-      lay_brick('FB', bx, by)
+      lay_brick('FB', 2, 0)
       lay_bagwall_a
       # col 3
-      bx += 1
       # col 4
-      bx += 1
       4.times do |i|
-        lay_brick_rotated('LG', bx, by + (i * 1.5))
+        lay_brick_rotated('LG', 4, 0 + (i * 1.5))
       end
       # col 5
-      bx += 1
       # col 6
-      bx += 1
       # col 7
-      bx += 1
-      lay_brick('FB', bx, by)
-      by += 2
-      lay_brick_rotated('FB', bx, by)
-      by += 1
+      lay_brick('FB', 7, 0)
+      lay_brick_rotated('FB', 7, 2)
       2.times do |i|
-        lay_brick_rotated('LG', bx, (i * 1.5) + by)
+        lay_brick_rotated('LG', 7, (i * 1.5) + 3)
       end
       # col 8
-      bx += 1
-      by = 0
-      lay_brick('IFB', bx, by)
-      lay_brick_rotated('FB', bx, 8)
+      lay_brick('IFB', 8, 0)
+      lay_brick_rotated('FB', 8, 8)
       10.times do |i|
-        lay_brick('FB', bx, (i * 2) + 9)
+        lay_brick('FB', 8, (i * 2) + 9)
       end
       # col 9
-      bx += 1
-      by = 0
-      lay_brick('IFB', bx, by)
-      lay_brick('IFB', bx, by + 2)
-      lay_brick('FB', bx, by + 4)
+      lay_brick('IFB', 9, 0)
+      lay_brick('IFB', 9, 0 + 2)
+      lay_brick('FB', 9, 0 + 4)
       lay_peeps_a
-      by = 28
       5.times do |i|
-        lay_brick('IFB', bx, (i * 2) + by)
+        lay_brick('IFB', 9, (i * 2) + 28)
       end
       # shelves
       lay_brick('shelf', 2.333, 10.833)
@@ -1224,8 +1186,6 @@ module Monty
       # door frame
       lay_brick_rotated('LG', 0, 15.5)
       lay_brick_rotated('FB', 0, 23)
-      bx = 0
-      by = 0
       # port holes
       lay_brick_rotated('FB', 0, 10.5)
       lay_brick_rotated('FB', 0, 12.5)
@@ -1265,13 +1225,11 @@ module Monty
         lay_brick_rotated('LG', 4, i * 1.5)
       end
       # row 8 port wall
-      bx = 8
-      lay_brick_rotated('FB', bx, 8)
+      lay_brick_rotated('FB', 8, 8)
       lay_brick('FB3/4', 8, 9)
       lay_peeps_b(true)
       # row 9 port wall
-      bx = 9
-      lay_brick('IFB3/4', bx, 9)
+      lay_brick('IFB3/4', 9, 9)
       # chimney w/hole for soda kiln B
       lay_brick_rotated('FB', 1, 36)
       lay_brick_rotated('FB', 7, 36)
@@ -1299,8 +1257,6 @@ module Monty
       # door frame
       lay_brick_rotated('FB', 0, 16)
       lay_brick_rotated('FB', 0, 23)
-      bx = 0
-      by = 0
       5.times do |i|
         lay_brick('IFB', 0, (i * 2))
       end
@@ -1344,22 +1300,16 @@ module Monty
         lay_brick('IFB', 9, (i * 2))
       end
       # col 8
-      bx = 8
-      by = 0
-      lay_brick_rotated('FB', bx, 8)
-      lay_brick('FB', bx, 9)
+      lay_brick_rotated('FB', 8, 8)
+      lay_brick('FB', 8, 9)
       lay_peeps_c
 
       # col 9
-      bx = 9
-      by = 0
-      lay_brick('IFB', bx, by)
-      lay_brick('IFB', bx, by + 2)
-      by = 8
-      lay_brick('IFB', bx, by + 1)
-      by += 20
+      lay_brick('IFB', 9, 0)
+      lay_brick('IFB', 9, 0 + 2)
+      lay_brick('IFB', 9, 9 + 1)
       5.times do |i|
-        lay_brick('IFB', bx, (i * 2) + by)
+        lay_brick('IFB', 9, (i * 2) + 28)
       end
       # chimney w/hole for soda kiln A
       lay_brick_rotated('FB/2', 2, 36)
