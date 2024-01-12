@@ -1479,7 +1479,9 @@ module Monty
     def self.create_ifb_floor
       add_kiln_layer
       entities = Sketchup.active_model.entities
-      componentdefinition = find_componentdefinition('IFB')
+      componentdefinition1 = find_componentdefinition('IFB')
+      componentdefinitionX = find_componentdefinition('IFBX')
+      componentdefinition = componentdefinition1
       # have to swap l & w because of the rotation applied
       l = componentdefinition.bounds.width
       w = componentdefinition.bounds.height
@@ -1489,6 +1491,12 @@ module Monty
       t = Geom::Transformation.rotation(target_point, vector, degrees_to_rotate)
       5.times do |i|
         38.times do |j|
+          if j %5 == 0 
+           componentdefinition = componentdefinitionX 
+          else 
+            componentdefinition = componentdefinition1
+          end
+          @grid = "(#{i*2}, #{j})"
           transformation = Geom::Transformation.new([(i * w) + w, j * l, @height]) * t
           componentinstance = entities.add_instance(componentdefinition, transformation)
           componentinstance.material = componentdefinition.material
@@ -1663,6 +1671,7 @@ module Monty
       create_brick(l, w, h, 'FB', 'Goldenrod')
       create_brick(l, l, h, 'Floor Tile', 'DarkGoldenrod')
       create_brick(l, w, h, 'IFB', 'Cornsilk')
+      create_brick(l, w, h, 'IFBX', 'LightSkyBlue')
       create_brick(13.5, w, h, 'LFB', 'BurlyWood')
       create_brick(l, 6.75, h, 'LG', 'Khaki')
       create_brick(l / 2, w, h, 'FB/2', 'Goldenrod')
