@@ -47,7 +47,7 @@ module Monty
       # return true if bx >= 7
       # return true if bx <= 2
       # return true if by < 26
-      return true if @height / 2.5 > 8
+      return true if @height / 2.5 > 12
       # return true if @height / 2.5 != 6
 
       false
@@ -836,38 +836,57 @@ module Monty
       # header course
       add_kiln_layer
       lay_bagwall_a_header_course
-      # door frame
-      lay_brick_rotated('LG', 0, 23)
 
       2.times do |i|
         lay_brick_rotated('LG', 2.5, i * 1.5)
         lay_brick_rotated('LG', 5.5, i * 1.5)
       end
 
+      # col 0
       lay_brick('FB', 4.5, 0)
       lay_brick('FB/2', 4.5, 2)
       lay_brick('FB/2L', 2, 0)
       lay_brick('FB/2/2', 2, 2)
       lay_brick('FB/2L', 7.5, 0)
       lay_brick('FB/2/2', 7.5, 2)
-      # col 0
-      7.times do |i|
+      8.times do |i|
         lay_brick_rotated('LG', 0, i * 1.5)
       end
-      lay_brick_rotated('FB', 0, 10.5)
-      lay_brick_rotated('FB', 0, 12.5)
-      lay_brick_rotated('FB', 0, 13.5)
-      lay_brick_rotated('LG', 0, 15.5)
-      7.times do |i|
-        lay_brick_rotated('LG', 0, 25.5 + (i * 1.5))
+      lay_brick_rotated('FB', 0, 12)
+      lay_brick_rotated('FB', 0, 13)
+      lay_brick_rotated('FB', 0, 15)
+      lay_brick_rotated('FB', 0, 16)
+      lay_brick_rotated('FB', 0, 23)
+      lay_brick_rotated('FB', 0, 24)
+      lay_brick_rotated('FB', 0, 26)
+
+
+      6.times do |i|
+        lay_brick_rotated('LG', 0, 27 + (i * 1.5))
       end
+      # holes
+      lay_brick_rotated('Hole', 0, 14)
+      lay_brick_rotated('Hole', 0, 25)
+      lay_brick_rotated('Hole', 8, 14)
+      lay_brick_rotated('Hole', 8, 18)
+      lay_brick_rotated('Hole', 8, 22)
+      lay_brick_rotated('Hole', 8, 25)
       # col 8
-      7.times do |i|
+      8.times do |i|
         lay_brick_rotated('LG', 8, i * 1.5)
       end
-      lay_peeps_b
-      5.times do |i|
-        lay_brick_rotated('LG', 8, 28.5 + (i * 1.5))
+      lay_brick_rotated('FB', 8, 12)
+      lay_brick_rotated('FB', 8, 13)
+      lay_brick_rotated('LG', 8, 15)
+      lay_brick_rotated('LG', 8, 16.5)
+      lay_brick_rotated('LG', 8, 19)
+      lay_brick_rotated('LG', 8, 20.5)
+      lay_brick_rotated('FB', 8, 23)
+      lay_brick_rotated('FB', 8, 24)
+      lay_brick_rotated('FB', 8, 26)
+
+      6.times do |i|
+        lay_brick_rotated('LG', 8, 27 + (i * 1.5))
       end
       # chimney end
       3.times do |i|
