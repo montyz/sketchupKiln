@@ -47,7 +47,7 @@ module Monty
       # return true if bx >= 7
       # return true if bx <= 2
       # return true if by < 26
-      return true if @height / 2.5 > 12
+      return true if @height / 2.5 > 13
       # return true if @height / 2.5 != 6
 
       false
@@ -792,24 +792,22 @@ module Monty
       lay_brick_rotated('FB', 0, 16)
       lay_brick_rotated('FB', 0, 23)
 
-      5.times do |i|
-        lay_brick('IFB', 0, i * 2)
+      6.times do |i|
+        lay_brick('IFB', 0, 1 + i * 2)
       end
-      lay_brick('IFB/2', 0, 10)
-      lay_brick('FB', 0, 11)
+      lay_brick_rotated('IFB', 0, 0)
       lay_brick('IFB/2', 0, 13)
       lay_brick('FB', 0, 14)
 
       6.times do |i|
         lay_brick('FB', 1, 1 + (i * 2))
       end
-      lay_brick('FB/2', 1, 13)
-      lay_brick('FB', 1, 14)
-      lay_brick('IFB/2', 1, 0)
+      lay_brick('FB', 1, 13)
+      lay_brick('FB/2', 1, 15)
       4.times do |i|
         lay_brick('LG', 2 + (i * 1.5), 0)
       end
-      lay_brick('IFB/2', 8, 0)
+      lay_brick_rotated('IFB', 8, 0)
       lay_brick('FB', 0, 24)
       lay_brick('IFB/2', 0, 26)
       lay_brick('IFB', 0, 27)
@@ -817,12 +815,24 @@ module Monty
       lay_brick('FB', 1, 26)
       lay_brick('FB/2', 1, 28)
 
-      lay_peeps_c(false)
-      5.times do |i|
-        lay_brick('FB', 8, 1 + (i * 2))
-        lay_brick('IFB', 9, i * 2)
+      13.times do |i|
+        lay_brick('FB', 8, 2 + (i * 2))
       end
-      lay_brick('IFB/2', 9, 10)
+      lay_brick('FB/2', 8, 1)
+      lay_brick('FB/2', 8, 28)
+
+      6.times do |i|
+          lay_brick('IFB', 9, 1 + (i * 2))
+      end
+      lay_brick('FB', 9, 13)
+      lay_brick('IFB', 9, 15)
+      lay_brick('FB', 9, 17)
+      lay_brick('IFB', 9, 19)
+      lay_brick('FB', 9, 21)
+      lay_brick('IFB', 9, 23)
+      lay_brick('FB', 9, 25)
+      lay_brick('IFB', 9, 27)
+
       4.times do |i|
         lay_brick_rotated('FB', 1 + (i * 2), 36)
       end
@@ -907,10 +917,9 @@ module Monty
       lay_brick_rotated('FB', 0, 23)
       # col 0
       lay_brick_rotated('IFB', 0, 0)
-      5.times do |i|
+      6.times do |i|
         lay_brick('IFB', 0, (i * 2) + 1)
       end
-      lay_brick('FB', 0, 11)
       lay_brick('IFB/2', 0, 13)
       lay_brick('FB', 0, 14)
 
@@ -956,6 +965,7 @@ module Monty
       lay_brick('IFB', 9, 23)
       lay_brick('FB', 9, 25)
       lay_brick('IFB', 9, 27)
+
       lay_brick('FB/2', 1, 36)
       lay_brick('FB/2', 8, 36)
       lay_brick_rotated('IFB', 0, 37)
