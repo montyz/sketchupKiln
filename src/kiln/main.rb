@@ -47,7 +47,7 @@ module Monty
       # return true if bx >= 7
       # return true if bx <= 2
       # return true if by < 26
-      return true if @height / 2.5 > 7
+      return true if @height / 2.5 > 8
       # return true if @height / 2.5 != 6
 
       false
@@ -1290,12 +1290,9 @@ module Monty
       # door frame
       lay_brick_rotated('FB', 0, 16)
       lay_brick_rotated('FB', 0, 23)
-      5.times do |i|
+      7.times do |i|
         lay_brick('IFB', 0, (i * 2))
       end
-      lay_brick('IFB/2', 0, 10)
-      lay_brick('FB', 0, 11)
-      lay_brick('IFB/2', 0, 13)
       lay_brick('FB', 0, 14)
       lay_brick('IFB/2', 0, 24)
       lay_brick('FB', 0, 25)
@@ -1331,19 +1328,25 @@ module Monty
       lay_brick('LG', 8.5, 4)
       2.times do |i|
         lay_brick('IFB', 9, (i * 2))
-      end
       # col 8
       lay_brick_rotated('FB', 8, 8)
-      lay_brick('FB', 8, 9)
-      lay_peeps_c
-
-      # col 9
-      lay_brick('IFB', 9, 0)
-      lay_brick('IFB', 9, 0 + 2)
-      lay_brick('IFB', 9, 9 + 1)
-      5.times do |i|
-        lay_brick('IFB', 9, (i * 2) + 28)
+      10.times do |i|
+        lay_brick('FB', 8, (i * 2) + 9)
       end
+      # col 9
+      lay_brick('IFB/2', 9, 9)
+      lay_brick('IFB', 9, 10)
+      lay_brick('IFB', 9, 12)
+      lay_brick('FB', 9, 14)
+      lay_brick('IFB', 9, 16)
+      lay_brick('FB', 9, 18)
+      lay_brick('IFB', 9, 20)
+      lay_brick('FB', 9, 22)
+      lay_brick('FB', 9, 24)
+
+      6.times do |i|
+        lay_brick('IFB', 9, (i * 2) + 26)
+      end      end
       # chimney w/hole for soda kiln A
       lay_brick_rotated('FB/2', 2, 36)
       lay_brick_rotated('FB/2', 7, 36)
