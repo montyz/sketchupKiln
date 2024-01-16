@@ -1231,12 +1231,37 @@ module Monty
       4.times do |i|
         lay_brick_rotated('LG', 4, i * 1.5)
       end
-      # row 8 port wall
+      # holes
+      lay_brick_rotated('Hole', 0, 14)
+      lay_brick_rotated('Hole', 0, 25)
       lay_brick_rotated('Hole', 8, 14)
       lay_brick_rotated('Hole', 8, 18)
       lay_brick_rotated('Hole', 8, 22)
       lay_brick_rotated('Hole', 8, 25)
+      # row 8 port wall
+      lay_brick('FB', 8, 8)
+      lay_brick('FB', 8, 10)
+      lay_brick('FB', 8, 12)
+      lay_brick('FB/2', 8, 15)
+      lay_brick('FB', 8, 16)
+      lay_brick('FB/2', 8, 19)
+      lay_brick('FB', 8, 20)
+      lay_brick('FB', 8, 23)
+      lay_brick('FB', 8, 26)
+      lay_brick('FB/2', 8, 28)
+
       # row 9 port wall
+      lay_brick('FB/2', 9, 8)
+      lay_brick('IFB', 9, 9)
+      lay_brick('IFB', 9, 11)
+      lay_brick('FB/2', 9, 13)
+      lay_brick('FB', 9, 15)
+      lay_brick('FB/2', 9, 17)
+      lay_brick('FB', 9, 19)
+      lay_brick('FB/2', 9, 21)
+      lay_brick('FB', 9, 23)
+      lay_brick('FB/2', 9, 26)
+      lay_brick('IFB', 9, 27)
 
       # chimney w/hole for soda kiln B
       lay_brick_rotated('FB', 1, 36)
