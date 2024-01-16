@@ -945,11 +945,17 @@ module Monty
       end
       lay_brick('FB/2', 8, 28)
       # col 9
-      5.times do |i|
+      6.times do |i|
         lay_brick('IFB', 9, (i * 2) + 1)
       end
-      lay_peeps_a
-      lay_brick('IFB/2', 9, 28)
+      lay_brick('FB', 9, 13)
+      lay_brick('IFB', 9, 15)
+      lay_brick('FB', 9, 17)
+      lay_brick('IFB', 9, 19)
+      lay_brick('FB', 9, 21)
+      lay_brick('IFB', 9, 23)
+      lay_brick('FB', 9, 25)
+      lay_brick('IFB', 9, 27)
       lay_brick('FB/2', 1, 36)
       lay_brick('FB/2', 8, 36)
       lay_brick_rotated('IFB', 0, 37)
