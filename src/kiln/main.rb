@@ -1,23 +1,5 @@
 require 'sketchup'
 
-# √ how to get bounding box l,w,h
-# √ how to rotate component (Geom.Transformation.something...)
-# √ how to tweak rubocop to not complain about 15 line methods
-# √ create a layer and assign a course to it Layout::Layer ? or Layout::Label
-# √ iterate over all instances and sum by type
-# X how to define my own units?
-# X how to create ruby DSL?
-# √ use the oversize bricks in header courses
-# **** leave 8" spaces between shelves under stoke holes ****
-# use 2" slabs & squares in air intake
-# use 2" slabs & squares over door arches?
-# course a
-# course b
-# header course
-# bagwall & primary air
-# arches
-# build the cast headers
-
 # to install for sketchup:
 # ln -s /Users/monty/code/sketchupKiln/src/kiln.rb '/Users/monty/Library/Application Support/SketchUp 2017/SketchUp/Plugins/kiln.rb'
 # ln -s /Users/monty/code/sketchupKiln/src/kiln '/Users/monty/Library/Application Support/SketchUp 2017/SketchUp/Plugins/kiln'
@@ -32,7 +14,7 @@ module Monty
     @grid = 'unk'
     @sub = ''
     @height = -3.5
-    @unit = 4.5
+    @unit = 173.0/38.0 # to account for spacing with cardboard, measured in real life
     @layer = nil
     @layer_name = ''
     @a27_center = [0, 0, -47.599]
@@ -47,7 +29,7 @@ module Monty
       # return true if bx >= 7
       # return true if bx <= 2
       # return true if by < 26
-      return true if @height / 2.5 > 13
+      return true if @height / 2.5 > 17
       # return true if @height / 2.5 != 6
 
       false
@@ -611,7 +593,7 @@ module Monty
       lay_brick('IFB3/4', 0, 27.5)
       lay_brick('FB3/4', 1, 27.5)
 
-      lay_peeps_b(true)
+      lay_peeps_b
       3.times do |i|
         lay_brick('FB', 8, 1 + (i * 2))
       end
@@ -672,7 +654,7 @@ module Monty
       2.times do |i|
         lay_brick('FB', 1, 25 + (i * 2))
       end
-      lay_peeps_b(true)
+      lay_peeps_b
       lay_brick('FB3/4', 8, 1)
       4.times do |i|
         lay_brick('FB', 8, 2.5 + (i * 2))
@@ -1308,15 +1290,18 @@ module Monty
       @height += 2.5
     end
 
-    def self.lay_peeps_b(make_last_lg = false)
-      lay_brick_rotated('FB', 8, 10.5)
-      7.times do |i|
-        if !make_last_lg && i == 6
-          lay_brick_rotated('FB', 8, 12.5 + (i * 2.5))
-        else
-          lay_brick_rotated('LG', 8, 12.5 + (i * 2.5))
-        end
-      end
+    def self.lay_peeps_b
+      lay_brick_rotated('Hole', 8, 14)
+      lay_brick_rotated('Hole', 8, 18)
+      lay_brick_rotated('Hole', 8, 22)
+      lay_brick_rotated('Hole', 8, 25)
+
+      lay_brick_rotated('LG', 8, 15)
+      lay_brick_rotated('LG', 8, 16.5)
+      lay_brick_rotated('LG', 8, 19)
+      lay_brick_rotated('LG', 8, 20.5)
+      lay_brick('FB', 8, 23)
+      lay_brick('FB', 9, 23)
     end
 
     def self.create_brick_row6
