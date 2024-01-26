@@ -29,7 +29,7 @@ module Monty
       # return true if bx >= 7
       # return true if bx <= 2
       # return true if by < 26
-      return true if @height / 2.5 > 17
+      return true if @height / 2.5 > 15
       # return true if @height / 2.5 != 6
 
       false
@@ -700,7 +700,7 @@ module Monty
       lay_brick('IFB', 0, 27)
       lay_brick('FB', 1, 24)
       lay_brick('FB', 1, 26)
-      lay_brick('FB', 1, 28)
+      lay_brick('FB/2', 1, 28)
       lay_peeps_a
       lay_brick('FB/2', 8, 2)
       13.times do |i|
@@ -709,8 +709,6 @@ module Monty
       4.times do |i|
         lay_brick('IFB', 9, i * 2)
       end
-      lay_brick('IFB/2', 9, 8)
-      lay_brick('IFB/2', 9, 28)
       4.times do |i|
         lay_brick_rotated('FB', 1 + (i * 2), 36)
       end
@@ -746,18 +744,14 @@ module Monty
       2.times do |i|
         lay_brick('FB', 1, 25 + (i * 2))
       end
+      lay_brick('FB/2', 8, 2)
       13.times do |i|
-        lay_brick('FB', 8, 2 + (i * 2))
+        lay_brick('FB', 8, 3 + (i * 2))
       end
-      lay_brick('FB/2', 8, 28)
-      lay_brick('IFB/2', 9, 0)
-      5.times do |i|
-        lay_brick('IFB', 9, 1 + (i * 2))
+      19.times do |i|
+        lay_brick('IFB', 9, 0 + (i * 2))
       end
-      lay_brick('IFB/2', 9, 11)
-      13.times do |i|
-        lay_brick('IFB', 9, 12 + (i * 2))
-      end
+
       3.times do |i|
         lay_brick_rotated('FB', 2 + (i * 2), 36)
       end
@@ -1773,7 +1767,9 @@ module Monty
         create_components
         create_kiln
       end
-
+      menu.add_item('Reload KilnTool') do
+        reload_files
+      end
       file_loaded(__FILE__)
     end
   end
