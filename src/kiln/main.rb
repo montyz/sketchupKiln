@@ -29,11 +29,47 @@ module Monty
       # return true if bx >= 7
       # return true if bx <= 2
       # return true if by < 26
-      return true if @height / 2.5 > 2+16
+      # return true if @height / 2.5 > 2+20
       # return true if @height / 2.5 != 6
 
       false
     end
+
+    def self.layer_pdf(name)
+      # p Sketchup.active_model.export("/Users/monty/code/sketchupKiln/pdf/#{@layer_name}.pdf", true) 
+      # Sketchup::send_action("printDocument:")
+       true
+    end
+    
+    def self.off(l)
+    p l.name
+     l.visible = false
+    end
+    
+    def self.on(l)
+      l.visible = true
+      @view.refresh
+      layer_pdf(l.name)
+      sleep 1
+      off(l)
+    end
+
+    def self.print_courses
+      model  = Sketchup.active_model
+      lays = model.layers
+      @view  = model.active_view
+            
+      lays.each do |l|
+        next if l.name =~ /Layer0/
+        off(l)
+      end
+      
+      lays.each do |l|
+        next if l.name =~ /Layer0/
+        on(l)
+      end
+    end
+
 
     def self.create_kiln
       model = Sketchup.active_model
@@ -43,33 +79,61 @@ module Monty
       create_ifb_floor
       create_fb_tile_floor
       create_brick_row4
+      save_jpg
       create_brick_row5
+      save_jpg
       create_brick_row6
+      save_jpg
       create_brick_row7
+      save_jpg
       create_brick_row8
+      save_jpg
       create_brick_row9
+      save_jpg
       create_brick_row10
+      save_jpg
       create_brick_row11
+      save_jpg
       create_brick_row12
+      save_jpg
       create_brick_row13
+      save_jpg
       create_brick_row14
+      save_jpg
       create_brick_row15
+      save_jpg
       create_brick_row16
+      save_jpg
       create_brick_row17
+      save_jpg
       create_brick_row18
+      save_jpg
       create_brick_row19
+      save_jpg
       create_brick_row20
+      save_jpg
       create_brick_row21
+      save_jpg
       create_brick_row22
+      save_jpg
       create_brick_row23
+      save_jpg
       create_brick_row24
+      save_jpg
       create_brick_row25
+      save_jpg
       create_brick_row26
+      save_jpg
       create_brick_row27
+      save_jpg
       create_brick_row28
+      save_jpg
       create_brick_row29
+      save_jpg
       create_brick_row30
+      save_jpg
       create_brick_row31
+      save_jpg
       15.times do
         add_kiln_layer
         chimney_course_b
@@ -87,6 +151,16 @@ module Monty
       hash.each do |key, value|
         puts "#{key}: #{value}"
       end
+    end
+
+    def self.save_jpg
+      model = Sketchup.active_model
+      # status = model.save_thumbnail("/Users/monty/code/sketchupKiln/jpgs/#{@layer_name}.jpg")
+      options_hash = { :show_summary => true,
+                 :output_profile_lines => false,
+                 :map_fonts => false,
+                 :model_units => Length::Inches }
+      # status = model.export("/Users/monty/code/sketchupKiln/pdfs/#{@layer_name}.pdf", options_hash)
     end
 
     def self.create_brick_row31
@@ -1554,8 +1628,10 @@ module Monty
       componentdefinitionX = find_componentdefinition('IFBX')
       componentdefinition = componentdefinition1
       # have to swap l & w because of the rotation applied
-      l = componentdefinition.bounds.width
-      w = componentdefinition.bounds.height
+      # l = componentdefinition.bounds.width
+      # w = componentdefinition.bounds.height
+      w = @unit * 2.0
+      l = @unit
       target_point = Geom::Point3d.new(0, 0, 0)
       vector = Geom::Vector3d.new(0, 0, 1)
       degrees_to_rotate = 90.degrees
@@ -1790,6 +1866,9 @@ module Monty
       end
       menu.add_item('Reload KilnTool') do
         reload_files
+      end
+      menu.add_item('Print Courses') do
+        print_courses
       end
       file_loaded(__FILE__)
     end
