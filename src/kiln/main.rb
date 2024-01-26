@@ -701,13 +701,14 @@ module Monty
       lay_brick('FB', 1, 24)
       lay_brick('FB', 1, 26)
       lay_brick('FB/2', 1, 28)
-      lay_peeps_a
-      lay_brick('FB/2', 8, 2)
+      
       13.times do |i|
-        lay_brick('FB', 8, 3 + (i * 2))
+        lay_brick('FB', 8, 2 + (i * 2))
       end
-      4.times do |i|
-        lay_brick('IFB', 9, i * 2)
+      lay_brick('FB/2', 8, 28)
+      lay_brick('IFB/2', 9, 0)
+      14.times do |i|
+        lay_brick('IFB', 9, 1 + (i * 2))
       end
       4.times do |i|
         lay_brick_rotated('FB', 1 + (i * 2), 36)
