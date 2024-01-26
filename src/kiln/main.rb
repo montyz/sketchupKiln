@@ -29,7 +29,7 @@ module Monty
       # return true if bx >= 7
       # return true if bx <= 2
       # return true if by < 26
-      return true if @height / 2.5 > 15
+      return true if @height / 2.5 > 16
       # return true if @height / 2.5 != 6
 
       false
@@ -635,43 +635,46 @@ module Monty
       lay_brick_rotated('FB', 4, 1)
       lay_brick_rotated('FB', 6, 1)
 
-      5.times do |i|
+      6.times do |i|
         lay_brick('IFB', 0, 1 + (i * 2))
       end
-      lay_brick('FB', 0, 11)
-      lay_brick('IFB/2', 0, 13)
-      lay_brick('FB', 0, 14)
+      lay_brick('FB/2', 0, 13)
+      lay_brick_rotated('Hole', 0, 14)
+      lay_brick_rotated('FB', 0, 15)
       lay_brick('FB/2', 1, 1)
-      7.times do |i|
+      6.times do |i|
         lay_brick('FB', 1, 2 + (i * 2))
       end
-      lay_brick('FB', 0, 24)
+      lay_brick_rotated('FB', 0, 24)
+      lay_brick_rotated('Hole', 0, 25)
       lay_brick('FB', 0, 26)
       5.times do |i|
         lay_brick('IFB', 0, 28 + (i * 2))
       end
-      lay_brick('FB/2', 1, 24)
-      2.times do |i|
-        lay_brick('FB', 1, 25 + (i * 2))
-      end
+      lay_brick('FB/2', 1, 26)
+      lay_brick('FB', 1, 27)
       lay_peeps_b
-      lay_brick('FB3/4', 8, 1)
-      4.times do |i|
-        lay_brick('FB', 8, 2.5 + (i * 2))
+      lay_brick('FB/2', 8, 1)
+      6.times do |i|
+        lay_brick('FB', 8, 2 + (i * 2))
       end
-      4.times do |i|
+      lay_brick('FB/2', 8, 26)
+      lay_brick('FB', 8, 27)
+
+      6.times do |i|
         lay_brick('IFB', 9, 1 + (i * 2))
       end
-      lay_brick('IFB3/4', 9, 9)
+      lay_brick('FB/2', 9, 13)
+
       3.times do |i|
         lay_brick_rotated('FB', 2 + (i * 2), 36)
       end
       4.times do |i|
         lay_brick_rotated('IFB', 1 + (i * 2), 37)
       end
-      lay_brick('IFB/2', 9, 29)
-      4.times do |i|
-        lay_brick('IFB', 9, 30 + (i * 2))
+      lay_brick('FB', 9, 26)
+      5.times do |i|
+        lay_brick('IFB', 9, 28 + (i * 2))
       end
       @height += 2.5
     end
