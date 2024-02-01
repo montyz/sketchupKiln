@@ -29,7 +29,7 @@ module Monty
       # return true if bx >= 7
       # return true if bx <= 2
       # return true if by < 26
-      return true if @height / 2.5 > 2+9
+      # return true if @height / 2.5 > 2+9
       # return true if @height / 2.5 != 6
 
       false
