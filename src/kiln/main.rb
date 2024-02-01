@@ -29,7 +29,7 @@ module Monty
       # return true if bx >= 7
       # return true if bx <= 2
       # return true if by < 26
-      # return true if @height / 2.5 > 2+20
+      return true if @height / 2.5 > 2+9
       # return true if @height / 2.5 != 6
 
       false
@@ -1049,10 +1049,12 @@ module Monty
       lay_brick('FB', 9, 25)
       lay_brick('IFB', 9, 27)
 
-      lay_brick('FB/2', 1, 36)
-      lay_brick('FB/2', 8, 36)
-      lay_brick_rotated('IFB', 0, 37)
-      lay_brick_rotated('IFB', 8, 37)
+      4.times do |i|
+        lay_brick_rotated('FB', 1 + (i * 2), 36)
+      end
+      5.times do |i|
+        lay_brick_rotated('IFB', 0 + (i * 2), 37)
+      end
 
       @height += 2.5
     end
@@ -1113,7 +1115,7 @@ module Monty
         lay_brick('IFB', 9, 10 + (i * 2))
       end
       # header over chimney w/hole for soda kiln
-      lay_brick_rotated('Cast27x9x5', 2, 36)
+      lay_brick_rotated('Cast27x9x2.5', 2, 36)
       lay_brick('IFB/2', 1, 37)
       lay_brick('IFB/2', 8, 37)
       @height += 2.5
@@ -1846,7 +1848,7 @@ module Monty
       create_brick(16.0, 8.0, 8.0, 'Cinder Block', 'SlateGray')
       create_brick(12, 24, 1, 'shelf', 'PapayaWhip')
       create_brick(171.0, 45.0, 3.5, 'Slab', 'LightSlateGray')
-      create_brick(27.0, 9.0, 5, 'Cast27x9x5', 'Thistle')
+      create_brick(27.0, 9.0, h, 'Cast27x9x2.5', 'Thistle')
     end
 
     def self.find_componentdefinition(name)
