@@ -144,12 +144,24 @@ module Monty
       end
 
       model.commit_operation
-      hash = {}
+      layer_hash = {}
+      brick_types = {}
       Sketchup.active_model.entities.each do |instance|
-        hash[instance.definition.name] = hash.key?(instance.definition.name) ? hash[instance.definition.name] + 1 : 1
+        layer_nm = instance.layer.name
+        layer_hash[layer_nm] = layer_hash.key?(layer_nm) ? layer_hash[layer_nm]: {}
+        brick_type = instance.definition.name
+        layer_hash[layer_nm][brick_type] = layer_hash[layer_nm].key?(brick_type) ? layer_hash[layer_nm][brick_type] + 1 : 1
+        brick_types[brick_type] = brick_types.key?(brick_type) ? brick_types[brick_type] + 1 : 1
       end
-      hash.each do |key, value|
-        puts "#{key}: #{value}"
+      bricks = brick_types.keys.sort
+      puts "Layer,#{bricks.join(',')}"
+      layer_hash.each do |layer_key, layer_bricks|
+        print "#{layer_key},"
+        bricks.each do |brick|
+          print layer_bricks.key?(brick) ? layer_bricks[brick] : 0
+          print ","
+        end
+        print "\n"
       end
     end
 
