@@ -28,7 +28,7 @@ module Monty
     def self.reject_coordinates(bx, by)
       # return true if bx >= 7
       # return true if bx <= 2
-      # return true if by < 26
+      # return true if by > 9
       # return true if @height / 2.5 > 2+9
       # return true if @height / 2.5 != 6
 
@@ -194,6 +194,17 @@ module Monty
         lay_brick_rotated('Skew', 2 + (i * 2.5 / 4.5), 1, 90.degrees)
         lay_brick_rotated('Skew', 1.5 + (i * 2.5 / 4.5), 9, 270.degrees)
       end
+      3.times do |i|
+        lay_brick('FB', 8, 2 + (i * 2))
+      end
+      4.times do |i|
+        lay_brick('IFB', 9, 1 + (i * 2))
+      end
+
+      lay_brick('FB/2', 8, 1)
+      lay_brick('FB/2', 8, 8)
+      lay_brick('IFB/2', 9, 0)
+      lay_brick('IFB/2', 9, 9)
       chimney_course_a
       @height += 2.5
     end
@@ -315,8 +326,17 @@ module Monty
       end
       lay_brick('IFB', 9, 0)
       lay_brick('IFB', 9, 8)
-      lay_brick('FB/2', 8, 1)
-      lay_brick('FB/2', 8, 8)
+      if span_over_door
+        4.times do |i|
+          lay_brick('FB', 8, 1 + (i * 2))
+        end
+        3.times do |i|
+          lay_brick('IFB', 9, 2 + (i * 2))
+        end
+      else
+        lay_brick('FB/2', 8, 1)
+        lay_brick('FB/2', 8, 8)        
+      end
       if include_door
         lay_brick_rotated('FB', 8, 2)
         lay_brick_rotated('FB', 8, 7)
@@ -380,6 +400,9 @@ module Monty
       lay_brick_rotated('FB/4', 7.5, 0)
       lay_brick_rotated('FB3/4', 7.5, 1)
       if span_over_door
+        3.times do |i|
+          lay_brick('FB', 8, 2 + (i * 2))
+        end
         4.times do |i|
           lay_brick('IFB', 9, 1 + (i * 2))
         end
