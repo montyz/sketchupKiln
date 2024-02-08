@@ -28,7 +28,7 @@ module Monty
     def self.reject_coordinates(bx, by)
       # return true if bx >= 7
       # return true if bx <= 2
-      # return true if by > 9
+      # return true if by > 1
       # return true if @height / 2.5 > 2+9
       # return true if @height / 2.5 != 6
 
@@ -278,7 +278,7 @@ module Monty
       lay_brick_rotated('FB3/4', 3 , 35.625)
       lay_brick_rotated('FB3/4', 5.5 , 35.625)
       lay_brick_rotated('FB', 7, 35.625)
-
+      lay_brick('Hole', 4.5, 36)
       @height += 2.5
     end
 
@@ -297,6 +297,8 @@ module Monty
       lay_brick_rotated('FB/4', 4, 35.625)
       lay_brick_rotated('FB/4', 5.5, 35.625)
       lay_brick_rotated('FB', 6, 35.625)
+      lay_brick('Hole', 4.5, 36)
+
       @height += 2.5
     end
 
@@ -1209,6 +1211,10 @@ module Monty
       lay_brick_rotated('FB/2', 7, 37)
       lay_brick_rotated('IFB', 0, 37)
       lay_brick_rotated('IFB', 8, 37)
+      lay_brick('Hole', 3, 36)
+      lay_brick('Hole', 4, 36)
+      lay_brick('Hole', 5, 36)
+      lay_brick('Hole', 6, 36)
 
       @height += 2.5
     end
@@ -1312,6 +1318,11 @@ module Monty
       lay_brick_rotated('FB/2', 7, 36)
       lay_brick_rotated('FB', 1, 37)
       lay_brick_rotated('FB', 7, 37)
+      lay_brick('Hole', 3, 36)
+      lay_brick('Hole', 4, 36)
+      lay_brick('Hole', 5, 36)
+      lay_brick('Hole', 6, 36)
+
       @height += 2.5
     end
 
@@ -1413,6 +1424,11 @@ module Monty
       lay_brick_rotated('FB/2', 7, 37)
       lay_brick_rotated('IFB', 0, 37)
       lay_brick_rotated('IFB', 8, 37)
+      lay_brick('Hole', 3, 36)
+      lay_brick('Hole', 4, 36)
+      lay_brick('Hole', 5, 36)
+      lay_brick('Hole', 6, 36)
+
       @height += 2.5
     end
 
@@ -1498,6 +1514,11 @@ module Monty
       lay_brick_rotated('FB/2', 7, 36)
       lay_brick_rotated('FB', 1, 37)
       lay_brick_rotated('FB', 7, 37)
+      lay_brick('Hole', 3, 36)
+      lay_brick('Hole', 4, 36)
+      lay_brick('Hole', 5, 36)
+      lay_brick('Hole', 6, 36)
+
       @height += 2.5
     end
 
