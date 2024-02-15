@@ -29,7 +29,7 @@ module Monty
       # return true if bx >= 7
       # return true if bx <= 2
       # return true if by > 1
-      # return true if @height / 2.5 > 2+9
+      # return true if @height / 2.5 > 2+17
       # return true if @height / 2.5 != 6
 
       false
@@ -278,7 +278,7 @@ module Monty
       lay_brick_rotated('FB3/4', 3 , 35.625)
       lay_brick_rotated('FB3/4', 5.5 , 35.625)
       lay_brick_rotated('FB', 7, 35.625)
-      lay_brick('Hole', 4.5, 36)
+      lay_brick('Hole', 4.5, 34.625)
       @height += 2.5
     end
 
@@ -297,7 +297,7 @@ module Monty
       lay_brick_rotated('FB/4', 4, 35.625)
       lay_brick_rotated('FB/4', 5.5, 35.625)
       lay_brick_rotated('FB', 6, 35.625)
-      lay_brick('Hole', 4.5, 36)
+      lay_brick('Hole', 4.5, 34.625)
 
       @height += 2.5
     end
@@ -1716,8 +1716,8 @@ module Monty
       add_kiln_layer
       entities = Sketchup.active_model.entities
       componentdefinition = find_componentdefinition('Floor Tile')
-      l = componentdefinition.bounds.height
-      w = componentdefinition.bounds.width
+      w = @unit * 2.0
+      l = w
       5.times do |i|
         19.times do |j|
           transformation = Geom::Transformation.new([i * w, j * l, @height])
